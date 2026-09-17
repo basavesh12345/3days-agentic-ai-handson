@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Day 1 — Foundations of Generative AI & RAG | Agentic AI Workshop</title>
+  <meta name="description" content="Day 1 workshop content: Generative AI, LLMs, LangChain fundamentals, and RAG development with hands-on projects."/>
+  <link rel="stylesheet" href="content.css"/>
+</head>
+<body>
+
+<!-- ░░ TOP NAV ░░ -->
+<nav class="top-nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-home">
+      <span class="nav-home-icon">←</span> Back to Workshop
+    </a>
+    <span class="nav-day-label" style="background:linear-gradient(135deg,#3b82f6,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Day 1 — Foundations & RAG</span>
+    <div class="nav-sessions" style="display:flex;gap:8px;align-items:center;">
+      <a href="#session1" class="nav-session-btn active">Session 1</a>
+      <a href="#session2" class="nav-session-btn">Session 2</a>
+      <a href="#session3" class="nav-session-btn">Session 3</a>
+      <button class="theme-toggle-btn" style="background:rgba(255,255,255,0.08);border:1px solid var(--border);color:var(--text-1);padding:4px 12px;border-radius:999px;cursor:pointer;font-size:12px;font-weight:600;">☀️ Light Mode</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ░░ DAY HERO ░░ -->
+<section class="day-hero">
+  <div class="container day-hero-inner">
+    <div class="day-crumb">
+      <a href="index.html">🏠 Workshop Home</a>
+      <span class="day-crumb-sep">›</span>
+      <span>Day 1</span>
+    </div>
+    <h1>Day 1 — <span style="background:linear-gradient(135deg,#3b82f6,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Foundations of Generative AI & RAG</span></h1>
+    <p>Set up your AI development environment, understand how Large Language Models work, build your first AI chatbot, master LangChain basics, and create a full RAG pipeline from scratch.</p>
+    <div class="day-meta-pills">
+      <span class="day-meta-pill pill-blue">🕘 9:00 AM – 5:00 PM</span>
+      <span class="day-meta-pill pill-purple">3 Sessions</span>
+      <span class="day-meta-pill pill-green">3 Hands-on Projects</span>
+      <span class="day-meta-pill pill-cyan">Python · Ollama · LangChain · ChromaDB</span>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ MAIN CONTENT WRAPPER ░░ -->
+<main id="main-content">
+
+<!-- ░░ STUDENT SETUP CHECKLIST ░░ -->
+<section class="container reveal" id="setup-checklist">
+  <div class="setup-checklist-card">
+    <div class="setup-checklist-header">
+      <span>🛠️ Student Setup Checklist (Complete Before Workshop Starts)</span>
+    </div>
+    <div class="checklist-grid">
+      <div class="check-item">
+        <h5>1. Python 3.10+ & Virtual Environment</h5>
+        <p>Verify installation: <code>python3 --version</code>.<br>Create & activate venv:<br><code>python3 -m venv venv && source venv/bin/activate</code></p>
+      </div>
+      <div class="check-item">
+        <h5>2. Ollama & Required Models</h5>
+        <p>Download from <a href="https://ollama.com" target="_blank" rel="noopener">ollama.com</a>.<br>Run in terminal:<br><code>ollama pull llama3.2</code><br><code>ollama pull nomic-embed-text</code></p>
+      </div>
+      <div class="check-item">
+        <h5>3. Low-RAM Fallback Options</h5>
+        <p>For laptops with 4GB/8GB RAM, pull lighter models:<br><code>ollama pull smollm:135m</code> or <code>tinyllama</code></p>
+      </div>
+      <div class="check-item">
+        <h5>4. VS Code & Extensions</h5>
+        <p>Install VS Code + <strong>Python</strong>, <strong>Pylance</strong>, and <strong>Jupyter</strong> extensions. Test terminal access.</p>
+      </div>
+    </div>
+    <div class="code-download-bar" style="margin-top:16px;">
+      <span style="font-size:0.85rem;color:var(--text-2);">📦 Download all workshop dependencies & starter files:</span>
+      <a href="code_samples/requirements.txt" download class="download-link-btn">⬇️ Download requirements.txt</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SESSION 1
+════════════════════════════════════════════════ -->
+<section class="session-section" id="session1">
+  <div class="container">
+    <div class="session-header-row">
+      <div class="session-header-left">
+        <div class="session-num-badge">Session 1 of 3</div>
+        <h2 class="session-title-main">Introduction to Generative AI & LLMs</h2>
+      </div>
+      <span class="session-time-badge">🕘 9:00 – 11:00 AM</span>
+    </div>
+
+    <!-- CONCEPTS -->
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">📖 Core Concepts</div>
+
+      <div class="callout callout-note" style="background:rgba(168,85,247,0.08);border-color:#a855f7;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-content">
+          <strong>Intuitive Analogy — LLM vs AI Agent</strong>
+          A standard Chatbot functions like an intelligent text generator that responds when prompted. In contrast, an <strong>AI Agent</strong> 🤖 acts as an autonomous digital worker equipped with tools, memory, and reasoning loops to accomplish multi-step objectives independently.
+        </div>
+      </div>
+
+      <div class="concepts-grid">
+        <div class="concept-card">
+          <span class="concept-card-icon">🧠</span>
+          <h4>AI vs ML vs Deep Learning</h4>
+          <p>Understanding the hierarchy of intelligence systems:</p>
+          <ul>
+            <li><strong>AI</strong> — any technique making machines smart (rules, logic)</li>
+            <li><strong>ML</strong> — machines learn from data (linear regression, decision trees)</li>
+            <li><strong>Deep Learning</strong> — neural networks with many layers</li>
+            <li><strong>Gen AI</strong> — models that generate new content (text, images, code)</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">📈</span>
+          <h4>Evolution of LLMs</h4>
+          <p>The rapid progression of language models:</p>
+          <ul>
+            <li><strong>2017</strong> — "Attention is All You Need" paper (Transformers)</li>
+            <li><strong>2018</strong> — BERT by Google (bidirectional)</li>
+            <li><strong>2019</strong> — GPT-2 by OpenAI</li>
+            <li><strong>2022</strong> — ChatGPT launches (GPT-3.5)</li>
+            <li><strong>2023</strong> — Llama, Mistral (open-source)</li>
+            <li><strong>2024</strong> — Llama 3, GPT-4o, Claude 3</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">⚙️</span>
+          <h4>How Transformers Work</h4>
+          <p>The core architecture powering all modern LLMs:</p>
+          <ul>
+            <li><strong>Tokenization</strong> — text split into tokens (words/subwords)</li>
+            <li><strong>Embeddings</strong> — tokens converted to number vectors</li>
+            <li><strong>Attention</strong> — model learns which tokens relate to each other</li>
+            <li><strong>Feed Forward</strong> — dense layers process attention output</li>
+            <li><strong>Output</strong> — predicts next token, repeat until done</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">✍️</span>
+          <h4>Prompt Engineering</h4>
+          <p>Techniques to get better responses from LLMs:</p>
+          <ul>
+            <li><strong>Zero-shot</strong> — Ask directly: "Translate to French: Hello"</li>
+            <li><strong>Few-shot</strong> — Give examples before asking</li>
+            <li><strong>Chain-of-Thought</strong> — "Think step by step…"</li>
+            <li><strong>System Prompt</strong> — Define role/persona for the AI</li>
+            <li><strong>Temperature</strong> — Controls randomness (0=deterministic)</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">🌐</span>
+          <h4>APIs vs Local Models</h4>
+          <table class="compare-table">
+            <tr><th>Feature</th><th>API (OpenAI)</th><th>Local (Ollama)</th></tr>
+            <tr><td>Cost</td><td>Pay per token</td><td>Free</td></tr>
+            <tr><td>Privacy</td><td>Data sent to cloud</td><td>100% private</td></tr>
+            <tr><td>Speed</td><td>Fast (GPUs)</td><td>Depends on hardware</td></tr>
+            <tr><td>Models</td><td>GPT-4, etc.</td><td>Llama, Mistral</td></tr>
+            <tr><td>Internet</td><td>Required</td><td>Not needed</td></tr>
+          </table>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">🤖</span>
+          <h4>What is Agentic AI?</h4>
+          <p>An AI Agent = LLM + Tools + Memory + Planning</p>
+          <ul>
+            <li><strong>LLM</strong> — the brain (reasoning)</li>
+            <li><strong>Tools</strong> — web search, calculator, APIs</li>
+            <li><strong>Memory</strong> — remember past conversations</li>
+            <li><strong>Planning</strong> — break tasks into steps</li>
+            <li>Example: "Research topic X and write a report" → agent searches, reads, writes</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-content">
+          <strong>Key Insight for Interviews</strong>
+          The difference between a Chatbot and an AI Agent: A chatbot only responds. An agent can take actions — search the web, write files, run code, and make decisions autonomously.
+        </div>
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">🎯</span>
+        <div class="callout-content">
+          <strong>AI Career Paths for CSE Graduates</strong>
+          AI Engineer · ML Engineer · LLM Application Developer · Prompt Engineer · AI Product Manager · Data Scientist · AI Researcher
+        </div>
+      </div>
+    </div>
+
+    <!-- HANDS-ON -->
+    <div class="code-section reveal">
+      <div class="code-section-title">⚡ Hands-On: Setup & First AI Chatbot</div>
+
+      <div class="handson-section">
+        <div class="project-goal-card">
+          <span class="goal-emoji">🎯</span>
+          <div>
+            <h4>What you'll build</h4>
+            <p>A Python environment running Ollama locally to invoke Llama 3.2, stream real-time tokens, and handle conversational turns.</p>
+          </div>
+        </div>
+
+        <div class="block-diagram-card">
+          <div class="block-diagram-title">📐 Program Architecture — Local AI Chatbot</div>
+          <div class="diagram-flow">
+            <span class="node-box node-blue">📥 User Query</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-purple">⚡ Ollama Local Server</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-cyan">🧠 Llama 3.2 LLM</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-green">💬 Streamed Terminal Output</span>
+          </div>
+        </div>
+
+        <div class="project-goal-card">
+          <span class="goal-emoji">🎯</span>
+          <div>
+            <h4>What you'll build</h4>
+            <p>A command-line AI chatbot that runs completely locally on your machine using Ollama + Llama 3.2. You type a message, the AI responds. No API key, no internet, no cost.</p>
+          </div>
+        </div>
+
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Install Python 3.11+</h4>
+              <p>Download from python.org. During install, check ✅ "Add Python to PATH". Verify:</p>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span> Terminal</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>python --version
+# Expected: Python 3.11.x or higher
+
+pip --version
+# Expected: pip 23.x ...</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Install VS Code</h4>
+              <p>Download from code.visualstudio.com. Install extensions: <strong>Python</strong>, <strong>Pylance</strong>.</p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Install Ollama (Local LLM Runner)</h4>
+              <p>Go to <strong>ollama.com</strong> → Download for your OS → Install. Then pull Llama 3.2:</p>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span> Terminal</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>ollama pull llama3.2
+# Downloads ~2GB model — wait for completion
+
+ollama run llama3.2
+# Test it: type "Hello!" and press Enter
+# Type /bye to exit</code></pre>
+              </div>
+              <div class="callout callout-warn" style="margin-top:10px;">
+                <span class="callout-icon">⚠️</span>
+                <div class="callout-content"><strong>Low RAM?</strong> Use <code>ollama pull llama3.2:1b</code> instead (1B parameter model, uses ~800MB RAM)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>Create project folder and install dependencies</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span> Terminal</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>mkdir agentic-ai-workshop
+cd agentic-ai-workshop
+pip install requests langchain langchain-ollama langchain-community chromadb langchain-chroma pypdf</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <h4>Build your first AI Chatbot</h4>
+              <p>Create a file called <strong>chatbot.py</strong> and paste this code:</p>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-python">python</span> chatbot.py</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code><span class="cm"># Day 1 - Session 1: Your First AI Chatbot</span>
+<span class="im">import</span> requests
+<span class="im">import</span> json
+
+<span class="cm"># Ollama runs locally on port 11434</span>
+OLLAMA_URL = <span class="st">"http://localhost:11434/api/generate"</span>
+MODEL = <span class="st">"llama3.2"</span>
+
+<span class="kw">def</span> <span class="fn">ask_ai</span>(message, history=[]):
+    <span class="st">"""Send a message to Llama 3.2 and get a response"""</span>
+    
+    <span class="cm"># Build conversation context</span>
+    context = <span class="st">""</span>
+    <span class="kw">for</span> msg <span class="kw">in</span> history[-<span class="nm">4</span>:]:  <span class="cm"># last 4 exchanges</span>
+        context += <span class="st">f"User: {msg['user']}\nAssistant: {msg['ai']}\n"</span>
+    
+    full_prompt = <span class="st">f"""{context}User: {message}\nAssistant:"""</span>
+    
+    response = requests.<span class="fn">post</span>(OLLAMA_URL, json={
+        <span class="st">"model"</span>: MODEL,
+        <span class="st">"prompt"</span>: full_prompt,
+        <span class="st">"stream"</span>: <span class="kw">False</span>,
+        <span class="st">"options"</span>: {<span class="st">"temperature"</span>: <span class="nm">0.7</span>, <span class="st">"num_predict"</span>: <span class="nm">500</span>}
+    })
+    
+    <span class="kw">return</span> response.<span class="fn">json</span>()[<span class="st">"response"</span>]
+
+<span class="kw">def</span> <span class="fn">main</span>():
+    <span class="fn">print</span>(<span class="st">"🤖 AI Chatbot powered by Llama 3.2 (type 'quit' to exit)"</span>)
+    <span class="fn">print</span>(<span class="st">"-" * 50</span>)
+    
+    history = []
+    
+    <span class="kw">while True</span>:
+        user_input = <span class="fn">input</span>(<span class="st">"\nYou: "</span>).strip()
+        
+        <span class="kw">if</span> user_input.lower() <span class="kw">in</span> [<span class="st">'quit'</span>, <span class="st">'exit'</span>, <span class="st">'bye'</span>]:
+            <span class="fn">print</span>(<span class="st">"Goodbye! 👋"</span>)
+            <span class="kw">break</span>
+        
+        <span class="kw">if not</span> user_input:
+            <span class="kw">continue</span>
+        
+        <span class="fn">print</span>(<span class="st">"AI: Thinking..."</span>, end=<span class="st">"\r"</span>)
+        response = <span class="fn">ask_ai</span>(user_input, history)
+        <span class="fn">print</span>(<span class="st">f"AI: {response}"</span>)
+        
+        history.<span class="fn">append</span>({<span class="st">"user"</span>: user_input, <span class="st">"ai"</span>: response})
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>:
+    <span class="fn">main</span>()</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">6</div>
+            <div class="step-content">
+              <h4>Run and test!</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span> Terminal</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>python chatbot.py</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="expected-output">
+          <div class="expected-output-title">✅ Expected Output</div>
+          <p>🤖 AI Chatbot powered by Llama 3.2 (type 'quit' to exit)<br/>
+          ──────────────────────────────────────<br/>
+          You: What is machine learning?<br/>
+          AI: Machine learning is a subset of artificial intelligence where systems learn from data to improve performance on tasks without being explicitly programmed...</p>
+        </div>
+
+        <div class="code-download-bar">
+          <span style="font-size:0.85rem;color:var(--text-2);">📄 Download Session 1 Python Code:</span>
+          <a href="code_samples/day1_01_first_chatbot.py" download class="download-link-btn">⬇️ Download day1_01_first_chatbot.py</a>
+        </div>
+
+        <div class="troubleshoot-box">
+          <div class="troubleshoot-title">🚨 Common Issues & Troubleshooting</div>
+          <div class="troubleshoot-item">
+            <strong>Error: Connection Refused / Cannot connect to Ollama</strong>
+            <div>Fix: Open a new terminal window and run <code>ollama serve</code> to ensure the background daemon is running.</div>
+          </div>
+          <div class="troubleshoot-item">
+            <strong>Error: model 'llama3.2' not found</strong>
+            <div>Fix: Run <code>ollama pull llama3.2</code> in your terminal before launching your Python script.</div>
+          </div>
+        </div>
+
+        <div class="session-checkpoint-card">
+          <div class="checkpoint-title">🎯 Session 1 Checkpoint & Expected Deliverables</div>
+          <ul class="checkpoint-list">
+            <li>Python 3.10+ virtual environment active with <code>langchain-ollama</code> installed.</li>
+            <li>Ollama running locally on port 11434 with <code>llama3.2</code> pulled.</li>
+            <li>Working <code>day1_01_first_chatbot.py</code> streaming tokens in real-time.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="session-nav reveal">
+      <span></span>
+      <a href="#session2" class="session-nav-btn primary next">Session 2: LangChain →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SESSION 2
+════════════════════════════════════════════════ -->
+<section class="session-section" id="session2">
+  <div class="container">
+    <div class="session-header-row">
+      <div class="session-header-left">
+        <div class="session-num-badge">Session 2 of 3</div>
+        <h2 class="session-title-main">LangChain Fundamentals</h2>
+      </div>
+      <span class="session-time-badge">🕑 11:15 AM – 1:00 PM</span>
+    </div>
+
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">📖 Core Concepts</div>
+
+      <div class="callout callout-note" style="background:rgba(59,130,246,0.08);border-color:#3b82f6;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-content">
+          <strong>Intuitive Analogy — LangChain Framework</strong>
+          Think of LangChain as a modular <strong>AI design system</strong>. Instead of writing complex custom code, you connect pre-built components—Prompts, LLM Models, Tools, and Output Parsers—into robust end-to-end applications.
+        </div>
+      </div>
+
+      <div class="callout callout-note">
+        <span class="callout-icon">🔗</span>
+        <div class="callout-content">
+          <strong>What is LangChain?</strong>
+          LangChain is a Python framework for building LLM-powered applications. It connects LLMs with prompts, memory, tools, and data sources through a unified interface — making it the #1 most used AI framework in production.
+        </div>
+      </div>
+
+      <div class="concepts-grid">
+        <div class="concept-card">
+          <span class="concept-card-icon">🏗️</span>
+          <h4>LangChain Architecture</h4>
+          <p>Six core building blocks:</p>
+          <ul>
+            <li><strong>Models</strong> — LLM/Chat model wrappers</li>
+            <li><strong>Prompts</strong> — PromptTemplate, ChatPromptTemplate</li>
+            <li><strong>Chains</strong> — Connect components with <code>|</code> pipe</li>
+            <li><strong>Memory</strong> — Store conversation history</li>
+            <li><strong>Tools</strong> — External capabilities (search, calc)</li>
+            <li><strong>Agents</strong> — LLM decides which tool to use</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">📝</span>
+          <h4>Prompt Templates</h4>
+          <p>Templates let you create reusable prompts with dynamic variables:</p>
+          <ul>
+            <li><code>PromptTemplate</code> — simple string templates</li>
+            <li><code>ChatPromptTemplate</code> — for chat models (system + human)</li>
+            <li>Variables use <code>{curly_braces}</code> syntax</li>
+            <li>Can include few-shot examples</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">⛓️</span>
+          <h4>LCEL — Pipe Syntax</h4>
+          <p>LangChain Expression Language uses <code>|</code> to chain components:</p>
+          <ul>
+            <li><code>prompt | llm | parser</code></li>
+            <li>Each component's output → next component's input</li>
+            <li>Easy to read, debug, and modify</li>
+            <li>Supports parallel execution</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">📤</span>
+          <h4>Output Parsers</h4>
+          <p>Parse LLM text output into structured formats:</p>
+          <ul>
+            <li><code>StrOutputParser</code> — returns clean string</li>
+            <li><code>JsonOutputParser</code> — parses JSON response</li>
+            <li><code>PydanticOutputParser</code> — validates with data model</li>
+            <li><code>CommaSeparatedListOutputParser</code></li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">🧠</span>
+          <h4>Memory</h4>
+          <p>Enable conversations by remembering previous messages:</p>
+          <ul>
+            <li><code>ConversationBufferMemory</code> — stores all messages</li>
+            <li><code>ConversationBufferWindowMemory</code> — last N messages</li>
+            <li><code>ConversationSummaryMemory</code> — LLM summarizes history</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">🔄</span>
+          <h4>LangChain Pipeline Flow</h4>
+          <div class="pipeline">
+            <span class="pipe-step pipe-blue">Input</span>
+            <span class="pipe-arrow">→</span>
+            <span class="pipe-step pipe-purple">PromptTemplate</span>
+            <span class="pipe-arrow">→</span>
+            <span class="pipe-step pipe-cyan">ChatOllama</span>
+            <span class="pipe-arrow">→</span>
+            <span class="pipe-step pipe-green">OutputParser</span>
+            <span class="pipe-arrow">→</span>
+            <span class="pipe-step pipe-amber">Result</span>
+          </div>
+          <p style="font-size:0.82rem;color:var(--text-2);margin-top:8px;">All connected using LCEL pipe <code>|</code> syntax</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 1 -->
+    <div class="code-section reveal">
+      <div class="code-section-title">⚡ Project 1: AI Resume Reviewer</div>
+      <div class="handson-section">
+        <div class="handson-header">
+          <div class="handson-icon-wrap">📄</div>
+          <div class="handson-header-text">
+            <h3>AI Resume Reviewer</h3>
+            <p>Paste a resume → get detailed strengths, weaknesses, and suggestions</p>
+          </div>
+        </div>
+        <div class="project-goal-card">
+          <span class="goal-emoji">🎯</span>
+          <div>
+            <h4>What you'll build</h4>
+            <p>An AI-powered resume analyzer using LangChain + Llama 3.2 that reads a resume and gives structured feedback: top 3 strengths, 3 weaknesses, and actionable improvement suggestions with a score out of 10.</p>
+          </div>
+        </div>
+
+        <div class="block-diagram-card">
+          <div class="block-diagram-title">📐 Program Architecture — LangChain LCEL Chain</div>
+          <div class="diagram-flow">
+            <span class="node-box node-blue">📄 Raw Resume Input</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-purple">📝 PromptTemplate</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-cyan">🧠 ChatOllama (Llama 3)</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-amber">📋 StrOutputParser</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-green">✅ Structured Analysis</span>
+          </div>
+        </div>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Create resume_reviewer.py</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-python">python</span> resume_reviewer.py</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code><span class="cm"># Day 1 - Session 2: AI Resume Reviewer</span>
+<span class="im">from</span> langchain_ollama <span class="im">import</span> ChatOllama
+<span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate
+<span class="im">from</span> langchain_core.output_parsers <span class="im">import</span> StrOutputParser
+
+<span class="cm"># 1. Initialize the model</span>
+llm = <span class="fn">ChatOllama</span>(model=<span class="st">"llama3.2"</span>, temperature=<span class="nm">0.3</span>)
+
+<span class="cm"># 2. Create the prompt template</span>
+prompt = ChatPromptTemplate.<span class="fn">from_messages</span>([
+    (<span class="st">"system"</span>, <span class="st">"""You are an expert HR recruiter and career coach 
+    with 10+ years of experience. Analyze the given resume and provide 
+    structured, honest, and actionable feedback."""</span>),
+    (<span class="st">"human"</span>, <span class="st">"""
+    Please review this resume and provide:
+    
+    **SCORE:** Give an overall score out of 10
+    
+    **STRENGTHS** (top 3):
+    - Point 1
+    - Point 2  
+    - Point 3
+    
+    **AREAS TO IMPROVE** (top 3):
+    - Point 1
+    - Point 2
+    - Point 3
+    
+    **ACTION ITEMS** (specific suggestions):
+    - Suggestion 1
+    - Suggestion 2
+    - Suggestion 3
+    
+    **INTERVIEW READINESS:** One sentence summary
+    
+    Resume:
+    {resume}
+    """</span>)
+])
+
+<span class="cm"># 3. Build the chain using LCEL (pipe syntax)</span>
+parser = <span class="fn">StrOutputParser</span>()
+chain = prompt | llm | parser
+
+<span class="cm"># 4. Sample resume to test with</span>
+sample_resume = <span class="st">"""
+Name: Rahul Kumar
+Email: rahul@email.com | LinkedIn: linkedin.com/in/rahulkumar
+
+EDUCATION
+B.E. Computer Science | Jyothy Institute of Technology | 2022-2026
+CGPA: 7.8/10
+
+SKILLS
+Programming: Python, Java, C++
+Web: HTML, CSS, JavaScript (basic)
+Tools: Git, VS Code
+
+PROJECTS
+Library Management System - Built using Python and MySQL
+Simple Calculator App - Android app using Java
+
+INTERNSHIP
+Web Development Intern | ABC Company | June 2024 (1 month)
+- Worked on HTML/CSS pages
+- Attended team meetings
+
+ACHIEVEMENTS
+- Participated in college hackathon
+- Member of coding club
+"""</span>
+
+<span class="cm"># 5. Run the chain</span>
+<span class="fn">print</span>(<span class="st">"🔍 Analyzing resume... Please wait\n"</span>)
+result = chain.<span class="fn">invoke</span>({<span class="st">"resume"</span>: sample_resume})
+<span class="fn">print</span>(result)
+<span class="fn">print</span>(<span class="st">"\n" + "="*50</span>)
+<span class="fn">print</span>(<span class="st">"✅ Review complete! Replace sample_resume with your own."</span>)</code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Run it</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span></span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>python resume_reviewer.py</code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>🚀 Challenge: Try with your own resume!</h4>
+              <p>Replace <code>sample_resume</code> with your actual resume content and see what the AI suggests.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 2 -->
+    <div class="code-section reveal">
+      <div class="code-section-title">⚡ Project 2: AI Email Generator</div>
+      <div class="handson-section">
+        <div class="handson-header">
+          <div class="handson-icon-wrap">✉️</div>
+          <div class="handson-header-text">
+            <h3>AI Email Generator</h3>
+            <p>Generate professional emails in different tones with one command</p>
+          </div>
+        </div>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Create email_generator.py</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-python">python</span> email_generator.py</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code><span class="cm"># Day 1 - Session 2: AI Email Generator</span>
+<span class="im">from</span> langchain_ollama <span class="im">import</span> ChatOllama
+<span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate
+<span class="im">from</span> langchain_core.output_parsers <span class="im">import</span> StrOutputParser
+
+llm = <span class="fn">ChatOllama</span>(model=<span class="st">"llama3.2"</span>, temperature=<span class="nm">0.7</span>)
+
+prompt = ChatPromptTemplate.<span class="fn">from_messages</span>([
+    (<span class="st">"system"</span>, <span class="st">"""You are a professional email writer. 
+    Write clear, concise emails appropriate for the given tone.
+    Format with Subject, greeting, body, and sign-off."""</span>),
+    (<span class="st">"human"</span>, <span class="st">"""
+    Write an email with the following details:
+    - Tone: {tone}
+    - From: {sender}
+    - To: {recipient}
+    - Purpose: {purpose}
+    - Key points to include: {key_points}
+    """</span>)
+])
+
+chain = prompt | llm | <span class="fn">StrOutputParser</span>()
+
+<span class="cm"># Interactive email generator</span>
+<span class="fn">print</span>(<span class="st">"✉️  AI Email Generator"</span>)
+<span class="fn">print</span>(<span class="st">"=" * 40</span>)
+
+tone = <span class="fn">input</span>(<span class="st">"Tone (formal/casual/persuasive/apologetic): "</span>)
+sender = <span class="fn">input</span>(<span class="st">"Your name: "</span>)
+recipient = <span class="fn">input</span>(<span class="st">"Recipient (e.g., 'HR Manager at Google'): "</span>)
+purpose = <span class="fn">input</span>(<span class="st">"Purpose of email: "</span>)
+key_points = <span class="fn">input</span>(<span class="st">"Key points to include (comma separated): "</span>)
+
+<span class="fn">print</span>(<span class="st">"\n📧 Generating email...\n"</span>)
+<span class="fn">print</span>(<span class="st">"=" * 40</span>)
+
+result = chain.<span class="fn">invoke</span>({
+    <span class="st">"tone"</span>: tone,
+    <span class="st">"sender"</span>: sender,
+    <span class="st">"recipient"</span>: recipient,
+    <span class="st">"purpose"</span>: purpose,
+    <span class="st">"key_points"</span>: key_points
+})
+
+<span class="fn">print</span>(result)</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="expected-output">
+          <div class="expected-output-title">✅ Example Interaction</div>
+          <p>Tone: formal<br/>
+          Your name: Basavesh<br/>
+          Recipient: HR Manager at Infosys<br/>
+          Purpose: Follow up on internship application<br/>
+          Key points: applied 2 weeks ago, strong Python skills, eager to contribute</p>
+        </div>
+
+        <div class="code-download-bar">
+          <span style="font-size:0.85rem;color:var(--text-2);">📄 Download Session 2 Python Code:</span>
+          <a href="code_samples/day1_02_resume_reviewer.py" download class="download-link-btn">⬇️ Download day1_02_resume_reviewer.py</a>
+        </div>
+
+        <div class="troubleshoot-box">
+          <div class="troubleshoot-title">🚨 Common Issues & Troubleshooting</div>
+          <div class="troubleshoot-item">
+            <strong>Deprecation Warning: LangChain import error</strong>
+            <div>Fix: Ensure you import from <code>langchain_ollama</code> and <code>langchain_core</code> (LangChain 0.3+ syntax).</div>
+          </div>
+        </div>
+
+        <div class="session-checkpoint-card">
+          <div class="checkpoint-title">🎯 Session 2 Checkpoint & Expected Deliverables</div>
+          <ul class="checkpoint-list">
+            <li>Built modular LCEL chain using <code>PromptTemplate | ChatOllama | StrOutputParser</code>.</li>
+            <li>Structured ATS score and section rewrites generated from raw resume text input.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="session-nav reveal">
+      <a href="#session1" class="session-nav-btn">← Session 1</a>
+      <a href="#session3" class="session-nav-btn primary next">Session 3: RAG →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SESSION 3
+════════════════════════════════════════════════ -->
+<section class="session-section" id="session3">
+  <div class="container">
+    <div class="session-header-row">
+      <div class="session-header-left">
+        <div class="session-num-badge">Session 3 of 3</div>
+        <h2 class="session-title-main">Retrieval Augmented Generation (RAG)</h2>
+      </div>
+      <span class="session-time-badge">🕑 2:00 – 5:00 PM</span>
+    </div>
+
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">📖 Core Concepts</div>
+
+      <div class="callout callout-note" style="background:rgba(16,185,129,0.08);border-color:#10b981;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-content">
+          <strong>Intuitive Analogy — RAG & Vector Search</strong>
+          A <strong>Vector Database</strong> indexes data by <em>semantic meaning</em> rather than keyword matches. <strong>RAG</strong> provides the LLM with an <em>open-book retrieval system</em>—searching your documents for authoritative context before generating factual answers.
+        </div>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">❓</span>
+        <div class="callout-content">
+          <strong>The Problem RAG Solves</strong>
+          LLMs have a training cutoff — they don't know about your college handbook, recent news, or your private documents. Asking GPT about your university's exam policy? It will hallucinate. RAG fixes this by letting the model "read" your documents first.
+        </div>
+      </div>
+
+      <div class="concepts-grid">
+        <div class="concept-card">
+          <span class="concept-card-icon">🔢</span>
+          <h4>What are Embeddings?</h4>
+          <p>Embeddings convert text into numerical vectors (lists of numbers) that capture meaning:</p>
+          <ul>
+            <li>"King" and "Queen" have similar vectors</li>
+            <li>"Cat" and "Dog" are closer than "Cat" and "Car"</li>
+            <li>Similarity is measured by cosine distance</li>
+            <li>We use <code>nomic-embed-text</code> model via Ollama</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">🗃️</span>
+          <h4>Vector Databases</h4>
+          <p>Specialized databases that store and search embeddings:</p>
+          <ul>
+            <li><strong>ChromaDB</strong> — local, no setup required ✅</li>
+            <li><strong>Pinecone</strong> — cloud-based, scalable</li>
+            <li><strong>FAISS</strong> — Facebook's fast similarity search</li>
+            <li>Search finds similar vectors (not exact keyword match)</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">✂️</span>
+          <h4>Text Splitting</h4>
+          <p>Large documents must be split into chunks before embedding:</p>
+          <ul>
+            <li><code>chunk_size=500</code> — characters per chunk</li>
+            <li><code>chunk_overlap=50</code> — overlap prevents cutting mid-sentence</li>
+            <li>Too large → loses precision</li>
+            <li>Too small → loses context</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">🔄</span>
+          <h4>Full RAG Pipeline</h4>
+          <div class="pipeline" style="flex-direction:column;align-items:flex-start;">
+            <span class="pipe-step pipe-blue">📄 Load Documents</span>
+            <span class="pipe-arrow" style="padding-left:24px;">↓</span>
+            <span class="pipe-step pipe-purple">✂️ Split into Chunks</span>
+            <span class="pipe-arrow" style="padding-left:24px;">↓</span>
+            <span class="pipe-step pipe-cyan">🔢 Create Embeddings</span>
+            <span class="pipe-arrow" style="padding-left:24px;">↓</span>
+            <span class="pipe-step pipe-green">🗃️ Store in ChromaDB</span>
+            <span class="pipe-arrow" style="padding-left:24px;">↓</span>
+            <span class="pipe-step pipe-blue">❓ User Asks Question</span>
+            <span class="pipe-arrow" style="padding-left:24px;">↓</span>
+            <span class="pipe-step pipe-purple">🔍 Retrieve Relevant Chunks</span>
+            <span class="pipe-arrow" style="padding-left:24px;">↓</span>
+            <span class="pipe-step pipe-amber">🤖 LLM Generates Answer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN PROJECT -->
+    <div class="code-section reveal">
+      <div class="code-section-title">⚡ Hands-On Project: College Question Answering System</div>
+      <div class="handson-section">
+        <div class="handson-header">
+          <div class="handson-icon-wrap">🏫</div>
+          <div class="handson-header-text">
+            <h3>College Q&A System</h3>
+            <p>Load any PDF → Ask questions → Get answers with source citations</p>
+          </div>
+        </div>
+
+        <div class="project-goal-card">
+          <span class="goal-emoji">🎯</span>
+          <div>
+            <h4>What you'll build</h4>
+            <p>A RAG pipeline that loads your college handbook or any PDF, creates a vector database, and answers questions with exact source references. This is the foundation of every enterprise AI assistant.</p>
+          </div>
+        </div>
+
+        <div class="block-diagram-card">
+          <div class="block-diagram-title">📐 Program Architecture — RAG Vector QA Pipeline</div>
+          <div class="diagram-flow" style="margin-bottom:12px;">
+            <span class="node-box node-blue">📄 PDF Handbook</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-purple">✂️ RecursiveSplitter</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-cyan">🔢 nomic-embed-text</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-amber">🗃️ ChromaDB Store</span>
+          </div>
+          <div class="diagram-flow">
+            <span class="node-box node-green">❓ Student Question</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-purple">🔍 Vector Similarity Search</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-cyan">🤖 RAG Prompt + Context</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-green">🎓 Verified Answer + Sources</span>
+          </div>
+        </div>
+
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Install additional dependencies</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span></span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>pip install chromadb pypdf langchain-chroma
+
+# Pull the embedding model
+ollama pull nomic-embed-text</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Create college_qa.py — Full RAG System</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-python">python</span> college_qa.py</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code><span class="cm"># Day 1 - Session 3: College Question Answering System (RAG)</span>
+<span class="im">import</span> os
+<span class="im">from</span> langchain_community.document_loaders <span class="im">import</span> PyPDFLoader, TextLoader
+<span class="im">from</span> langchain.text_splitter <span class="im">import</span> RecursiveCharacterTextSplitter
+<span class="im">from</span> langchain_chroma <span class="im">import</span> Chroma
+<span class="im">from</span> langchain_ollama <span class="im">import</span> OllamaEmbeddings, ChatOllama
+<span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate
+<span class="im">from</span> langchain_core.output_parsers <span class="im">import</span> StrOutputParser
+<span class="im">from</span> langchain_core.runnables <span class="im">import</span> RunnablePassthrough
+
+<span class="cm"># ── Configuration ──</span>
+MODEL = <span class="st">"llama3.2"</span>
+EMBED_MODEL = <span class="st">"nomic-embed-text"</span>
+CHROMA_PATH = <span class="st">"./chroma_db"</span>
+CHUNK_SIZE = <span class="nm">500</span>
+CHUNK_OVERLAP = <span class="nm">50</span>
+
+<span class="kw">def</span> <span class="fn">load_documents</span>(file_path: str):
+    <span class="st">"""Load PDF or text file"""</span>
+    <span class="fn">print</span>(<span class="st">f"📄 Loading document: {file_path}"</span>)
+    
+    <span class="kw">if</span> file_path.<span class="fn">endswith</span>(<span class="st">'.pdf'</span>):
+        loader = <span class="fn">PyPDFLoader</span>(file_path)
+    <span class="kw">else</span>:
+        loader = <span class="fn">TextLoader</span>(file_path)
+    
+    docs = loader.<span class="fn">load</span>()
+    <span class="fn">print</span>(<span class="st">f"✅ Loaded {len(docs)} page(s)"</span>)
+    <span class="kw">return</span> docs
+
+<span class="kw">def</span> <span class="fn">split_documents</span>(docs):
+    <span class="st">"""Split documents into smaller chunks"""</span>
+    <span class="fn">print</span>(<span class="st">"✂️  Splitting into chunks..."</span>)
+    splitter = <span class="fn">RecursiveCharacterTextSplitter</span>(
+        chunk_size=CHUNK_SIZE,
+        chunk_overlap=CHUNK_OVERLAP,
+        separators=[<span class="st">"\n\n"</span>, <span class="st">"\n"</span>, <span class="st">" "</span>, <span class="st">""</span>]
+    )
+    chunks = splitter.<span class="fn">split_documents</span>(docs)
+    <span class="fn">print</span>(<span class="st">f"✅ Created {len(chunks)} chunks"</span>)
+    <span class="kw">return</span> chunks
+
+<span class="kw">def</span> <span class="fn">create_vector_db</span>(chunks):
+    <span class="st">"""Create and persist ChromaDB vector store"""</span>
+    <span class="fn">print</span>(<span class="st">"🔢 Creating embeddings and storing in ChromaDB..."</span>)
+    embeddings = <span class="fn">OllamaEmbeddings</span>(model=EMBED_MODEL)
+    vectordb = Chroma.<span class="fn">from_documents</span>(
+        documents=chunks,
+        embedding=embeddings,
+        persist_directory=CHROMA_PATH
+    )
+    <span class="fn">print</span>(<span class="st">"✅ Vector database created!"</span>)
+    <span class="kw">return</span> vectordb
+
+<span class="kw">def</span> <span class="fn">load_vector_db</span>():
+    <span class="st">"""Load existing ChromaDB"""</span>
+    embeddings = <span class="fn">OllamaEmbeddings</span>(model=EMBED_MODEL)
+    <span class="kw">return</span> <span class="fn">Chroma</span>(
+        persist_directory=CHROMA_PATH,
+        embedding_function=embeddings
+    )
+
+<span class="kw">def</span> <span class="fn">build_rag_chain</span>(vectordb):
+    <span class="st">"""Build the RAG question-answering chain"""</span>
+    llm = <span class="fn">ChatOllama</span>(model=MODEL, temperature=<span class="nm">0</span>)
+    retriever = vectordb.<span class="fn">as_retriever</span>(
+        search_type=<span class="st">"similarity"</span>,
+        search_kwargs={<span class="st">"k"</span>: <span class="nm">3</span>}  <span class="cm"># retrieve top 3 chunks</span>
+    )
+    
+    prompt = ChatPromptTemplate.<span class="fn">from_messages</span>([
+        (<span class="st">"system"</span>, <span class="st">"""You are a helpful assistant for answering questions 
+        about college documents. Use ONLY the provided context to answer.
+        If the answer is not in the context, say "I don't have that information 
+        in the provided documents."
+        
+        Always mention which part of the document your answer comes from."""</span>),
+        (<span class="st">"human"</span>, <span class="st">"""Context from documents:
+        {context}
+        
+        Question: {question}
+        
+        Answer (with source reference):"""</span>)
+    ])
+    
+    <span class="kw">def</span> <span class="fn">format_docs</span>(docs):
+        <span class="kw">return</span> <span class="st">"\n\n"</span>.<span class="fn">join</span>([
+            <span class="st">f"[Source: Page {doc.metadata.get('page', 'N/A')}]\n{doc.page_content}"</span>
+            <span class="kw">for</span> doc <span class="kw">in</span> docs
+        ])
+    
+    chain = (
+        {<span class="st">"context"</span>: retriever | format_docs, <span class="st">"question"</span>: <span class="fn">RunnablePassthrough</span>()}
+        | prompt
+        | llm
+        | <span class="fn">StrOutputParser</span>()
+    )
+    <span class="kw">return</span> chain
+
+<span class="kw">def</span> <span class="fn">main</span>():
+    <span class="fn">print</span>(<span class="st">"🏫 College Q&A System (RAG)"</span>)
+    <span class="fn">print</span>(<span class="st">"=" * 45</span>)
+    
+    <span class="cm"># Check if DB exists, else create it</span>
+    <span class="kw">if not</span> os.path.<span class="fn">exists</span>(CHROMA_PATH):
+        pdf_path = <span class="fn">input</span>(<span class="st">"Enter path to your PDF/TXT file: "</span>).strip()
+        <span class="kw">if not</span> os.path.<span class="fn">exists</span>(pdf_path):
+            <span class="fn">print</span>(<span class="st">"File not found! Creating demo with sample text..."</span>)
+            <span class="cm"># Create sample text file for demo</span>
+            <span class="kw">with</span> <span class="fn">open</span>(<span class="st">"college_info.txt"</span>, <span class="st">"w"</span>) <span class="kw">as</span> f:
+                f.<span class="fn">write</span>(<span class="st">"""
+Jyothy Institute of Technology - College Handbook
+
+EXAMINATION RULES:
+Students must carry their hall ticket to all examinations.
+Mobile phones are strictly prohibited in examination halls.
+Minimum 75% attendance is required to appear for exams.
+Students found cheating will be expelled from the examination.
+
+ATTENDANCE POLICY:
+Regular attendance is mandatory for all students.
+Students with less than 75% attendance will be detained.
+Medical leave requires a medical certificate from a registered doctor.
+Prior permission must be obtained for planned absences.
+
+FEE STRUCTURE:
+Tuition fee: Rs. 80,000 per year
+Hostel fee: Rs. 60,000 per year (including meals)
+Lab fee: Rs. 5,000 per semester
+Bus facility available for selected routes.
+
+LIBRARY RULES:
+Library hours: 8:00 AM to 8:00 PM on working days
+Students can borrow up to 3 books at a time
+Books must be returned within 14 days
+Late fee: Rs. 2 per day per book
+
+PLACEMENT CELL:
+The Placement Cell coordinates campus recruitment.
+Students with CGPA above 6.0 are eligible for placement.
+Mock interviews and aptitude training provided.
+Companies visiting include TCS, Infosys, Wipro, Accenture.
+                """</span>)
+            pdf_path = <span class="st">"college_info.txt"</span>
+        
+        docs = <span class="fn">load_documents</span>(pdf_path)
+        chunks = <span class="fn">split_documents</span>(docs)
+        vectordb = <span class="fn">create_vector_db</span>(chunks)
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="st">"📂 Loading existing database..."</span>)
+        vectordb = <span class="fn">load_vector_db</span>()
+    
+    chain = <span class="fn">build_rag_chain</span>(vectordb)
+    
+    <span class="fn">print</span>(<span class="st">"\n🎉 Ready! Ask questions about the college documents."</span>)
+    <span class="fn">print</span>(<span class="st">"Type 'quit' to exit.\n"</span>)
+    
+    <span class="kw">while True</span>:
+        question = <span class="fn">input</span>(<span class="st">"❓ Your question: "</span>).strip()
+        <span class="kw">if</span> question.lower() <span class="kw">in</span> [<span class="st">'quit'</span>, <span class="st">'exit'</span>]:
+            <span class="kw">break</span>
+        <span class="kw">if not</span> question:
+            <span class="kw">continue</span>
+        
+        <span class="fn">print</span>(<span class="st">"\n🤖 Answer:"</span>)
+        answer = chain.<span class="fn">invoke</span>(question)
+        <span class="fn">print</span>(answer)
+        <span class="fn">print</span>(<span class="st">"\n" + "-" * 45 + "\n"</span>)
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>:
+    <span class="fn">main</span>()</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Run the Q&A System</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span></span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>python college_qa.py
+
+# Try these questions:
+# "What is the attendance requirement?"
+# "What are the exam rules?"
+# "How much is the hostel fee?"
+# "What companies visit for placement?"</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="expected-output">
+          <div class="expected-output-title">✅ Expected Output</div>
+          <p>❓ Your question: What is the minimum attendance required?<br/><br/>
+          🤖 Answer: According to the college handbook (Attendance Policy section), the minimum attendance required is <strong>75%</strong>. Students with less than 75% attendance will be detained and will not be allowed to appear for examinations. Medical absences require a certificate from a registered doctor...</p>
+        </div>
+
+        <div class="callout callout-tip">
+          <span class="callout-icon">💡</span>
+          <div class="callout-content">
+            <strong>Placement Insight ★★★★★</strong>
+            RAG is the most in-demand AI skill in 2024. Every company building an AI assistant over their internal documents uses RAG. Master this and you're immediately interview-ready for AI Engineer roles.
+          </div>
+        </div>
+        <div class="code-download-bar">
+          <span style="font-size:0.85rem;color:var(--text-2);">📄 Download Session 3 Python Code:</span>
+          <a href="code_samples/day1_03_college_qa_rag.py" download class="download-link-btn">⬇️ Download day1_03_college_qa_rag.py</a>
+        </div>
+
+        <div class="troubleshoot-box">
+          <div class="troubleshoot-title">🚨 Common Issues & Troubleshooting</div>
+          <div class="troubleshoot-item">
+            <strong>Error: ChromaDB sqlite3 / C++ Compilation Error</strong>
+            <div>Fix: On Linux/macOS, install <code>pip install pysqlite3-binary</code> and add <code>__import__('pysqlite3'); sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')</code> at the top of your script.</div>
+          </div>
+          <div class="troubleshoot-item">
+            <strong>Error: model 'nomic-embed-text' not found</strong>
+            <div>Fix: Run <code>ollama pull nomic-embed-text</code> in your terminal before running vector embeddings.</div>
+          </div>
+        </div>
+
+        <div class="session-checkpoint-card">
+          <div class="checkpoint-title">🎯 Session 3 Checkpoint & Expected Deliverables</div>
+          <ul class="checkpoint-list">
+            <li>Created persistent ChromaDB vector store in <code>./chroma_db</code>.</li>
+            <li>RAG pipeline retrieves relevant document chunks and returns answers with exact source citations.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="session-nav reveal">
+      <a href="#session2" class="session-nav-btn">← Session 2</a>
+      <a href="day2.html" class="session-nav-btn primary next">Day 2: AI Agents →</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ░░ FOOTER ░░ -->
+<footer class="content-footer">
+  <div class="container">
+    <p>🤖 Agentic AI Workshop · Day 1 of 3 · <a href="index.html">Back to Home</a> · <a href="day2.html">Go to Day 2 →</a></p>
+    <p style="margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px;"><img src="basavesh.jpg" alt="Basavesh D." style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid #a855f7;" /> Conducted by <strong>Basavesh D.</strong> · Dept. of CSE · Jyothy Institute of Technology, Bengaluru</p>
+  </div>
+</footer>
+
+<script>
+function showCopied(btn) {
+  btn.textContent = '✅ Copied!';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+}
+
+function fallbackCopy(text, btn) {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  document.body.appendChild(textarea);
+  textarea.select();
+  try {
+    document.execCommand('copy');
+    showCopied(btn);
+  } catch (err) {
+    btn.textContent = 'Error';
+  }
+  document.body.removeChild(textarea);
+}
+
+function copyCode(btn) {
+  const pre = btn.closest('.code-block-wrapper').querySelector('code');
+  const text = pre.innerText;
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(() => showCopied(btn)).catch(() => fallbackCopy(text, btn));
+  } else {
+    fallbackCopy(text, btn);
+  }
+}
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+revealEls.forEach(el => revealObs.observe(el));
+
+// Active nav highlight on scroll
+const sections = document.querySelectorAll('.session-section');
+const navBtns  = document.querySelectorAll('.nav-session-btn');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+  navBtns.forEach(b => {
+    b.classList.toggle('active', b.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Day 3 — Multi-Agent AI & Capstone | Agentic AI Workshop</title>
+  <meta name="description" content="Day 3 workshop content: CrewAI multi-agent systems, capstone project build, and career readiness for AI roles."/>
+  <link rel="stylesheet" href="content.css"/>
+</head>
+<body>
+
+<!-- ░░ TOP NAV ░░ -->
+<nav class="top-nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-home"><span class="nav-home-icon">←</span> Back to Workshop</a>
+    <span class="nav-day-label" style="background:linear-gradient(135deg,#f59e0b,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Day 3 — Multi-Agent & Portfolio</span>
+    <div class="nav-sessions" style="display:flex;gap:8px;align-items:center;">
+      <a href="#session1" class="nav-session-btn active">Session 1</a>
+      <a href="#session2" class="nav-session-btn">Session 2</a>
+      <a href="#session3" class="nav-session-btn">Session 3</a>
+      <button class="theme-toggle-btn" style="background:rgba(255,255,255,0.08);border:1px solid var(--border);color:var(--text-1);padding:4px 12px;border-radius:999px;cursor:pointer;font-size:12px;font-weight:600;">☀️ Light Mode</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ░░ DAY HERO ░░ -->
+<section class="day-hero">
+  <div class="container day-hero-inner">
+    <div class="day-crumb">
+      <a href="index.html">🏠 Workshop Home</a>
+      <span class="day-crumb-sep">›</span>
+      <a href="day1.html">Day 1</a>
+      <span class="day-crumb-sep">›</span>
+      <a href="day2.html">Day 2</a>
+      <span class="day-crumb-sep">›</span>
+      <span>Day 3</span>
+    </div>
+    <h1>Day 3 — <span style="background:linear-gradient(135deg,#f59e0b,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Multi-Agent AI & Portfolio</span></h1>
+    <p>Build collaborative AI teams with CrewAI, develop your capstone portfolio project, present it live, and get career guidance to land AI roles.</p>
+    <div class="day-meta-pills">
+      <span class="day-meta-pill pill-amber">🕘 9:00 AM – 5:00 PM</span>
+      <span class="day-meta-pill pill-blue">3 Sessions</span>
+      <span class="day-meta-pill pill-green">Capstone + GitHub Portfolio</span>
+      <span class="day-meta-pill pill-cyan">CrewAI · Streamlit · Career Guidance</span>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ MAIN CONTENT WRAPPER ░░ -->
+<main id="main-content">
+
+<!-- ═══════════════════════════════════════════════
+     SESSION 1
+════════════════════════════════════════════════ -->
+<section class="session-section" id="session1">
+  <div class="container">
+    <div class="session-header-row">
+      <div class="session-header-left">
+        <div class="session-num-badge">Session 1 of 3</div>
+        <h2 class="session-title-main">CrewAI — Multi-Agent Systems</h2>
+      </div>
+      <span class="session-time-badge">🕘 9:00 – 11:00 AM</span>
+    </div>
+
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">📖 Core Concepts</div>
+
+      <div class="callout callout-note" style="background:rgba(168,85,247,0.08);border-color:#a855f7;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-content">
+          <strong>Intuitive Analogy — Multi-Agent Engineering Teams</strong>
+          CrewAI structures multi-agent collaboration like a <strong>specialized software engineering team</strong> 👥. Specialized agents take on roles (e.g., Project Manager, Researcher, Developer, QA) with distinct goals and tool sets to execute complex workflows.
+        </div>
+      </div>
+
+      <div class="callout callout-note">
+        <span class="callout-icon">👥</span>
+        <div class="callout-content">
+          <strong>Why Multi-Agent Systems?</strong>
+          One AI agent trying to do everything gets confused and makes mistakes — just like one person trying to be a developer, designer, and manager simultaneously. Multi-agent systems divide work among specialized agents that collaborate, similar to a real software company.
+        </div>
+      </div>
+
+      <div class="concepts-grid">
+        <div class="concept-card">
+          <span class="concept-card-icon">🧑‍💼</span>
+          <h4>Agent = Role + Goal + Backstory</h4>
+          <p>Each CrewAI agent has three defining attributes:</p>
+          <ul>
+            <li><strong>Role</strong> — what the agent IS (e.g., "Senior Python Developer")</li>
+            <li><strong>Goal</strong> — what it's trying to achieve</li>
+            <li><strong>Backstory</strong> — personality and expertise context</li>
+            <li><strong>Tools</strong> — optional capabilities (search, code, etc.)</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">📋</span>
+          <h4>Task = Work + Expected Output</h4>
+          <ul>
+            <li><strong>Description</strong> — detailed instructions for the agent</li>
+            <li><strong>Expected Output</strong> — what should be produced</li>
+            <li><strong>Agent</strong> — which agent executes this task</li>
+            <li><strong>Context</strong> — can use output of previous tasks</li>
+            <li><strong>Output File</strong> — save result to file automatically</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">🚢</span>
+          <h4>Crew = Team Orchestrator</h4>
+          <ul>
+            <li>Brings agents and tasks together</li>
+            <li>Manages execution order</li>
+            <li><code>Process.sequential</code> — one after another</li>
+            <li><code>Process.hierarchical</code> — manager delegates to agents</li>
+            <li><code>verbose=True</code> — see agents think and collaborate</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">🔀</span>
+          <h4>Sequential vs Hierarchical</h4>
+          <table class="compare-table">
+            <tr><th>Feature</th><th>Sequential</th><th>Hierarchical</th></tr>
+            <tr><td>Order</td><td>Fixed 1→2→3</td><td>Manager decides</td></tr>
+            <tr><td>Delegation</td><td>No</td><td>Yes</td></tr>
+            <tr><td>Flexibility</td><td>Low</td><td>High</td></tr>
+            <tr><td>Best for</td><td>Pipelines</td><td>Complex projects</td></tr>
+          </table>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">🏭</span>
+          <h4>Real-World Use Cases</h4>
+          <ul>
+            <li>🔬 Research → Write → Review workflow</li>
+            <li>💻 Plan → Code → Test → Document cycle</li>
+            <li>📊 Collect data → Analyze → Report</li>
+            <li>📧 Draft email → Review → Send</li>
+            <li>🛍️ Product research → Compare → Recommend</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">⚡</span>
+          <h4>CrewAI Architecture</h4>
+          <div class="pipeline" style="flex-direction:column;align-items:flex-start;">
+            <span class="pipe-step pipe-amber">Define Agents (Role+Goal+Backstory)</span>
+            <span class="pipe-arrow" style="padding-left:16px;">↓</span>
+            <span class="pipe-step pipe-blue">Define Tasks (What to do)</span>
+            <span class="pipe-arrow" style="padding-left:16px;">↓</span>
+            <span class="pipe-step pipe-purple">Create Crew (Team + Process)</span>
+            <span class="pipe-arrow" style="padding-left:16px;">↓</span>
+            <span class="pipe-step pipe-green">kickoff(inputs) → Result</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-section reveal">
+      <div class="code-section-title">⚡ Project: AI Software Company with CrewAI</div>
+      <div class="handson-section">
+        <div class="handson-header">
+          <div class="handson-icon-wrap">🏢</div>
+          <div class="handson-header-text">
+            <h3>Build an AI Software Company</h3>
+            <p>5 specialized agents collaborating to build software: Researcher → Developer → Tester → Doc Writer</p>
+          </div>
+        </div>
+
+        <div class="project-goal-card">
+          <span class="goal-emoji">🎯</span>
+          <div>
+            <h4>What you'll build</h4>
+            <p>A multi-agent team where a Project Manager coordinates a Researcher, Developer, Tester, and Documentation Writer to analyze a requirement, write code, test it, and produce documentation — all automatically.</p>
+          </div>
+        </div>
+
+        <div class="block-diagram-card">
+          <div class="block-diagram-title">📐 Program Architecture — CrewAI Multi-Agent Team</div>
+          <div class="diagram-flow" style="margin-bottom:12px;">
+            <span class="node-box node-blue">💼 User Spec</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-purple">🧑‍💼 Project Manager</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-cyan">🔬 Researcher Agent</span>
+          </div>
+          <div class="diagram-flow">
+            <span class="node-box node-amber">💻 Developer Agent</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-red">🧪 Tester Agent</span>
+            <span class="node-arrow">➔</span>
+            <span class="node-box node-green">📦 Final README.md Output</span>
+          </div>
+        </div>
+
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Install CrewAI</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span></span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>pip install crewai crewai-tools streamlit</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Create ai_software_company.py</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-python">python</span> ai_software_company.py</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code><span class="cm"># Day 3 - Session 1: AI Software Company with CrewAI</span>
+<span class="im">import</span> os
+<span class="im">from</span> crewai <span class="im">import</span> Agent, Task, Crew, Process, LLM
+
+<span class="cm"># Configure Ollama LLM backend for CrewAI</span>
+local_llm = <span class="fn">LLM</span>(
+    model=<span class="st">"ollama/llama3.2"</span>,
+    base_url=<span class="st">"http://localhost:11434"</span>
+)
+
+<span class="cm"># ── 1. Define the Agents ──</span>
+
+project_manager = <span class="fn">Agent</span>(
+    role=<span class="st">"Project Manager"</span>,
+    goal=<span class="st">"Break down software requirements into clear tasks and coordinate the team"</span>,
+    backstory=<span class="st">"""You are an experienced software project manager with 10 years 
+    of experience. You excel at understanding requirements and planning 
+    structured development workflows. You're organized, clear, and pragmatic."""</span>,
+    llm=local_llm,
+    verbose=<span class="kw">True</span>,
+    allow_delegation=<span class="kw">False</span>
+)
+
+researcher = <span class="fn">Agent</span>(
+    role=<span class="st">"Senior Technical Researcher"</span>,
+    goal=<span class="st">"Research best approaches, algorithms, and design patterns for the given problem"</span>,
+    backstory=<span class="st">"""You are a senior software architect who loves exploring different 
+    approaches to solve problems. You know multiple programming paradigms, 
+    design patterns, and best practices. You provide thorough analysis."""</span>,
+    llm=local_llm,
+    verbose=<span class="kw">True</span>,
+    allow_delegation=<span class="kw">False</span>
+)
+
+developer = <span class="fn">Agent</span>(
+    role=<span class="st">"Senior Python Developer"</span>,
+    goal=<span class="st">"Write clean, efficient, well-commented Python code based on the research"</span>,
+    backstory=<span class="st">"""You are a senior Python developer with expertise in writing 
+    production-quality code. You follow PEP 8 standards, add proper comments,
+    handle edge cases, and write readable, maintainable code."""</span>,
+    llm=local_llm,
+    verbose=<span class="kw">True</span>,
+    allow_delegation=<span class="kw">False</span>
+)
+
+tester = <span class="fn">Agent</span>(
+    role=<span class="st">"QA Engineer"</span>,
+    goal=<span class="st">"Review the code, identify bugs, and write comprehensive test cases"</span>,
+    backstory=<span class="st">"""You are a meticulous QA engineer who thinks about edge cases,
+    input validation, and failure scenarios. You write pytest test cases 
+    and provide specific, actionable feedback on code quality."""</span>,
+    llm=local_llm,
+    verbose=<span class="kw">True</span>,
+    allow_delegation=<span class="kw">False</span>
+)
+
+doc_writer = <span class="fn">Agent</span>(
+    role=<span class="st">"Technical Documentation Writer"</span>,
+    goal=<span class="st">"Create clear, comprehensive documentation including README and usage examples"</span>,
+    backstory=<span class="st">"""You write excellent technical documentation that developers love.
+    You include installation instructions, usage examples, API references,
+    and troubleshooting tips. Your READMEs are always GitHub-ready."""</span>,
+    llm=local_llm,
+    verbose=<span class="kw">True</span>,
+    allow_delegation=<span class="kw">False</span>
+)
+
+<span class="cm"># ── 2. Define the Tasks ──</span>
+
+<span class="kw">def</span> <span class="fn">create_tasks</span>(project_requirement: str):
+    
+    plan_task = <span class="fn">Task</span>(
+        description=<span class="st">f"""Analyze this software requirement and create a structured plan:
+        
+        Requirement: {project_requirement}
+        
+        Create:
+        1. Clear understanding of what needs to be built
+        2. List of key features to implement
+        3. Suggested data structures or classes needed
+        4. Step-by-step implementation plan (5-7 steps)"""</span>,
+        expected_output=<span class="st">"A structured project plan with features, data structures, and implementation steps"</span>,
+        agent=project_manager
+    )
+    
+    research_task = <span class="fn">Task</span>(
+        description=<span class="st">"""Based on the project plan, research and recommend:
+        1. Best Python libraries to use (if any)
+        2. Most suitable data structures 
+        3. Design patterns to apply
+        4. Potential edge cases to handle
+        5. Common pitfalls to avoid"""</span>,
+        expected_output=<span class="st">"Technical recommendations including libraries, patterns, and edge cases"</span>,
+        agent=researcher,
+        context=[plan_task]
+    )
+    
+    code_task = <span class="fn">Task</span>(
+        description=<span class="st">"""Write complete, working Python code based on the plan and research.
+        Requirements:
+        - Full implementation with all features
+        - Proper error handling and input validation
+        - Clear variable names and comments
+        - Example usage at the bottom
+        - PEP 8 compliant"""</span>,
+        expected_output=<span class="st">"Complete, runnable Python code with comments and examples"</span>,
+        agent=developer,
+        context=[plan_task, research_task],
+        output_file=<span class="st">"solution.py"</span>
+    )
+    
+    test_task = <span class="fn">Task</span>(
+        description=<span class="st">"""Review the Python code and:
+        1. Identify any bugs or logical errors
+        2. Check edge case handling  
+        3. Write 5 pytest test cases covering:
+           - Normal usage (happy path)
+           - Edge cases (empty input, large input)
+           - Error cases (invalid input)
+        4. Suggest any improvements"""</span>,
+        expected_output=<span class="st">"Code review feedback + 5 pytest test cases + improvement suggestions"</span>,
+        agent=tester,
+        context=[code_task],
+        output_file=<span class="st">"test_solution.py"</span>
+    )
+    
+    doc_task = <span class="fn">Task</span>(
+        description=<span class="st">"""Create a professional README.md for this project including:
+        1. Project title and description
+        2. Features list
+        3. Installation instructions
+        4. Usage examples with code snippets
+        5. Function/class documentation
+        6. Example output
+        7. Contributing guidelines"""</span>,
+        expected_output=<span class="st">"Complete README.md in markdown format, ready for GitHub"</span>,
+        agent=doc_writer,
+        context=[code_task, test_task],
+        output_file=<span class="st">"README.md"</span>
+    )
+    
+    <span class="kw">return</span> [plan_task, research_task, code_task, test_task, doc_task]
+
+<span class="cm"># ── 3. Create and Run the Crew ──</span>
+<span class="kw">def</span> <span class="fn">main</span>():
+    <span class="fn">print</span>(<span class="st">"🏢 AI Software Company — CrewAI"</span>)
+    <span class="fn">print</span>(<span class="st">"="*50</span>)
+    <span class="fn">print</span>(<span class="st">"Agents: Project Manager | Researcher | Developer | Tester | Doc Writer"</span>)
+    <span class="fn">print</span>(<span class="st">"="*50</span>)
+    
+    requirement = <span class="fn">input</span>(<span class="st">"\n📋 Enter your software requirement:\n> "</span>).strip()
+    
+    <span class="kw">if not</span> requirement:
+        requirement = <span class="st">"Build a Python library for managing a student grade book that can add students, record grades, calculate GPA, and generate a report card"</span>
+        <span class="fn">print</span>(<span class="st">f"\nUsing default: {requirement}"</span>)
+    
+    tasks = <span class="fn">create_tasks</span>(requirement)
+    
+    crew = <span class="fn">Crew</span>(
+        agents=[project_manager, researcher, developer, tester, doc_writer],
+        tasks=tasks,
+        process=Process.sequential,
+        verbose=<span class="kw">True</span>
+    )
+    
+    <span class="fn">print</span>(<span class="st">"\n🚀 Crew is working... (this may take 2-4 minutes with local LLM)\n"</span>)
+    result = crew.<span class="fn">kickoff</span>()
+    
+    <span class="fn">print</span>(<span class="st">"\n"</span> + <span class="st">"="*50</span>)
+    <span class="fn">print</span>(<span class="st">"✅ CREW COMPLETED!"</span>)
+    <span class="fn">print</span>(<span class="st">"="*50</span>)
+    <span class="fn">print</span>(<span class="st">"\n📄 Generated Deliverables:"</span>)
+    <span class="fn">print</span>(<span class="st">"  1. Code:        solution.py"</span>)
+    <span class="fn">print</span>(<span class="st">"  2. Test Suite:  test_solution.py"</span>)
+    <span class="fn">print</span>(<span class="st">"  3. Docs:        README.md"</span>)
+    <span class="fn">print</span>(<span class="st">"\n--- Final Documentation Preview ---"</span>)
+    <span class="fn">print</span>(result)
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>:
+    <span class="fn">main</span>()</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Run with a project idea</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span></span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>python ai_software_company.py
+
+# Try these requirements:
+# "Build a Python-based task manager with priority levels and due dates"
+# "Create a simple inventory management system for a small shop"
+# "Build a student attendance tracking system"</code></pre>
+              </div>
+              <div class="callout callout-tip" style="margin-top:12px;">
+                <span class="callout-icon">💡</span>
+                <div class="callout-content"><strong>Watch agents think!</strong> With verbose=True, see each agent's Thought process. The README.md is auto-saved and ready to push to GitHub.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-download-bar">
+          <span style="font-size:0.85rem;color:var(--text-2);">📄 Download Session 1 Python Code:</span>
+          <a href="code_samples/day3_01_ai_software_company.py" download class="download-link-btn">⬇️ Download day3_01_ai_software_company.py</a>
+        </div>
+
+        <div class="troubleshoot-box">
+          <div class="troubleshoot-title">🚨 Common Issues & Troubleshooting</div>
+          <div class="troubleshoot-item">
+            <strong>Error: CrewAI process task output missing</strong>
+            <div>Fix: Specify <code>output_file="output.md"</code> inside your <code>Task</code> definition to ensure output is persisted to disk.</div>
+          </div>
+        </div>
+
+        <div class="session-checkpoint-card">
+          <div class="checkpoint-title">🎯 Session 1 Checkpoint & Expected Deliverables</div>
+          <ul class="checkpoint-list">
+            <li>Created 3 specialized CrewAI agents (PM, Developer, QA).</li>
+            <li>Sequential task execution generated a complete product spec and README.md.</li>
+          </ul>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="session-nav reveal">
+      <a href="day2.html#session3" class="session-nav-btn">← Day 2: MCP & Guardrails</a>
+      <a href="#session2" class="session-nav-btn primary next">Session 2: Capstone →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SESSION 2
+════════════════════════════════════════════════ -->
+<section class="session-section" id="session2">
+  <div class="container">
+    <div class="session-header-row">
+      <div class="session-header-left">
+        <div class="session-num-badge">Session 2 of 3</div>
+        <h2 class="session-title-main">Build an Industry-Level AI Application</h2>
+      </div>
+      <span class="session-time-badge">🕑 11:15 AM – 1:00 PM</span>
+    </div>
+
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">🏗️ Capstone Project Options</div>
+
+      <div class="callout callout-note" style="background:rgba(59,130,246,0.08);border-color:#3b82f6;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-content">
+          <strong>Industry Focus — Capstone Product Build</strong>
+          The Capstone Project simulates an <strong>industry-level product sprint</strong> 🏗️. Student teams design, develop, and present full-stack AI solutions combining Streamlit UIs, LangChain/CrewAI logic, and vector stores for GitHub portfolio showcase.
+        </div>
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">👥</span>
+        <div class="callout-content">
+          <strong>Team Setup</strong>
+          Form teams of 3–4 students. Choose one project from below. Each team member owns one module. Use the standard architecture: Streamlit UI + LangChain + Ollama + ChromaDB.
+        </div>
+      </div>
+
+      <div class="block-diagram-card">
+        <div class="block-diagram-title">📐 Program Architecture — Full-Stack Capstone Stack</div>
+        <div class="diagram-flow" style="margin-bottom:12px;">
+          <span class="node-box node-blue">🖥️ Streamlit Web UI</span>
+          <span class="node-arrow">➔</span>
+          <span class="node-box node-purple">⚙️ LangChain / CrewAI Engine</span>
+          <span class="node-arrow">➔</span>
+          <span class="node-box node-cyan">🧠 Ollama Local LLM</span>
+        </div>
+        <div class="diagram-flow">
+          <span class="node-box node-amber">🗃️ ChromaDB Vector Store</span>
+          <span class="node-arrow">➔</span>
+          <span class="node-box node-green">📊 Real-Time Interactive Dashboard</span>
+        </div>
+      </div>
+
+      <!-- Project Options -->
+      <div class="concepts-grid">
+        <div class="concept-card">
+          <span class="concept-card-icon">📄</span>
+          <h4>Option 1: AI Resume Analyzer</h4>
+          <p><strong>Stack:</strong> Streamlit + LangChain + RAG</p>
+          <ul>
+            <li>Upload resume PDF</li>
+            <li>ATS compatibility score (out of 100)</li>
+            <li>Missing keywords for target role</li>
+            <li>Rewrite suggestions section-by-section</li>
+            <li>Compare against job description</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">🎯</span>
+          <h4>Option 2: AI Interview Prep Assistant</h4>
+          <p><strong>Stack:</strong> Streamlit + LangChain + Agents</p>
+          <ul>
+            <li>Input: role + company + resume</li>
+            <li>Generate role-specific questions</li>
+            <li>Evaluate student's answers</li>
+            <li>Provide model answers</li>
+            <li>Track weak topics</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">🏫</span>
+          <h4>Option 3: College Admission Chatbot</h4>
+          <p><strong>Stack:</strong> Streamlit + RAG + LangChain</p>
+          <ul>
+            <li>Load college brochure/handbook</li>
+            <li>Answer admission queries</li>
+            <li>Fee structure lookups</li>
+            <li>Course information</li>
+            <li>Chat with source citations</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">📚</span>
+          <h4>Option 4: Research Paper Assistant</h4>
+          <p><strong>Stack:</strong> Streamlit + RAG + LangGraph</p>
+          <ul>
+            <li>Upload research papers (PDF)</li>
+            <li>Auto-summarize in plain English</li>
+            <li>Extract methodology & findings</li>
+            <li>Compare multiple papers</li>
+            <li>Generate literature review</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">💻</span>
+          <h4>Option 5: AI Code Reviewer</h4>
+          <p><strong>Stack:</strong> Streamlit + LangChain + CrewAI</p>
+          <ul>
+            <li>Paste Python code</li>
+            <li>Bug detection and fixes</li>
+            <li>Code quality scoring</li>
+            <li>Performance suggestions</li>
+            <li>Auto-generate tests</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">📅</span>
+          <h4>Option 6: AI Study Planner</h4>
+          <p><strong>Stack:</strong> Streamlit + LangChain + Agents</p>
+          <ul>
+            <li>Input: exam date + subjects + hours/day</li>
+            <li>Generate personalized study schedule</li>
+            <li>Daily topic recommendations</li>
+            <li>Progress tracking</li>
+            <li>Resource suggestions per topic</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- STANDARD ARCHITECTURE -->
+    <div class="code-section reveal">
+      <div class="code-section-title">🏗️ Standard Project Architecture (Streamlit UI)</div>
+
+      <div class="handson-section">
+        <div class="handson-header">
+          <div class="handson-icon-wrap">⚡</div>
+          <div class="handson-header-text">
+            <h3>Streamlit App Template</h3>
+            <p>Use this as your starting point for any of the 6 projects above</p>
+          </div>
+        </div>
+
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Install Streamlit</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span></span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>pip install streamlit</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>app.py — Base Streamlit Template</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-python">python</span> app.py</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code><span class="cm"># Day 3 - Session 2: Capstone Project Template</span>
+<span class="cm"># Replace [YOUR PROJECT] with your actual project logic</span>
+<span class="im">import</span> streamlit <span class="im">as</span> st
+<span class="im">from</span> langchain_ollama <span class="im">import</span> ChatOllama
+<span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate
+<span class="im">from</span> langchain_core.output_parsers <span class="im">import</span> StrOutputParser
+
+<span class="cm"># ── Page Configuration ──</span>
+st.<span class="fn">set_page_config</span>(
+    page_title=<span class="st">"[Your Project Name]"</span>,
+    page_icon=<span class="st">"🤖"</span>,
+    layout=<span class="st">"wide"</span>,
+    initial_sidebar_state=<span class="st">"expanded"</span>
+)
+
+<span class="cm"># ── Custom CSS ──</span>
+st.<span class="fn">markdown</span>(<span class="st">"""
+<style>
+    .stButton>button { 
+        background: linear-gradient(135deg, #6366f1, #a855f7);
+        color: white; border: none; border-radius: 8px;
+        font-weight: 600; padding: 0.5rem 2rem;
+    }
+    .stButton>button:hover { opacity: 0.9; }
+    .result-card {
+        background: #0c1225; border: 1px solid rgba(99,102,241,0.3);
+        border-radius: 12px; padding: 20px; margin: 10px 0;
+    }
+</style>
+"""</span>, unsafe_allow_html=<span class="kw">True</span>)
+
+<span class="cm"># ── Sidebar ──</span>
+<span class="kw">with</span> st.sidebar:
+    st.<span class="fn">title</span>(<span class="st">"⚙️ Settings"</span>)
+    model_choice = st.<span class="fn">selectbox</span>(
+        <span class="st">"LLM Model"</span>,
+        [<span class="st">"llama3.2"</span>, <span class="st">"llama3.2:1b"</span>, <span class="st">"mistral"</span>]
+    )
+    temperature = st.<span class="fn">slider</span>(<span class="st">"Temperature"</span>, <span class="nm">0.0</span>, <span class="nm">1.0</span>, <span class="nm">0.3</span>, <span class="nm">0.1</span>)
+    st.<span class="fn">divider</span>()
+    st.<span class="fn">markdown</span>(<span class="st">"**About**"</span>)
+    st.<span class="fn">markdown</span>(<span class="st">"Built with 🦙 Ollama + 🔗 LangChain"</span>)
+    st.<span class="fn">markdown</span>(<span class="st">"Agentic AI Workshop · Day 3"</span>)
+
+<span class="cm"># ── Main UI ──</span>
+st.<span class="fn">title</span>(<span class="st">"🤖 [Your Project Name]"</span>)
+st.<span class="fn">markdown</span>(<span class="st">"*Brief description of what this app does*"</span>)
+st.<span class="fn">divider</span>()
+
+<span class="cm"># ── Initialize LLM ──</span>
+<span class="dc">@st.cache_resource</span>
+<span class="kw">def</span> <span class="fn">get_llm</span>(model, temp):
+    <span class="kw">return</span> <span class="fn">ChatOllama</span>(model=model, temperature=temp)
+
+llm = <span class="fn">get_llm</span>(model_choice, temperature)
+
+<span class="cm"># ── Input Area ──</span>
+col1, col2 = st.<span class="fn">columns</span>([<span class="nm">2</span>, <span class="nm">1</span>])
+
+<span class="kw">with</span> col1:
+    <span class="cm"># === CUSTOMIZE: Change to your input type ===</span>
+    user_input = st.<span class="fn">text_area</span>(
+        <span class="st">"📝 Enter your input"</span>,
+        placeholder=<span class="st">"Type here..."</span>,
+        height=<span class="nm">200</span>
+    )
+    <span class="cm"># OR: uploaded_file = st.file_uploader("Upload PDF", type=['pdf'])</span>
+
+<span class="kw">with</span> col2:
+    st.<span class="fn">markdown</span>(<span class="st">"### 📋 How to use"</span>)
+    st.<span class="fn">markdown</span>(<span class="st">"""
+    1. Enter your input on the left
+    2. Click the button below
+    3. View AI analysis
+    """</span>)
+
+<span class="cm"># ── Process Button ──</span>
+<span class="kw">if</span> st.<span class="fn">button</span>(<span class="st">"🚀 Analyze"</span>, use_container_width=<span class="kw">True</span>):
+    <span class="kw">if not</span> user_input.strip():
+        st.<span class="fn">warning</span>(<span class="st">"⚠️ Please enter some input first!"</span>)
+    <span class="kw">else</span>:
+        <span class="kw">with</span> st.<span class="fn">spinner</span>(<span class="st">"🤖 AI is analyzing..."</span>):
+            <span class="cm"># === CUSTOMIZE: Your LangChain logic here ===</span>
+            prompt = ChatPromptTemplate.<span class="fn">from_messages</span>([
+                (<span class="st">"system"</span>, <span class="st">"You are a helpful AI assistant."</span>),
+                (<span class="st">"human"</span>, <span class="st">"Analyze this: {input}"</span>)
+            ])
+            chain = prompt | llm | <span class="fn">StrOutputParser</span>()
+            result = chain.<span class="fn">invoke</span>({<span class="st">"input"</span>: user_input})
+        
+        <span class="cm"># Display result</span>
+        st.<span class="fn">success</span>(<span class="st">"✅ Analysis complete!"</span>)
+        st.<span class="fn">markdown</span>(<span class="st">"### 📊 Results"</span>)
+        st.<span class="fn">markdown</span>(result)
+        
+        <span class="cm"># Download button</span>
+        st.<span class="fn">download_button</span>(
+            <span class="st">"📥 Download Report"</span>,
+            data=result,
+            file_name=<span class="st">"ai_analysis.txt"</span>,
+            mime=<span class="st">"text/plain"</span>
+        )
+
+<span class="cm"># ── Session History ──</span>
+<span class="kw">if</span> <span class="st">"history"</span> <span class="kw">not in</span> st.session_state:
+    st.session_state.history = []
+
+<span class="kw">if</span> st.session_state.history:
+    st.<span class="fn">divider</span>()
+    st.<span class="fn">markdown</span>(<span class="st">"### 📜 Previous Analyses"</span>)
+    <span class="kw">for</span> i, item <span class="kw">in</span> <span class="fn">enumerate</span>(reversed(st.session_state.history[-<span class="nm">3</span>:]), <span class="nm">1</span>):
+        <span class="kw">with</span> st.<span class="fn">expander</span>(<span class="st">f"Analysis {i}"</span>):
+            st.<span class="fn">write</span>(item)</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Run the Streamlit app</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span></span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>streamlit run app.py
+# Opens browser at http://localhost:8501</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>GitHub Repository Setup</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span> Terminal</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code># Initialize git and push to GitHub
+git init
+git add .
+git commit -m "Initial commit: AI application capstone"
+git branch -M main
+git remote add origin https://github.com/yourusername/your-project.git
+git push -u origin main</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="session-nav reveal">
+      <a href="#session1" class="session-nav-btn">← Session 1</a>
+      <a href="#session3" class="session-nav-btn primary next">Session 3: Career Guidance →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SESSION 3
+════════════════════════════════════════════════ -->
+<section class="session-section" id="session3">
+  <div class="container">
+    <div class="session-header-row">
+      <div class="session-header-left">
+        <div class="session-num-badge">Session 3 of 3</div>
+        <h2 class="session-title-main">Capstone Demo & Career Readiness</h2>
+      </div>
+      <span class="session-time-badge">🕑 2:00 – 5:00 PM</span>
+    </div>
+
+    <!-- PRESENTATION GUIDE -->
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">🎤 Capstone Presentation Structure</div>
+
+      <div class="callout callout-note" style="background:rgba(16,185,129,0.08);border-color:#10b981;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-content">
+          <strong>Production Focus — Cloud Deployment & Portfolios</strong>
+          <strong>Cloud Deployment</strong> moves student applications from `localhost` to production platforms (Hugging Face / Render) 🚀, providing recruiters with live working URLs to verify technical competency.
+        </div>
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">⏱️</span>
+        <div class="callout-content">
+          <strong>Each team gets 10 minutes</strong>: 7 min demo + 3 min Q&A. Follow this structure to make a strong impression.
+        </div>
+      </div>
+
+      <div class="concepts-grid">
+        <div class="concept-card">
+          <span class="concept-card-icon">1️⃣</span>
+          <h4>Problem Statement (1 min)</h4>
+          <ul>
+            <li>What problem does your app solve?</li>
+            <li>Who is the target user?</li>
+            <li>Why does this problem matter?</li>
+            <li>One-line value proposition</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <span class="concept-card-icon">2️⃣</span>
+          <h4>Architecture (2 min)</h4>
+          <ul>
+            <li>Draw the system diagram on whiteboard</li>
+            <li>Which LangChain components used?</li>
+            <li>How does data flow through the system?</li>
+            <li>Why did you choose this architecture?</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <span class="concept-card-icon">3️⃣</span>
+          <h4>Live Demo (3 min)</h4>
+          <ul>
+            <li>Show the Streamlit UI</li>
+            <li>Use a real, interesting example</li>
+            <li>Highlight the AI reasoning</li>
+            <li>Show at least 2 different scenarios</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <span class="concept-card-icon">4️⃣</span>
+          <h4>GitHub Walk (1 min)</h4>
+          <ul>
+            <li>Show the repository</li>
+            <li>Point to the README</li>
+            <li>Briefly show code structure</li>
+            <li>Mention your contribution</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAREER SECTION -->
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">💼 Career Guidance</div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">🎯</span>
+        <div class="callout-content">
+          <strong>Your Competitive Advantage</strong>
+          Most CSE graduates can write basic Python. You can now build real AI applications with RAG, Agents, and Multi-Agent Systems. This is what separates you from 90% of other candidates.
+        </div>
+      </div>
+
+      <div class="two-col">
+        <!-- Interview Questions -->
+        <div>
+          <h3 style="font-size:1.1rem;margin-bottom:16px;color:var(--text-1);">🎤 Top 20 AI Interview Q&A</h3>
+
+          <div class="concept-card" style="margin-bottom:12px;">
+            <h4>Fundamentals</h4>
+            <ul>
+              <li>What is RAG and why is it needed?</li>
+              <li>Explain the difference between an LLM and an AI Agent</li>
+              <li>What is prompt engineering? Give 3 techniques</li>
+              <li>What is an embedding? How is it used in vector search?</li>
+              <li>Explain the ReAct pattern in AI agents</li>
+            </ul>
+          </div>
+
+          <div class="concept-card" style="margin-bottom:12px;">
+            <h4>LangChain / Technical</h4>
+            <ul>
+              <li>What is LCEL and what's the pipe operator?</li>
+              <li>How does LangGraph differ from a regular LangChain agent?</li>
+              <li>What is ChromaDB and how do you query it?</li>
+              <li>How do you add memory to a LangChain chatbot?</li>
+              <li>Explain hallucination in LLMs and how to reduce it</li>
+            </ul>
+          </div>
+
+          <div class="concept-card">
+            <h4>Project-Based Questions</h4>
+            <ul>
+              <li>Walk me through your RAG pipeline</li>
+              <li>What challenges did you face with your AI project?</li>
+              <li>How would you scale this to 1000 users?</li>
+              <li>What would you add next to improve it?</li>
+              <li>How do you evaluate the quality of your RAG system?</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Resume Tips -->
+        <div>
+          <h3 style="font-size:1.1rem;margin-bottom:16px;color:var(--text-1);">📄 Resume Bullet Points for AI Roles</h3>
+
+          <div class="concept-card" style="margin-bottom:12px;">
+            <h4>✅ Strong Resume Bullets</h4>
+            <ul>
+              <li>Built a RAG-based document Q&A system using LangChain + ChromaDB, reducing hallucinations by implementing hallucination grading</li>
+              <li>Developed a multi-agent AI system using CrewAI with 5 specialized agents (Researcher, Developer, Tester) collaborating sequentially</li>
+              <li>Created stateful AI workflows using LangGraph with conditional routing, memory persistence, and human-in-the-loop checkpoints</li>
+              <li>Deployed AI applications using Streamlit with LLM backend (Llama 3.2 via Ollama) — zero cloud cost</li>
+            </ul>
+          </div>
+
+          <div class="concept-card" style="margin-bottom:12px;">
+            <h4>🗂️ GitHub Portfolio Tips</h4>
+            <ul>
+              <li>Pin your 3 best AI repos on your profile</li>
+              <li>Every repo needs a detailed README with screenshots</li>
+              <li>Include a demo GIF or video in the README</li>
+              <li>Add requirements.txt for easy setup</li>
+              <li>Write clean commit messages (not "fix stuff")</li>
+              <li>Add topics/tags: #langchain #ai #python #rag</li>
+            </ul>
+          </div>
+
+          <div class="concept-card">
+            <h4>🏆 AI Certifications to Target</h4>
+            <ul>
+              <li><strong>DeepLearning.AI</strong> — LangChain for LLM Application Development</li>
+              <li><strong>Coursera</strong> — Generative AI with LLMs (AWS + DeepLearning.AI)</li>
+              <li><strong>Google</strong> — Introduction to Generative AI (free)</li>
+              <li><strong>Hugging Face</strong> — NLP Course (free)</li>
+              <li><strong>LangChain Academy</strong> — Introduction to LangGraph</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6-MONTH ROADMAP -->
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">🗺️ 6-Month Learning Roadmap</div>
+
+      <div class="concepts-grid">
+        <div class="concept-card">
+          <span class="concept-card-icon">📅</span>
+          <h4>Month 1–2: Consolidate</h4>
+          <ul>
+            <li>Complete all workshop projects from scratch</li>
+            <li>Push everything to GitHub with READMEs</li>
+            <li>Build one more RAG project (your topic)</li>
+            <li>Learn Streamlit in depth (multi-page apps)</li>
+            <li>Get Google Gen AI cert (free, 1 day)</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">📅</span>
+          <h4>Month 3–4: Expand</h4>
+          <ul>
+            <li>Learn vector DB alternatives (Pinecone/FAISS)</li>
+            <li>Explore OpenAI API + cost management</li>
+            <li>Build one complete end-to-end project</li>
+            <li>Contribute to LangChain open source</li>
+            <li>Start applying for AI internships</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">📅</span>
+          <h4>Month 5–6: Specialize</h4>
+          <ul>
+            <li>Pick a domain: healthcare / finance / education</li>
+            <li>Learn Docker basics (containerize your app)</li>
+            <li>Build a SaaS-style AI tool</li>
+            <li>Participate in AI hackathons</li>
+            <li>Apply for AI internship at product companies</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">🚀</span>
+        <div class="callout-content">
+          <strong>Internship Hunt Strategy</strong>
+          Apply to startups building AI products (not just services). Look on LinkedIn for "AI Engineer Intern" with tags like LangChain, LLM, RAG. Your GitHub portfolio + these skills will get you shortlisted over candidates with no hands-on AI experience.
+        </div>
+      </div>
+        <div class="session-checkpoint-card">
+          <div class="checkpoint-title">🎯 Day 3 Final Checkpoint & Portfolio Deliverables</div>
+          <ul class="checkpoint-list">
+            <li>Full-stack AI application running locally on Streamlit.</li>
+            <li>Repository pushed to GitHub with clean README.md documentation.</li>
+            <li>Application deployed to cloud (Hugging Face Spaces / Render) with live public URL.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="session-nav reveal">
+        <a href="#session2" class="session-nav-btn">← Session 2</a>
+        <a href="index.html" class="session-nav-btn primary">🏠 Back to Workshop Home</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ░░ FOOTER ░░ -->
+<footer class="content-footer">
+  <div class="container">
+    <p style="font-size:1.1rem;font-weight:700;margin-bottom:8px;">🎉 Congratulations on completing the 3-Day Agentic AI Workshop!</p>
+    <p>You are now equipped to build real AI applications. Go build something amazing! 🚀</p>
+    <p style="margin-top:12px;">
+      <a href="day1.html">← Day 1</a> &nbsp;·&nbsp; <a href="day2.html">Day 2</a> &nbsp;·&nbsp; <a href="index.html">Workshop Home</a>
+    </p>
+    <p style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;"><img src="basavesh.jpg" alt="Basavesh D." style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid #a855f7;" /> Conducted by <strong>Basavesh D.</strong> · Dept. of CSE · Jyothy Institute of Technology, Bengaluru</p>
+  </div>
+</footer>
+
+<script>
+function showCopied(btn) {
+  btn.textContent = '✅ Copied!';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+}
+
+function fallbackCopy(text, btn) {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  document.body.appendChild(textarea);
+  textarea.select();
+  try {
+    document.execCommand('copy');
+    showCopied(btn);
+  } catch (err) {
+    btn.textContent = 'Error';
+  }
+  document.body.removeChild(textarea);
+}
+
+function copyCode(btn) {
+  const pre = btn.closest('.code-block-wrapper').querySelector('code');
+  const text = pre.innerText;
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(() => showCopied(btn)).catch(() => fallbackCopy(text, btn));
+  } else {
+    fallbackCopy(text, btn);
+  }
+}
+const revealEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+revealEls.forEach(el => obs.observe(el));
+
+const sections = document.querySelectorAll('.session-section');
+const navBtns  = document.querySelectorAll('.nav-session-btn');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+  navBtns.forEach(b => b.classList.toggle('active', b.getAttribute('href') === '#' + current));
+});
+</script>
+<script src="script.js"></script>
+</body>
+</html>

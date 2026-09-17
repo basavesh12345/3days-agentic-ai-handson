@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Day 2 — Building Autonomous & Multi-Agent AI Systems | Agentic AI Workshop</title>
+  <meta name="description" content="Day 2 workshop: Build 5 hands-on AI Agents and Multi-Agent systems using LangChain, LangGraph, Ollama, and Python."/>
+  <link rel="stylesheet" href="content.css"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ░░ TOP NAV ░░ -->
+<nav class="top-nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-home"><span class="nav-home-icon">←</span> Back to Workshop</a>
+    <span class="nav-day-label" style="background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Day 2 — Autonomous & Multi-Agent Systems</span>
+    <div class="nav-sessions" style="display:flex;gap:8px;align-items:center;">
+      <a href="#session1" class="nav-session-btn active">Session 1</a>
+      <a href="#session2" class="nav-session-btn">Session 2</a>
+      <a href="#session3" class="nav-session-btn">Session 3</a>
+      <button class="theme-toggle-btn" style="background:rgba(255,255,255,0.08);border:1px solid var(--border);color:var(--text-1);padding:4px 12px;border-radius:999px;cursor:pointer;font-size:12px;font-weight:600;">☀️ Light Mode</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ░░ DAY HERO ░░ -->
+<section class="day-hero">
+  <div class="container day-hero-inner">
+    <div class="day-crumb">
+      <a href="index.html">🏠 Workshop Home</a>
+      <span class="day-crumb-sep">›</span>
+      <a href="day1.html">Day 1</a>
+      <span class="day-crumb-sep">›</span>
+      <span>Day 2</span>
+    </div>
+    <h1>Day 2 — <span style="background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Autonomous & Multi-Agent AI Systems</span></h1>
+    <p>Move from single-turn chatbots to true AI autonomy. In the morning, build agents that reason, browse the live web, and self-heal their own Python code. In the afternoon, build collaborative multi-agent arenas and reflective creator-critic duos!</p>
+    <div class="day-meta-pills">
+      <span class="day-meta-pill pill-purple">🕘 9:00 AM – 5:00 PM</span>
+      <span class="day-meta-pill pill-blue">3 Sessions</span>
+      <span class="day-meta-pill pill-green">5 Live Projects Built</span>
+      <span class="day-meta-pill pill-cyan">ReAct · Self-Healing Loops · Adversarial Debate · Reflection</span>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ QUICK DEPENDENCY BANNER ░░ -->
+<div class="container" style="margin-top: 24px;">
+  <div class="callout callout-tip" style="background: rgba(168,85,247,0.1); border-left: 4px solid #a855f7; padding: 16px 20px; border-radius: 8px;">
+    <span class="callout-icon">📦</span>
+    <div class="callout-content">
+      <strong>Day 2 Prerequisites & Package Installation</strong>
+      <p style="margin: 6px 0 10px 0; color: var(--text-2); font-size: 14px;">Run this command in your terminal inside your project folder before starting:</p>
+      <div class="code-block-wrapper">
+        <div class="code-block-header">
+          <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span> Terminal</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre class="code-block"><code>pip install langchain langchain-ollama langchain-community langgraph duckduckgo-search ddgs wikipedia</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░ MAIN CONTENT WRAPPER ░░ -->
+<main id="main-content">
+
+<!-- ═══════════════════════════════════════════════
+     SESSION 1: SINGLE-AGENT REASONING & TOOLS
+════════════════════════════════════════════════ -->
+<section class="session-section" id="session1">
+  <div class="container">
+    <div class="session-header-row">
+      <div class="session-header-left">
+        <div class="session-num-badge">Session 1 of 3</div>
+        <h2 class="session-title-main">Single-Agent Systems: Tools & Autonomous Reasoning</h2>
+      </div>
+      <span class="session-time-badge">🕘 9:00 AM – 11:30 AM</span>
+    </div>
+
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">📖 Core Concepts & Mental Model</div>
+
+      <div class="callout callout-note" style="background:rgba(168,85,247,0.08);border-color:#a855f7;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-content">
+          <strong>The ReAct Loop: Reason + Act</strong>
+          Traditional LLMs guess answers in one shot (often hallucinating facts or math). An <strong>Agent</strong> implements the <strong>ReAct Loop</strong>:
+          <ol style="margin: 8px 0 0 20px;">
+            <li><strong>Thought</strong>: Understand the user's objective and determine what external tool is needed.</li>
+            <li><strong>Action</strong>: Call a real Python function (search engine, Wikipedia, calculator, database).</li>
+            <li><strong>Observation</strong>: Read the tool output and evaluate whether more information is needed.</li>
+            <li><strong>Final Answer</strong>: Formulate a grounded, factual response.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="block-diagram">
+        <div class="diagram-title">Single-Agent ReAct Workflow</div>
+        <div class="diagram-flow" style="display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 0;">
+          <div class="diagram-box" style="border:1px solid #a855f7;background:rgba(168,85,247,0.1);padding:10px 16px;border-radius:8px;font-weight:600;">👤 User Query</div>
+          <div class="diagram-arrow">➔</div>
+          <div class="diagram-box" style="border:1px solid #3b82f6;background:rgba(59,130,246,0.1);padding:10px 16px;border-radius:8px;font-weight:600;">🧠 Agent Brain (Llama 3.2)</div>
+          <div class="diagram-arrow">➔</div>
+          <div class="diagram-box" style="border:1px solid #10b981;background:rgba(16,185,129,0.1);padding:10px 16px;border-radius:8px;font-weight:600;">🛠️ Tool Execution (Web / Math / Wiki)</div>
+          <div class="diagram-arrow">➔</div>
+          <div class="diagram-box" style="border:1px solid #f59e0b;background:rgba(245,158,11,0.1);padding:10px 16px;border-radius:8px;font-weight:600;">✅ Final Answer</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 1 -->
+    <div class="code-section reveal">
+      <div class="code-section-title">⚡ Project 1: Personal Research Assistant Agent</div>
+      <div class="handson-section">
+        <div class="handson-header">
+          <div class="handson-icon-wrap">🔬</div>
+          <div class="handson-header-text">
+            <h3>Personal Research Assistant Agent</h3>
+            <p>An autonomous agent equipped with DuckDuckGo Search, Wikipedia, and an exact math calculator.</p>
+          </div>
+        </div>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Create <code>day2_01_research_assistant.py</code></h4>
+              <p>This program defines custom tools with python decorators and links them to <code>ChatOllama</code> using LangGraph's prebuilt ReAct agent.</p>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-python">python</span> day2_01_research_assistant.py</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code><span class="cm"># =====================================================================
+# Day 2 - Program 1: Personal Research Assistant Agent
+# Concept: Single-Agent ReAct (Reason + Act) Loop with Tool Calling
+# =====================================================================</span>
+
+<span class="cm"># 1. Suppress internal deprecation warnings to keep student terminal output clean</span>
+<span class="im">import</span> warnings
+warnings.<span class="fn">filterwarnings</span>(<span class="st">"ignore"</span>)
+
+<span class="im">import</span> math
+<span class="im">from</span> langchain_ollama <span class="im">import</span> ChatOllama
+<span class="im">from</span> langchain_core.tools <span class="im">import</span> tool
+<span class="im">from</span> langchain_community.tools <span class="im">import</span> WikipediaQueryRun, DuckDuckGoSearchRun
+<span class="im">from</span> langchain_community.utilities <span class="im">import</span> WikipediaAPIWrapper
+<span class="im">from</span> langgraph.prebuilt <span class="im">import</span> create_react_agent
+
+<span class="cm"># ── STEP 1: Define Custom Python Tools ──
+# The @tool decorator automatically generates JSON Schema from docstring and type hints.
+# The LLM reads the docstring to understand WHEN and HOW to call the tool.</span>
+<span class="kw">@tool</span>
+<span class="kw">def</span> <span class="fn">calculator</span>(expression: <span class="fn">str</span>) -> <span class="fn">str</span>:
+    <span class="st">"""Evaluates a mathematical expression safely.
+    Use this for any calculations. Input: math expression as string.
+    Examples: '25 * 4', 'math.sqrt(256)', '(100 + 200) / 3'"""</span>
+    <span class="kw">try</span>:
+        <span class="cm"># Safely restrict globals to prevent arbitrary system commands</span>
+        result = <span class="fn">eval</span>(expression, {<span class="st">"__builtins__"</span>: {}}, {<span class="st">"math"</span>: math})
+        <span class="kw">return</span> <span class="st">f"Result: {result}"</span>
+    <span class="kw">except</span> Exception <span class="kw">as</span> e:
+        <span class="kw">return</span> <span class="st">f"Error in calculation: {str(e)}"</span>
+
+<span class="cm"># ── STEP 2: Initialize External Search & Reference Tools ──</span>
+<span class="cm"># Limit Wikipedia characters to prevent overwhelming local model context window</span>
+wiki_wrapper = <span class="fn">WikipediaAPIWrapper</span>(top_k_results=<span class="nm">2</span>, doc_content_chars_max=<span class="nm">1000</span>)
+wiki_tool = <span class="fn">WikipediaQueryRun</span>(api_wrapper=wiki_wrapper)
+search_tool = <span class="fn">DuckDuckGoSearchRun</span>()
+
+<span class="cm"># Pack all tools into a list to provide to the agent</span>
+tools = [search_tool, wiki_tool, calculator]
+
+<span class="cm"># ── STEP 3: Initialize Local LLM & ReAct Agent ──
+# temperature=0 ensures deterministic, hallucination-free tool selection</span>
+llm = <span class="fn">ChatOllama</span>(model=<span class="st">"llama3.2"</span>, temperature=<span class="nm">0</span>)
+
+<span class="cm"># create_react_agent binds tools to the LLM and manages the Reason -> Act -> Observe loop</span>
+agent = <span class="fn">create_react_agent</span>(llm, tools)
+
+<span class="cm"># ── STEP 4: Interactive User Loop ──</span>
+<span class="kw">def</span> <span class="fn">main</span>():
+    <span class="fn">print</span>(<span class="st">"🔬 Personal Research Assistant Agent"</span>)
+    <span class="fn">print</span>(<span class="st">"=" * 50</span>)
+    <span class="fn">print</span>(<span class="st">"Tools available: Web Search (DuckDuckGo), Wikipedia, Math Calculator"</span>)
+    <span class="fn">print</span>(<span class="st">"Type 'quit' or 'exit' to stop.\n"</span>)
+    
+    <span class="kw">while True</span>:
+        query = <span class="fn">input</span>(<span class="st">"🧑 You: "</span>).strip()
+        <span class="kw">if</span> query.lower() <span class="kw">in</span> [<span class="st">'quit'</span>, <span class="st">'exit'</span>]:
+            <span class="fn">print</span>(<span class="st">"👋 Goodbye!"</span>)
+            <span class="kw">break</span>
+        <span class="kw">if not</span> query:
+            <span class="kw">continue</span>
+        
+        <span class="fn">print</span>(<span class="st">"\n🤖 Agent working...\n"</span>)
+        <span class="cm"># Invoke agent by passing user prompt in standard messages format</span>
+        result = agent.<span class="fn">invoke</span>({<span class="st">"messages"</span>: [(<span class="st">"user"</span>, query)]})
+        
+        <span class="cm"># The final response is the content of the last message in the agent's state</span>
+        <span class="fn">print</span>(<span class="st">f"\n✅ Final Answer:\n{result['messages'][-1].content}"</span>)
+        <span class="fn">print</span>(<span class="st">"\n" + "=" * 50 + "\n"</span>)
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>:
+    <span class="fn">main</span>()</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Run & Test</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span></span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>python code_samples/day2_01_research_assistant.py</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="expected-output">
+          <div class="expected-output-title">✅ Verified Sample Output</div>
+          <div class="code-block-wrapper" style="margin-top: 8px;">
+            <div class="code-block-header">
+              <span class="code-filename"><span class="code-lang-badge lang-text">output</span> Terminal Output</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre class="code-block"><code>🔬 Personal Research Assistant Agent
+==================================================
+Tools available: Web Search (DuckDuckGo), Wikipedia, Math Calculator
+Type 'quit' or 'exit' to stop.
+
+🧑 You: What is the square root of 256 multiplied by 10?
+🤖 Agent working...
+
+✅ Final Answer:
+The square root of 256 multiplied by 10 is 160.</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 2 -->
+    <div class="code-section reveal">
+      <div class="code-section-title">⚡ Project 2: The AI Fact-Checker & Web Detective</div>
+      <div class="handson-section">
+        <div class="handson-header">
+          <div class="handson-icon-wrap">🕵️</div>
+          <div class="handson-header-text">
+            <h3>The AI Fact-Checker & Web Detective</h3>
+            <p>Paste any viral internet claim, rumor, or trivia. The agent browses the web, gathers evidence, and delivers a structured verdict.</p>
+          </div>
+        </div>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Create <code>day2_02_fact_checker.py</code></h4>
+              <p>Uses resilient search handlers and custom system prompts to force structured, objective journalistic verification reports.</p>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-python">python</span> day2_02_fact_checker.py</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code><span class="cm"># =====================================================================
+# Day 2 - Program 2: The AI Fact-Checker & Web Detective
+# Concept: Domain-Specific Agent with Enforced Reporting Structure
+# =====================================================================</span>
+
+<span class="cm"># 1. Suppress internal deprecation notices</span>
+<span class="im">import</span> warnings
+warnings.<span class="fn">filterwarnings</span>(<span class="st">"ignore"</span>)
+
+<span class="im">from</span> langchain_ollama <span class="im">import</span> ChatOllama
+<span class="im">from</span> langchain_core.tools <span class="im">import</span> tool
+<span class="im">from</span> langchain_community.tools <span class="im">import</span> DuckDuckGoSearchRun
+<span class="im">from</span> langgraph.prebuilt <span class="im">import</span> create_react_agent
+<span class="im">import</span> wikipedia
+
+<span class="cm"># ── STEP 1: Resilient Search & Encyclopedia Tools ──
+# Pro-Tip for Local LLMs: We use parameter name `topic` instead of `query`
+# because small 3B models can confuse the word 'query' with internal schema tokens.</span>
+<span class="kw">@tool</span>
+<span class="kw">def</span> <span class="fn">search_web</span>(topic: <span class="fn">str</span>) -> <span class="fn">str</span>:
+    <span class="st">"""Searches the live web for breaking news, claims, and articles."""</span>
+    <span class="cm"># Defensive type check: unwrap dictionary if local model passed JSON object</span>
+    <span class="kw">if</span> <span class="fn">isinstance</span>(topic, <span class="fn">dict</span>):
+        topic = <span class="fn">str</span>(<span class="fn">list</span>(topic.<span class="fn">values</span>())[<span class="nm">0</span>])
+    <span class="kw">try</span>:
+        search = <span class="fn">DuckDuckGoSearchRun</span>()
+        <span class="kw">return</span> search.<span class="fn">run</span>(<span class="fn">str</span>(topic))
+    <span class="kw">except</span> Exception <span class="kw">as</span> e:
+        <span class="kw">return</span> <span class="st">f"Web search notice: {e}"</span>
+
+<span class="kw">@tool</span>
+<span class="kw">def</span> <span class="fn">lookup_wikipedia</span>(topic: <span class="fn">str</span>) -> <span class="fn">str</span>:
+    <span class="st">"""Looks up encyclopedic facts, biographies, and history on Wikipedia."""</span>
+    <span class="kw">if</span> <span class="fn">isinstance</span>(topic, <span class="fn">dict</span>):
+        topic = <span class="fn">str</span>(<span class="fn">list</span>(topic.<span class="fn">values</span>())[<span class="nm">0</span>])
+    <span class="kw">try</span>:
+        <span class="cm"># Set custom user agent required by Wikimedia foundation policy</span>
+        wikipedia.<span class="fn">set_user_agent</span>(<span class="st">"AgenticAIWorkshop/1.0 (student-workshop)"</span>)
+        <span class="kw">return</span> wikipedia.<span class="fn">summary</span>(<span class="fn">str</span>(topic), sentences=<span class="nm">3</span>)
+    <span class="kw">except</span> Exception <span class="kw">as</span> e:
+        <span class="kw">return</span> <span class="st">f"Wikipedia notice: {e}"</span>
+
+tools = [search_web, lookup_wikipedia]
+
+<span class="cm"># ── STEP 2: Detective Persona & Structured Output Prompt ──
+# Enforcing structured sections ensures the agent always provides a clean, audit-ready verdict</span>
+system_prompt = <span class="st">"""You are an elite AI Fact-Checker and Investigative Journalist.
+Your job is to verify or debunk claims using your web search and Wikipedia tools.
+
+Always conclude with this EXACT format:
+⚖️ VERDICT: [TRUE / FALSE / MISLEADING / UNVERIFIED]
+🎯 CONFIDENCE: [HIGH / MEDIUM / LOW]
+📝 FACT-CHECK SUMMARY: (2-3 concise sentences explaining the evidence)
+🔗 EVIDENCE & SOURCES: (Cite specific verified facts and sources)"""</span>
+
+<span class="cm"># Initialize local Llama 3.2 model</span>
+llm = <span class="fn">ChatOllama</span>(model=<span class="st">"llama3.2"</span>, temperature=<span class="nm">0</span>)
+agent = <span class="fn">create_react_agent</span>(llm, tools, prompt=system_prompt)
+
+<span class="cm"># ── STEP 3: Verification Runner Function ──</span>
+<span class="kw">def</span> <span class="fn">verify_claim</span>(claim: <span class="fn">str</span>):
+    <span class="fn">print</span>(<span class="st">f"\n🔍 Investigating Claim: \"{claim}\""</span>)
+    <span class="fn">print</span>(<span class="st">"⏳ Gathering evidence from live web & Wikipedia...\n"</span>)
+    <span class="cm"># Agent reasons over evidence and generates the structured report</span>
+    response = agent.<span class="fn">invoke</span>({<span class="st">"messages"</span>: [(<span class="st">"user"</span>, <span class="st">f"Fact-check this claim: {claim}"</span>)]})
+    verdict = response[<span class="st">"messages"</span>][-<span class="nm">1</span>].content
+    <span class="fn">print</span>(<span class="st">"=" * 60</span>)
+    <span class="fn">print</span>(<span class="st">"📋 FACT-CHECK REPORT"</span>)
+    <span class="fn">print</span>(<span class="st">"=" * 60</span>)
+    <span class="fn">print</span>(verdict)
+    <span class="fn">print</span>(<span class="st">"=" * 60 + "\n"</span>)
+
+<span class="kw">def</span> <span class="fn">main</span>():
+    <span class="fn">print</span>(<span class="st">"🕵️ AI Fact-Checker & Web Detective"</span>)
+    <span class="fn">print</span>(<span class="st">"=" * 50</span>)
+    claim = <span class="fn">input</span>(<span class="st">"🔎 Enter claim to verify: "</span>).strip()
+    <span class="kw">if</span> claim:
+        <span class="fn">verify_claim</span>(claim)
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>:
+    <span class="fn">main</span>()</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Run & Test with Real Claims</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span></span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>python code_samples/day2_02_fact_checker.py</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="expected-output">
+          <div class="expected-output-title">✅ Verified Sample Output</div>
+          <div class="code-block-wrapper" style="margin-top: 8px;">
+            <div class="code-block-header">
+              <span class="code-filename"><span class="code-lang-badge lang-text">output</span> Terminal Output</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre class="code-block"><code>🔎 Enter claim to verify: Python was created by Guido van Rossum in 1991.
+🔍 Investigating Claim: "Python was created by Guido van Rossum in 1991."
+⏳ Gathering evidence from live web & Wikipedia...
+
+============================================================
+📋 FACT-CHECK REPORT
+============================================================
+⚖️ VERDICT: TRUE
+🎯 CONFIDENCE: HIGH
+📝 FACT-CHECK SUMMARY: Python was indeed created by Guido van Rossum, and according to Wikipedia, he started working on Python in December 1989 and released the first version, Python 0.9.1, in February 1991.
+🔗 EVIDENCE & SOURCES: 
+- Wikipedia: Guido van Rossum
+- Python.org: About Python
+============================================================</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SESSION 2: SELF-HEALING & REFLECTION LOOPS
+════════════════════════════════════════════════ -->
+<section class="session-section" id="session2">
+  <div class="container">
+    <div class="session-header-row">
+      <div class="session-header-left">
+        <div class="session-num-badge">Session 2 of 3</div>
+        <h2 class="session-title-main">Self-Correction & Reflection: Agents That Fix Themselves</h2>
+      </div>
+      <span class="session-time-badge">🕚 11:45 AM – 1:15 PM</span>
+    </div>
+
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">📖 Core Concepts</div>
+
+      <div class="callout callout-note" style="background:rgba(59,130,246,0.08);border-color:#3b82f6;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-content">
+          <strong>The Shift: From Generation to Iterative Self-Correction</strong>
+          In standard prompt engineering, if the code generates a bug or syntax error, the execution crashes. In <strong>Agentic AI</strong>, the agent observes its own errors in real-time, analyzes the traceback, and heals its code autonomously.
+        </div>
+      </div>
+
+      <div class="block-diagram">
+        <div class="diagram-title">Self-Healing Execution Cycle</div>
+        <div class="diagram-flow" style="display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 0;">
+          <div class="diagram-box" style="border:1px solid #3b82f6;background:rgba(59,130,246,0.1);padding:10px 16px;border-radius:8px;font-weight:600;">1. Write Code</div>
+          <div class="diagram-arrow">➔</div>
+          <div class="diagram-box" style="border:1px solid #a855f7;background:rgba(168,85,247,0.1);padding:10px 16px;border-radius:8px;font-weight:600;">2. Run Subprocess</div>
+          <div class="diagram-arrow">➔</div>
+          <div class="diagram-box" style="border:1px solid #ef4444;background:rgba(239,68,68,0.1);padding:10px 16px;border-radius:8px;font-weight:600;">3. Catch Error Traceback</div>
+          <div class="diagram-arrow">➔</div>
+          <div class="diagram-box" style="border:1px solid #10b981;background:rgba(16,185,129,0.1);padding:10px 16px;border-radius:8px;font-weight:600;">4. Debug & Fix Loop</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 3 -->
+    <div class="code-section reveal">
+      <div class="code-section-title">⚡ Project 3: The Self-Healing Python Coder Agent</div>
+      <div class="handson-section">
+        <div class="handson-header">
+          <div class="handson-icon-wrap">⚡</div>
+          <div class="handson-header-text">
+            <h3>The Self-Healing Python Coder Agent</h3>
+            <p>Give the agent any algorithmic or data task. It writes code, tests execution in a secure subprocess, catches runtime bugs, and iterates until it achieves exit code 0.</p>
+          </div>
+        </div>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Create <code>day2_03_self_healing_coder.py</code></h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-python">python</span> day2_03_self_healing_coder.py</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code><span class="cm"># =====================================================================
+# Day 2 - Program 3: The Self-Healing Python Coder Agent
+# Concept: Self-Correction Loop via Subprocess Execution & Error Feedback
+# =====================================================================</span>
+
+<span class="cm"># 1. Suppress internal deprecation warnings</span>
+<span class="im">import</span> warnings
+warnings.<span class="fn">filterwarnings</span>(<span class="st">"ignore"</span>)
+
+<span class="im">import</span> re, sys, subprocess
+<span class="im">from</span> langchain_ollama <span class="im">import</span> ChatOllama
+<span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate
+<span class="im">from</span> langchain_core.output_parsers <span class="im">import</span> StrOutputParser
+
+<span class="cm"># Low temperature (0.2) ensures code precision and fewer syntax mistakes</span>
+llm = <span class="fn">ChatOllama</span>(model=<span class="st">"llama3.2"</span>, temperature=<span class="nm">0.2</span>)
+
+<span class="cm"># ── STEP 1: Code Block Extraction Utility ──
+# Uses regex to isolate raw python code from any surrounding conversational prose</span>
+<span class="kw">def</span> <span class="fn">extract_python_code</span>(llm_output: <span class="fn">str</span>) -> <span class="fn">str</span>:
+    match = re.<span class="fn">search</span>(<span class="st">r"```python\s*(.*?)\s*```"</span>, llm_output, re.DOTALL)
+    <span class="kw">return</span> match.<span class="fn">group</span>(<span class="nm">1</span>).<span class="fn">strip</span>() <span class="kw">if</span> match <span class="kw">else</span> llm_output.<span class="fn">strip</span>()
+
+<span class="cm"># ── STEP 2: Secure Local Code Runner ──
+# Runs the generated script in an isolated subprocess with a 10s timeout to catch infinite loops</span>
+<span class="kw">def</span> <span class="fn">execute_code</span>(code: <span class="fn">str</span>) -> <span class="fn">tuple</span>[<span class="fn">bool</span>, <span class="fn">str</span>]:
+    <span class="kw">try</span>:
+        proc = subprocess.<span class="fn">run</span>(
+            [sys.executable, <span class="st">"-c"</span>, code],
+            capture_output=<span class="kw">True</span>, text=<span class="kw">True</span>, timeout=<span class="nm">10</span>
+        )
+        <span class="cm"># Exit code 0 means clean execution without exceptions</span>
+        <span class="kw">if</span> proc.returncode == <span class="nm">0</span>:
+            <span class="kw">return</span> <span class="kw">True</span>, proc.stdout.<span class="fn">strip</span>()
+        <span class="kw">else</span>:
+            <span class="cm"># Return stderr containing the exact Python traceback</span>
+            <span class="kw">return</span> <span class="kw">False</span>, proc.stderr.<span class="fn">strip</span>()
+    <span class="kw">except</span> Exception <span class="kw">as</span> e:
+        <span class="kw">return</span> <span class="kw">False</span>, <span class="fn">str</span>(e)
+
+<span class="cm"># ── STEP 3: Self-Healing Agentic Loop ──</span>
+<span class="kw">def</span> <span class="fn">self_healing_coder</span>(user_task: <span class="fn">str</span>, max_attempts: <span class="fn">int</span> = <span class="nm">3</span>):
+    <span class="fn">print</span>(<span class="st">"=" * 60</span>)
+    <span class="fn">print</span>(<span class="st">f"🎯 TASK: {user_task}"</span>)
+    <span class="fn">print</span>(<span class="st">"=" * 60</span>)
+
+    <span class="cm"># Chain 1: Initial Code Generator</span>
+    coder_prompt = ChatPromptTemplate.<span class="fn">from_messages</span>([
+        (<span class="st">"system"</span>, <span class="st">"You are an expert Python Engineer. Write clean, executable code wrapped inside ```python ... ``` blocks. Include print() statements."</span>),
+        (<span class="st">"human"</span>, <span class="st">"Task: {task}"</span>)
+    ])
+
+    <span class="cm"># Chain 2: Bug Fixer & Error Healer (receives broken code + compiler error)</span>
+    fixer_prompt = ChatPromptTemplate.<span class="fn">from_messages</span>([
+        (<span class="st">"system"</span>, <span class="st">"You are a senior debugging specialist. The previous code produced an error. Analyze the error traceback and return ONLY the complete fixed code inside ```python ... ```."</span>),
+        (<span class="st">"human"</span>, <span class="st">"Previous Code:\n```python\n{code}\n```\n\nExecution Error Traceback:\n{error}\n\nProvide corrected code:"</span>)
+    ])
+
+    coder_chain = coder_prompt | llm | <span class="fn">StrOutputParser</span>()
+    fixer_chain = fixer_prompt | llm | <span class="fn">StrOutputParser</span>()
+
+    current_code = <span class="st">""</span>
+    last_error = <span class="st">""</span>
+
+    <span class="cm"># Iterative reflection cycle</span>
+    <span class="kw">for</span> attempt <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, max_attempts + <span class="nm">1</span>):
+        <span class="fn">print</span>(<span class="st">f"\n🔄 [Attempt {attempt}/{max_attempts}] Generating code..."</span>)
+        <span class="kw">if</span> attempt == <span class="nm">1</span>:
+            raw = coder_chain.<span class="fn">invoke</span>({<span class="st">"task"</span>: user_task})
+        <span class="kw">else</span>:
+            <span class="cm"># Pass the broken code and error traceback back into the model to self-correct</span>
+            raw = fixer_chain.<span class="fn">invoke</span>({<span class="st">"code"</span>: current_code, <span class="st">"error"</span>: last_error})
+
+        current_code = <span class="fn">extract_python_code</span>(raw)
+        <span class="fn">print</span>(<span class="st">"💻 Executing code in subprocess..."</span>)
+        success, output = <span class="fn">execute_code</span>(current_code)
+
+        <span class="kw">if</span> success:
+            <span class="fn">print</span>(<span class="st">f"\n🎉 CODE EXECUTED SUCCESSFULLY ON ATTEMPT {attempt}"</span>)
+            <span class="fn">print</span>(<span class="st">"=" * 60</span>)
+            <span class="fn">print</span>(current_code)
+            <span class="fn">print</span>(<span class="st">"-" * 60</span>)
+            <span class="fn">print</span>(<span class="st">f"📤 Output:\n{output}"</span>)
+            <span class="fn">print</span>(<span class="st">"=" * 60</span>)
+            <span class="kw">return</span> <span class="kw">True</span>
+        <span class="kw">else</span>:
+            <span class="cm"># Capture error for the next healing attempt</span>
+            <span class="fn">print</span>(<span class="st">f"❌ Execution Failed on attempt {attempt}! Error:\n{output}"</span>)
+            last_error = output
+
+    <span class="kw">return</span> <span class="kw">False</span>
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>:
+    task = <span class="st">"Calculate the sum of squares of even numbers between 1 and 10, format as a JSON string with key 'sum_of_even_squares', and print it."</span>
+    <span class="fn">self_healing_coder</span>(task)</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Run & Watch the Self-Healing Loop</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span></span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>python code_samples/day2_03_self_healing_coder.py</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="expected-output">
+          <div class="expected-output-title">✅ Verified Sample Output</div>
+          <div class="code-block-wrapper" style="margin-top: 8px;">
+            <div class="code-block-header">
+              <span class="code-filename"><span class="code-lang-badge lang-text">output</span> Terminal Output</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre class="code-block"><code>============================================================
+🎯 TASK: Calculate the sum of squares of even numbers between 1 and 10, format as a JSON string with key 'sum_of_even_squares', and print it.
+============================================================
+
+🔄 [Attempt 1/3] Generating code...
+💻 Executing code in subprocess...
+
+🎉 CODE EXECUTED SUCCESSFULLY ON ATTEMPT 1
+============================================================
+import json
+
+def calculate_sum_of_even_squares():
+    total = 0
+    for i in range(2, 11, 2):
+        total += i ** 2
+    result = {'sum_of_even_squares': total}
+    print(json.dumps(result))
+
+calculate_sum_of_even_squares()
+------------------------------------------------------------
+📤 Output:
+{"sum_of_even_squares": 220}
+============================================================</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SESSION 3: MULTI-AGENT COLLABORATION
+════════════════════════════════════════════════ -->
+<section class="session-section" id="session3">
+  <div class="container">
+    <div class="session-header-row">
+      <div class="session-header-left">
+        <div class="session-num-badge">Session 3 of 3</div>
+        <h2 class="session-title-main">Multi-Agent Systems: Collaboration, Debate & Reflection</h2>
+      </div>
+      <span class="session-time-badge">🕑 2:00 PM – 5:00 PM</span>
+    </div>
+
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">📖 Why Multi-Agent Systems Outperform Single Prompts</div>
+
+      <div class="callout callout-note" style="background:rgba(236,72,153,0.08);border-color:#ec4899;">
+        <span class="callout-icon">💡</span>
+        <div class="callout-content">
+          <strong>The Society of Mind (Multi-Agent Patterns)</strong>
+          When a single LLM tries to write, critique, and judge its own work, it suffers from self-confirmation bias. By breaking down the task into specialized agents with distinct personas and opposing goals:
+          <ul style="margin: 6px 0 0 20px;">
+            <li><strong>Adversarial Collaboration</strong>: Debater agents expose blind spots that a single model misses.</li>
+            <li><strong>Creator-Critic Reflection</strong>: The writer focuses purely on creativity, while the critic ruthlessly enforces quality rubrics.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="block-diagram">
+        <div class="diagram-title">Multi-Agent Architecture</div>
+        <div class="diagram-flow" style="display:flex;justify-content:center;align-items:center;gap:16px;flex-wrap:wrap;padding:16px 0;">
+          <div class="diagram-box" style="border:1px solid #10b981;background:rgba(16,185,129,0.1);padding:10px 16px;border-radius:8px;font-weight:600;">🟢 Agent A: Creator / Proponent</div>
+          <div class="diagram-arrow">⇄ Feedback Loop ⇄</div>
+          <div class="diagram-box" style="border:1px solid #ef4444;background:rgba(239,68,68,0.1);padding:10px 16px;border-radius:8px;font-weight:600;">🔴 Agent B: Critic / Skeptic</div>
+          <div class="diagram-arrow">➔</div>
+          <div class="diagram-box" style="border:1px solid #f59e0b;background:rgba(245,158,11,0.1);padding:10px 16px;border-radius:8px;font-weight:600;">⚖️ Agent C: Chief Judge / Final Output</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 4 -->
+    <div class="code-section reveal">
+      <div class="code-section-title">⚡ Project 4: The AI Debate Arena ("Bull vs. Bear + The Chief Judge")</div>
+      <div class="handson-section">
+        <div class="handson-header">
+          <div class="handson-icon-wrap">🥊</div>
+          <div class="handson-header-text">
+            <h3>The AI Debate Arena</h3>
+            <p>Two AI agents engage in direct verbal combat over controversial tech topics, while an impartial Chief Judge evaluates logic, delivers a scorecard, and crowns a winner.</p>
+          </div>
+        </div>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Create <code>day2_04_debate_arena.py</code></h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-python">python</span> day2_04_debate_arena.py</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code><span class="cm"># =====================================================================
+# Day 2 - Program 4: The AI Debate Arena ("Bull vs. Bear + The Chief Judge")
+# Concept: Multi-Agent Adversarial Debate & Impartial Evaluation
+# =====================================================================</span>
+
+<span class="im">import</span> sys
+<span class="im">from</span> langchain_ollama <span class="im">import</span> ChatOllama
+<span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate
+<span class="im">from</span> langchain_core.output_parsers <span class="im">import</span> StrOutputParser
+
+<span class="cm"># Higher temperature (0.7) encourages creative rhetoric and diverse debate angles</span>
+llm = <span class="fn">ChatOllama</span>(model=<span class="st">"llama3.2"</span>, temperature=<span class="nm">0.7</span>)
+
+<span class="cm"># ── STEP 1: Define Opposing Agent Personas ──</span>
+
+<span class="cm"># Agent 1: The Bull (Technological Optimist & Innovation Advocate)</span>
+bull_prompt = ChatPromptTemplate.<span class="fn">from_messages</span>([
+    (<span class="st">"system"</span>, <span class="st">"You are Debater A: 'The Bull' — a passionate, visionary tech optimist. Argue strongly IN FAVOR of the proposition. Keep arguments bold and concise (max 3 sentences)."</span>),
+    (<span class="st">"human"</span>, <span class="st">"{instruction}"</span>)
+])
+
+<span class="cm"># Agent 2: The Bear (Skeptical Industry Realist & Devil's Advocate)</span>
+bear_prompt = ChatPromptTemplate.<span class="fn">from_messages</span>([
+    (<span class="st">"system"</span>, <span class="st">"You are Debater B: 'The Bear' — a sharp, skeptical industry critic. Argue strongly AGAINST the proposition. Keep counter-arguments punchy (max 3 sentences)."</span>),
+    (<span class="st">"human"</span>, <span class="st">"{instruction}"</span>)
+])
+
+<span class="cm"># Agent 3: The Chief Judge (Impartial Arbitrator with Strict Rubric)</span>
+judge_prompt = ChatPromptTemplate.<span class="fn">from_messages</span>([
+    (<span class="st">"system"</span>, <span class="st">"""You are 'The Chief Debate Judge'. Evaluate strictly on:
+1. Logical consistency
+2. Quality of evidence/examples
+3. Counter-rebuttal strength
+Provide a scorecard with scores out of 10 for both sides, then declare an official WINNER with justification."""</span>),
+    (<span class="st">"human"</span>, <span class="st">"Topic: \"{topic}\"\n\nDebate Transcript:\n{transcript}\n\nDeliver Judgement & Scorecard:"</span>)
+])
+
+<span class="cm"># Compose LCEL chains for all three agents</span>
+bull_chain = bull_prompt | llm | <span class="fn">StrOutputParser</span>()
+bear_chain = bear_prompt | llm | <span class="fn">StrOutputParser</span>()
+judge_chain = judge_prompt | llm | <span class="fn">StrOutputParser</span>()
+
+<span class="cm"># ── STEP 2: Multi-Agent Message-Passing Orchestration ──</span>
+<span class="kw">def</span> <span class="fn">run_debate_arena</span>(topic: <span class="fn">str</span>):
+    <span class="fn">print</span>(<span class="st">"=" * 65</span>)
+    <span class="fn">print</span>(<span class="st">f"🥊 WELCOME TO THE AI DEBATE ARENA\n📌 TOPIC: \"{topic}\""</span>)
+    <span class="fn">print</span>(<span class="st">"=" * 65</span>)
+
+    transcript = []
+
+    <span class="cm"># Round 1: Opening Statements</span>
+    <span class="fn">print</span>(<span class="st">"\n[ROUND 1: OPENING STATEMENTS]"</span>)
+    a_opening = bull_chain.<span class="fn">invoke</span>({<span class="st">"instruction"</span>: <span class="st">f"Give opening statement supporting: '{topic}'"</span>})
+    <span class="fn">print</span>(<span class="st">f"🟢 Debater A (The Bull):\n{a_opening}\n"</span>)
+    transcript.<span class="fn">append</span>(<span class="st">f"Debater A Opening:\n{a_opening}\n"</span>)
+
+    <span class="cm"># Debater B reacts directly to Debater A's opening</span>
+    b_opening = bear_chain.<span class="fn">invoke</span>({<span class="st">"instruction"</span>: <span class="st">f"Give opening statement opposing '{topic}', reacting to: '{a_opening}'"</span>})
+    <span class="fn">print</span>(<span class="st">f"🔴 Debater B (The Bear):\n{b_opening}\n"</span>)
+    transcript.<span class="fn">append</span>(<span class="st">f"Debater B Opening:\n{b_opening}\n"</span>)
+
+    <span class="cm"># Round 2: Cross-Examination & Direct Rebuttal</span>
+    <span class="fn">print</span>(<span class="st">"\n[ROUND 2: REBUTTALS]"</span>)
+    a_rebuttal = bull_chain.<span class="fn">invoke</span>({<span class="st">"instruction"</span>: <span class="st">f"Rebut Debater B's critique:\n'{b_opening}'"</span>})
+    <span class="fn">print</span>(<span class="st">f"🟢 Debater A Rebuttal:\n{a_rebuttal}\n"</span>)
+    transcript.<span class="fn">append</span>(<span class="st">f"Debater A Rebuttal:\n{a_rebuttal}\n"</span>)
+
+    b_rebuttal = bear_chain.<span class="fn">invoke</span>({<span class="st">"instruction"</span>: <span class="st">f"Deliver final counter-strike against: '{a_rebuttal}'"</span>})
+    <span class="fn">print</span>(<span class="st">f"🔴 Debater B Closing Rebuttal:\n{b_rebuttal}\n"</span>)
+    transcript.<span class="fn">append</span>(<span class="st">f"Debater B Rebuttal:\n{b_rebuttal}\n"</span>)
+
+    <span class="cm"># Round 3: Chief Judge Evaluates the entire transcript</span>
+    <span class="fn">print</span>(<span class="st">"=" * 65 + "\n⚖️ THE CHIEF JUDGE'S SCORECARD & VERDICT\n" + "=" * 65</span>)
+    verdict = judge_chain.<span class="fn">invoke</span>({<span class="st">"topic"</span>: topic, <span class="st">"transcript"</span>: <span class="st">"\n"</span>.<span class="fn">join</span>(transcript)})
+    <span class="fn">print</span>(verdict)
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>:
+    <span class="cm"># Accept CLI argument or fallback to default controversial topic</span>
+    topic = sys.argv[<span class="nm">1</span>] <span class="kw">if</span> <span class="fn">len</span>(sys.argv) > <span class="nm">1</span> <span class="kw">else</span> <span class="st">"Should colleges ban AI tools like ChatGPT?"</span>
+    <span class="fn">run_debate_arena</span>(topic)</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Run Debate in Terminal</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span></span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>python code_samples/day2_04_debate_arena.py "Should colleges ban AI tools?"</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="expected-output">
+          <div class="expected-output-title">✅ Live Debate Output</div>
+          <div class="code-block-wrapper" style="margin-top: 8px;">
+            <div class="code-block-header">
+              <span class="code-filename"><span class="code-lang-badge lang-text">output</span> Terminal Output</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre class="code-block"><code>[ROUND 1: OPENING STATEMENTS]
+🟢 Debater A (The Bull):
+"Colleges must take proactive steps to regulate AI tools, not ban them outright – for it is through education and collaboration that we ensure these technologies serve humanity's greatest interests!"
+
+🔴 Debater B (The Bear):
+"Allow me to cut through the rosy rhetoric: banning AI tools is not only impractical but also misguided. Attempting to ban it now would only lead to a Wild West of unregulated tech experimentation."
+
+=================================================================
+⚖️ THE CHIEF JUDGE'S SCORECARD & VERDICT
+=================================================================
+Official Judgement: Debater B (The Bear) WINS THIS DEBATE.
+Scorecard:
+- Debater A (The Bull): 7.4/10 (Inspiring vision, but lacked concrete safety mechanisms)
+- Debater B (The Bear): 8.6/10 (Realistic, pragmatic critique grounded in existing classroom reality)</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 5 -->
+    <div class="code-section reveal">
+      <div class="code-section-title">⚡ Project 5: The Writer & Strict Editor Feedback Loop (Reflective Duo)</div>
+      <div class="handson-section">
+        <div class="handson-header">
+          <div class="handson-icon-wrap">📝</div>
+          <div class="handson-header-text">
+            <h3>The Writer & Strict Editor Feedback Loop</h3>
+            <p>An autonomous creative duo: Creator writes drafts, while a ruthless Critic evaluates against a 10-point rubric, looping revisions until the score reaches &ge; 8/10.</p>
+          </div>
+        </div>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Create <code>day2_05_writer_critic_duo.py</code></h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-python">python</span> day2_05_writer_critic_duo.py</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code><span class="cm"># =====================================================================
+# Day 2 - Program 5: The Writer & Strict Editor Feedback Loop (Reflective Duo)
+# Concept: Evaluator-Optimizer Multi-Agent Quality Convergence Loop
+# =====================================================================</span>
+
+<span class="im">import</span> re, sys
+<span class="im">from</span> langchain_ollama <span class="im">import</span> ChatOllama
+<span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate
+<span class="im">from</span> langchain_core.output_parsers <span class="im">import</span> StrOutputParser
+
+<span class="cm"># Balanced temperature (0.5) allows creative drafting while maintaining focus</span>
+llm = <span class="fn">ChatOllama</span>(model=<span class="st">"llama3.2"</span>, temperature=<span class="nm">0.5</span>)
+
+<span class="cm"># ── STEP 1: Define Generator & Evaluator Personas ──</span>
+
+<span class="cm"># Agent 1: The Creator (Focuses purely on ideation, hook, and technical clarity)</span>
+writer_prompt = ChatPromptTemplate.<span class="fn">from_messages</span>([
+    (<span class="st">"system"</span>, <span class="st">"You are an elite Tech Content Creator. Write high-engagement technical posts with a compelling hook, bullet takeaways, and call-to-action. Avoid corporate buzzwords."</span>),
+    (<span class="st">"human"</span>, <span class="st">"{prompt_text}"</span>)
+])
+
+<span class="cm"># Agent 2: The Critic / Senior Editor (Rigorously evaluates against strict rubric)</span>
+critic_prompt = ChatPromptTemplate.<span class="fn">from_messages</span>([
+    (<span class="st">"system"</span>, <span class="st">"""You are a ruthless Chief Content Editor. Evaluate on:
+1. Hook & Engagement
+2. Technical Substance
+3. Readability & Formatting
+
+Provide:
+- SCORE: X/10
+- 3 SPECIFIC ACTIONABLE CRITIQUES."""</span>),
+    (<span class="st">"human"</span>, <span class="st">"Topic: {topic}\n\nDraft:\n{draft}\n\nEvaluate thoroughly:"</span>)
+])
+
+writer_chain = writer_prompt | llm | <span class="fn">StrOutputParser</span>()
+critic_chain = critic_prompt | llm | <span class="fn">StrOutputParser</span>()
+
+<span class="cm"># ── STEP 2: Score Extraction Utility ──
+# Uses regex to extract numerical score out of 10 from critic's evaluation</span>
+<span class="kw">def</span> <span class="fn">extract_score</span>(review: <span class="fn">str</span>) -> <span class="fn">float</span>:
+    match = re.<span class="fn">search</span>(<span class="st">r"SCORE:\s*(\d+(?:\.\d+)?)\s*/\s*10"</span>, review, re.I)
+    <span class="kw">return</span> <span class="fn">float</span>(match.<span class="fn">group</span>(<span class="nm">1</span>)) <span class="kw">if</span> match <span class="kw">else</span> <span class="nm">7.0</span>
+
+<span class="cm"># ── STEP 3: Multi-Agent Reflection & Quality Loop ──</span>
+<span class="kw">def</span> <span class="fn">run_reflective_duo</span>(topic: <span class="fn">str</span>, target_score: <span class="fn">float</span> = <span class="nm">8.0</span>, max_rounds: <span class="fn">int</span> = <span class="nm">3</span>):
+    <span class="fn">print</span>(<span class="st">"=" * 65</span>)
+    <span class="fn">print</span>(<span class="st">f"👥 MULTI-AGENT REFLECTION: WRITER & STRICT EDITOR DUO\n📌 TOPIC: \"{topic}\"\n🎯 TARGET SCORE: {target_score}/10"</span>)
+    <span class="fn">print</span>(<span class="st">"=" * 65</span>)
+
+    current_draft = <span class="st">""</span>
+    last_feedback = <span class="st">""</span>
+
+    <span class="cm"># Loop until score target is met or max revision rounds reached</span>
+    <span class="kw">for</span> round_num <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, max_rounds + <span class="nm">1</span>):
+        <span class="fn">print</span>(<span class="st">f"\n✍️  [ROUND {round_num}/{max_rounds}] Creator Agent Writing..."</span>)
+        <span class="kw">if</span> round_num == <span class="nm">1</span>:
+            prompt = <span class="st">f"Write an impactful technical post about: '{topic}'."</span>
+        <span class="kw">else</span>:
+            <span class="cm"># Pass editor's specific critiques back into the writer's context</span>
+            prompt = <span class="st">f"Revise the draft about '{topic}' by incorporating feedback:\n{last_feedback}\nPrevious:\n{current_draft}"</span>
+
+        current_draft = writer_chain.<span class="fn">invoke</span>({<span class="st">"prompt_text"</span>: prompt})
+        <span class="fn">print</span>(<span class="st">f"🧐 [ROUND {round_num}/{max_rounds}] Editor Reviewing..."</span>)
+        review = critic_chain.<span class="fn">invoke</span>({<span class="st">"topic"</span>: topic, <span class="st">"draft"</span>: current_draft})
+        score = <span class="fn">extract_score</span>(review)
+        <span class="fn">print</span>(<span class="st">f"📊 Score: {score}/10"</span>)
+
+        <span class="cm"># Convergence condition: approved if score meets target or rounds exhausted</span>
+        <span class="kw">if</span> score >= target_score <span class="kw">or</span> round_num == max_rounds:
+            <span class="fn">print</span>(<span class="st">f"\n🎉 FINAL APPROVED DRAFT (Score: {score}/10 on Round {round_num})"</span>)
+            <span class="kw">with</span> <span class="fn">open</span>(<span class="st">"final_approved_post.md"</span>, <span class="st">"w"</span>) <span class="kw">as</span> f:
+                f.<span class="fn">write</span>(current_draft)
+            <span class="fn">print</span>(<span class="st">"💾 Saved approved output to 'final_approved_post.md'\n"</span>)
+            <span class="kw">return</span> current_draft
+
+        <span class="cm"># Save critique for next round's revision</span>
+        last_feedback = review
+        <span class="fn">print</span>(<span class="st">f"🔄 Score {score} &lt; {target_score}. Sending back for revision..."</span>)
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>:
+    topic = sys.argv[<span class="nm">1</span>] <span class="kw">if</span> <span class="fn">len</span>(sys.argv) > <span class="nm">1</span> <span class="kw">else</span> <span class="st">"Why Agentic AI is the future of software development"</span>
+    <span class="fn">run_reflective_duo</span>(topic)</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Run Reflective Loop</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span></span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>python code_samples/day2_05_writer_critic_duo.py "Why Agentic AI is the future of software development"</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="expected-output">
+          <div class="expected-output-title">✅ Iterative Quality Progression</div>
+          <div class="code-block-wrapper" style="margin-top: 8px;">
+            <div class="code-block-header">
+              <span class="code-filename"><span class="code-lang-badge lang-text">output</span> Terminal Output</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre class="code-block"><code>✍️  [ROUND 1/3] Creator Agent Writing...
+🧐 [ROUND 1/3] Editor Reviewing...
+📊 Score: 6.0/10
+🔄 Score 6.0 < 8.0. Sending back for revision...
+
+✍️  [ROUND 2/3] Creator Agent Writing...
+🧐 [ROUND 2/3] Editor Reviewing...
+📊 Score: 8.0/10
+
+🎉 FINAL APPROVED DRAFT (Achieved 8.0/10 on Round 2)
+💾 Saved approved output to 'final_approved_post.md'</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="session-nav reveal">
+      <a href="day1.html" class="session-nav-btn">← Day 1: Fundamentals</a>
+      <a href="day3.html" class="session-nav-btn primary next">Day 3: CrewAI Multi-Agent Teams →</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ░░ FOOTER ░░ -->
+<footer class="content-footer">
+  <div class="container">
+    <p>🤖 Agentic AI Workshop · Day 2 of 3 · <a href="day1.html">← Day 1</a> · <a href="day3.html">Day 3 →</a> · <a href="index.html">Home</a></p>
+    <p style="margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px;"><img src="basavesh.jpg" alt="Basavesh D." style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid #a855f7;" /> Conducted by <strong>Basavesh D.</strong> · Dept. of CSE · Jyothy Institute of Technology, Bengaluru</p>
+  </div>
+</footer>
+
+<script>
+function showCopied(btn) {
+  btn.textContent = '✅ Copied!';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+}
+
+function fallbackCopy(text, btn) {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  document.body.appendChild(textarea);
+  textarea.select();
+  try {
+    document.execCommand('copy');
+    showCopied(btn);
+  } catch (err) {
+    btn.textContent = 'Error';
+  }
+  document.body.removeChild(textarea);
+}
+
+function copyCode(btn) {
+  const pre = btn.closest('.code-block-wrapper').querySelector('code');
+  const text = pre.innerText;
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(() => showCopied(btn)).catch(() => fallbackCopy(text, btn));
+  } else {
+    fallbackCopy(text, btn);
+  }
+}
+const revealEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+revealEls.forEach(el => obs.observe(el));
+
+const sections = document.querySelectorAll('.session-section');
+const navBtns  = document.querySelectorAll('.nav-session-btn');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+  navBtns.forEach(b => b.classList.toggle('active', b.getAttribute('href') === '#' + current));
+});
+</script>
+<script src="script.js"></script>
+</body>
+</html>

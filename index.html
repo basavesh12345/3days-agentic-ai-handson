@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2-Day Agentic AI Workshop | CSE Engineering Students</title>
+  <meta name="description"
+    content="A placement-focused 3-day hands-on workshop on Agentic AI for engineering students covering Python, LangChain, LangGraph, CrewAI, and RAG." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ░░ HERO ░░ -->
+  <header class="hero" id="home">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-orbs">
+      <span class="orb orb-1"></span>
+      <span class="orb orb-2"></span>
+      <span class="orb orb-3"></span>
+    </div>
+    <div class="container hero-inner">
+      <div class="badge-row">
+        <span class="badge badge-blue">🎓 CSE Students</span>
+        <span class="badge badge-purple">🚀 Placement-Focused</span>
+        <span class="badge badge-green">⚡ Hands-On</span>
+      </div>
+      <h1 class="hero-title">
+        3-Day Hands-on Workshop on<br />
+        <span class="gradient-text">Agentic AI</span><br />
+        for Software Engineers
+      </h1>
+      <p class="hero-subtitle">
+        Build Intelligent AI Applications using<br />
+        <strong>Python · LangChain · LangGraph · CrewAI · RAG</strong>
+      </p>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-num">3</span>
+          <span class="stat-label">Intensive Days</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">9</span>
+          <span class="stat-label">Sessions</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">9+</span>
+          <span class="stat-label">Projects Built</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Hands-On</span>
+        </div>
+        <div
+          style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:20px; align-items:center;">
+          <a href="#curriculum" class="cta-btn">View Full Curriculum ↓</a>
+          <a href="day1.html#setup-checklist" class="cta-btn"
+            style="background:rgba(16,185,129,0.2);border-color:#10b981;color:#6ee7b7;">🛠️ Setup Checklist</a>
+          <a href="code_samples/requirements.txt" download class="cta-btn"
+            style="background:rgba(168,85,247,0.2);border-color:#a855f7;color:#e9d5ff;">📦 Starter Requirements</a>
+          <button class="theme-toggle-btn cta-btn"
+            style="background:rgba(255,255,255,0.1);border:1px solid var(--border);color:var(--text-primary);cursor:pointer;">☀️
+            Toggle Light Mode</button>
+        </div>
+
+        <!-- Conducted By -->
+        <div class="conducted-by">
+          <span class="conducted-label">Conducted by</span>
+          <div class="instructor-mini">
+            <img src="basavesh.jpg" alt="Basavesh D." class="instructor-avatar" style="object-fit:cover;" />
+            <div class="instructor-info">
+              <strong>Basavesh D.</strong>
+              <span>Assistant Professor &amp; AI Trainer · Dept. of CSE</span>
+              <span>Jyothy Institute of Technology, Bengaluru</span>
+            </div>
+          </div>
+        </div>
+      </div>
+  </header>
+
+  <!-- ░░ OUTCOMES ░░ -->
+  <section class="outcomes-section" id="outcomes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">🎯 What You'll Gain</span>
+        <h2>Placement-Ready Outcomes</h2>
+        <p>Leave with skills, projects, and confidence to crack AI-focused roles</p>
+      </div>
+      <div class="outcomes-grid">
+        <div class="outcome-card">
+          <div class="outcome-icon">🐍</div>
+          <h3>Python + LLM Development</h3>
+          <p>Strong foundation in Python-based AI application development with real LLM integrations</p>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon">🔗</div>
+          <h3>LangChain Expertise</h3>
+          <p>Hands-on experience building chains, agents, and memory-powered applications</p>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon">📚</div>
+          <h3>RAG Systems</h3>
+          <p>Design and implement Retrieval-Augmented Generation pipelines from scratch</p>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon">🤖</div>
+          <h3>AI Agents</h3>
+          <p>Build intelligent agents using ReAct pattern with web search, tools, and memory</p>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon">🕸️</div>
+          <h3>Multi-Agent Systems</h3>
+          <p>Create collaborative AI teams using CrewAI with specialized roles and workflows</p>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon">💼</div>
+          <h3>GitHub Portfolio</h3>
+          <p>Walk away with a capstone project and resume-worthy portfolio on GitHub</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ CURRICULUM ░░ -->
+  <section class="curriculum-section" id="curriculum">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">📋 Full Curriculum</span>
+        <h2>3-Day Workshop Schedule</h2>
+        <p>A carefully designed progression from fundamentals to industry-level applications</p>
+      </div>
+
+      <!-- DAY 1 -->
+      <div class="day-block" id="day1">
+        <div class="day-header day-header-1" onclick="location.href='day1.html'" style="cursor:pointer;"
+          title="Open Day 1 Content">
+          <div class="day-label">
+            <span class="day-number">Day 1</span>
+            <span class="day-theme">Foundations of Generative AI & RAG Development</span>
+          </div>
+          <div class="day-date-pill">9:00 AM – 5:00 PM</div>
+        </div>
+
+        <div class="sessions-grid">
+
+          <!-- SESSION 1.1 -->
+          <div class="session-card" data-session="1.1" onclick="location.href='day1.html#session1'"
+            style="cursor:pointer;">
+            <div class="session-time-tag">9:00 – 11:00</div>
+            <div class="session-number">Session 1</div>
+            <h3 class="session-title">Introduction to Generative AI & LLMs</h3>
+            <div class="session-body">
+              <div class="topics-block">
+                <h4>📖 Topics Covered</h4>
+                <ul>
+                  <li>AI vs ML vs Deep Learning</li>
+                  <li>Evolution of LLMs & Transformers</li>
+                  <li>Prompt Engineering Fundamentals</li>
+                  <li>APIs vs Local Models</li>
+                  <li>What is Agentic AI?</li>
+                  <li>AI Agents vs Agentic AI</li>
+                  <li>Industry Use Cases & Career Opportunities</li>
+                </ul>
+              </div>
+              <div class="handson-block">
+                <h4>⚡ Hands-On</h4>
+                <ul>
+                  <li>Install Python Environment & VS Code</li>
+                  <li>Ollama Installation & Setup</li>
+                  <li>Run Llama 3 Locally</li>
+                  <li class="highlight-item">🏗️ Build your first AI Chatbot</li>
+                </ul>
+              </div>
+            </div>
+            <div class="skill-tag-row">
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Ollama</span>
+              <span class="skill-tag">Llama 3</span>
+              <span class="skill-tag">LLMs</span>
+            </div>
+          </div>
+
+          <!-- SESSION 1.2 -->
+          <div class="session-card" data-session="1.2" onclick="location.href='day1.html#session2'"
+            style="cursor:pointer;">
+            <div class="session-time-tag">11:15 – 1:00</div>
+            <div class="session-number">Session 2</div>
+            <h3 class="session-title">LangChain Fundamentals</h3>
+            <div class="session-body">
+              <div class="topics-block">
+                <h4>📖 Topics Covered</h4>
+                <ul>
+                  <li>LangChain Architecture Overview</li>
+                  <li>Prompts & Prompt Templates</li>
+                  <li>Chains & Chat Models</li>
+                  <li>Output Parsers</li>
+                  <li>Memory & Tools</li>
+                </ul>
+              </div>
+              <div class="handson-block">
+                <h4>⚡ Hands-On Projects</h4>
+                <div class="project-pill">📄 AI Resume Reviewer</div>
+                <div class="project-pill">✉️ AI Email Generator</div>
+                <p class="handson-note">Students learn prompt templates and structured outputs</p>
+              </div>
+            </div>
+            <div class="skill-tag-row">
+              <span class="skill-tag">LangChain</span>
+              <span class="skill-tag">Prompt Engineering</span>
+              <span class="skill-tag">Output Parsers</span>
+            </div>
+          </div>
+
+          <!-- SESSION 1.3 -->
+          <div class="session-card featured-session" data-session="1.3" onclick="location.href='day1.html#session3'"
+            style="cursor:pointer;">
+            <div class="session-time-tag">2:00 – 5:00</div>
+            <div class="session-number">Session 3</div>
+            <div class="featured-badge">⭐ Flagship Project</div>
+            <h3 class="session-title">Retrieval Augmented Generation (RAG)</h3>
+            <div class="session-body">
+              <div class="topics-block">
+                <h4>📖 Topics Covered</h4>
+                <ul>
+                  <li>Why RAG? The Problem It Solves</li>
+                  <li>Embeddings & Vector Databases</li>
+                  <li>ChromaDB Setup & Usage</li>
+                  <li>Document Loaders</li>
+                  <li>Text Splitters & Chunking</li>
+                </ul>
+              </div>
+              <div class="handson-block">
+                <h4>⚡ Capstone Project</h4>
+                <div class="project-big">
+                  <div class="project-big-title">🏫 College Question Answering System</div>
+                  <div class="project-steps">
+                    <span class="step">📄 Load PDFs</span>
+                    <span class="arrow">→</span>
+                    <span class="step">🗃️ Create Vector DB</span>
+                    <span class="arrow">→</span>
+                    <span class="step">❓ Ask Questions</span>
+                    <span class="arrow">→</span>
+                    <span class="step">🔍 Show Sources</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="placement-meter">
+              <span class="placement-label">Placement Value</span>
+              <span class="stars">★★★★★</span>
+            </div>
+            <div class="skill-tag-row">
+              <span class="skill-tag">RAG</span>
+              <span class="skill-tag">ChromaDB</span>
+              <span class="skill-tag">Embeddings</span>
+              <span class="skill-tag">Vector DB</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- DAY 2 -->
+      <div class="day-block" id="day2">
+        <div class="day-header day-header-2" onclick="location.href='day2.html'" style="cursor:pointer;"
+          title="Open Day 2 Content">
+          <div class="day-label">
+            <span class="day-number">Day 2</span>
+            <span class="day-theme">Autonomous & Multi-Agent Systems</span>
+          </div>
+          <div class="day-date-pill">9:00 AM – 5:00 PM</div>
+        </div>
+
+        <div class="sessions-grid">
+
+          <!-- SESSION 2.1 -->
+          <div class="session-card" data-session="2.1" onclick="location.href='day2.html#session1'"
+            style="cursor:pointer;">
+            <div class="session-time-tag">9:00 – 11:00 AM</div>
+            <div class="session-number">Session 1</div>
+            <h3 class="session-title">Autonomous Single Agents with Tools (ReAct Loop)</h3>
+            <div class="session-body">
+              <div class="topics-block">
+                <h4>📖 Topics Covered</h4>
+                <ul>
+                  <li>ReAct Architecture (Reason + Act Loop)</li>
+                  <li><code>@tool</code> Decorator & JSON Schema</li>
+                  <li>Live Web Search & Wikimedia Integration</li>
+                  <li>Safe Sandboxed Python Math Evaluator</li>
+                  <li>Defensive Type-Handling for 3B LLMs</li>
+                </ul>
+              </div>
+              <div class="handson-block">
+                <h4>⚡ Hands-On Projects</h4>
+                <div class="project-pill">🔬 Project 1: Personal Research Assistant</div>
+                <div class="project-pill" style="margin-top:6px;">🕵️ Project 2: AI Fact-Checker & Web Detective</div>
+                <p class="handson-note" style="margin-top:8px;">Live web search, Wikipedia queries, and safe math
+                  evaluations</p>
+              </div>
+            </div>
+            <div class="skill-tag-row">
+              <span class="skill-tag">LangGraph</span>
+              <span class="skill-tag">ReAct</span>
+              <span class="skill-tag">Tool Calling</span>
+              <span class="skill-tag">Ollama</span>
+            </div>
+          </div>
+
+          <!-- SESSION 2.2 -->
+          <div class="session-card" data-session="2.2" onclick="location.href='day2.html#session2'"
+            style="cursor:pointer;">
+            <div class="session-time-tag">11:15 AM – 1:00 PM</div>
+            <div class="session-number">Session 2</div>
+            <h3 class="session-title">Self-Healing Agents & Code Execution</h3>
+            <div class="session-body">
+              <div class="topics-block">
+                <h4>📖 Topics Covered</h4>
+                <ul>
+                  <li>Autonomous Code Generation & Parsing</li>
+                  <li>Subprocess Isolation & Timeout Guards</li>
+                  <li>Capturing Stderr Tracebacks Dynamically</li>
+                  <li>Self-Correction & Reflection Loops</li>
+                  <li>Iterative Prompt Feedback Chains</li>
+                </ul>
+              </div>
+              <div class="handson-block">
+                <h4>⚡ Hands-On Project</h4>
+                <div class="project-pill">⚡ Project 3: Self-Healing Python Coder</div>
+                <div class="workflow-flow" style="margin-top:10px;">
+                  <span class="flow-step">💻 Write Code</span>
+                  <span class="flow-arrow">➔</span>
+                  <span class="flow-step">⚙️ Run Subprocess</span>
+                  <span class="flow-arrow">➔</span>
+                  <span class="flow-step">🚨 Catch Stderr</span>
+                  <span class="flow-arrow">➔</span>
+                  <span class="flow-step">🔄 Auto-Fix Loop</span>
+                </div>
+                <p class="handson-note">Agent iterates automatically until achieving exit code 0</p>
+              </div>
+            </div>
+            <div class="skill-tag-row">
+              <span class="skill-tag">Self-Healing</span>
+              <span class="skill-tag">Subprocess</span>
+              <span class="skill-tag">Debugging</span>
+              <span class="skill-tag">LangChain</span>
+            </div>
+          </div>
+
+          <!-- SESSION 2.3 -->
+          <div class="session-card featured-session" data-session="2.3" onclick="location.href='day2.html#session3'"
+            style="cursor:pointer;">
+            <div class="session-time-tag">2:00 – 5:00 PM</div>
+            <div class="session-number">Session 3</div>
+            <div class="featured-badge">⭐ Multi-Agent Arena</div>
+            <h3 class="session-title">Multi-Agent Collaboration, Debate & Reflection</h3>
+            <div class="session-body">
+              <div class="topics-block">
+                <h4>📖 Topics Covered</h4>
+                <ul>
+                  <li>The Society of Mind Architecture</li>
+                  <li>Adversarial Collaboration (Bull vs. Bear)</li>
+                  <li>Evaluator-Optimizer Multi-Agent Pattern</li>
+                  <li>Cross-Examination Message Passing</li>
+                  <li>LLM-as-a-Judge Scoring & Feedback Loops</li>
+                </ul>
+              </div>
+              <div class="handson-block">
+                <h4>⚡ Hands-On Projects</h4>
+                <div class="project-pill">🥊 Project 4: AI Debate Arena</div>
+                <div class="project-pill" style="margin-top:6px;">📝 Project 5: Writer & Strict Editor Duo</div>
+                <div class="agents-grid" style="margin-top:10px;">
+                  <div class="agent-chip">🟢 The Bull</div>
+                  <div class="agent-chip">🔴 The Bear</div>
+                  <div class="agent-chip">⚖️ Chief Judge</div>
+                  <div class="agent-chip">✍️ Creator</div>
+                  <div class="agent-chip">🧐 Strict Editor</div>
+                </div>
+                <p class="handson-note">Multi-turn debate verdicts and quality score convergence (&ge;8/10)</p>
+              </div>
+            </div>
+            <div class="placement-meter">
+              <span class="placement-label">Agentic Depth</span>
+              <span class="stars">★★★★★</span>
+            </div>
+            <div class="skill-tag-row">
+              <span class="skill-tag">Multi-Agent</span>
+              <span class="skill-tag">Adversarial AI</span>
+              <span class="skill-tag">Reflection</span>
+              <span class="skill-tag">LLM Judge</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- DAY 3 -->
+      <div class="day-block" id="day3">
+        <div class="day-header day-header-3" onclick="location.href='day3.html'" style="cursor:pointer;"
+          title="Open Day 3 Content">
+          <div class="day-label">
+            <span class="day-number">Day 3</span>
+            <span class="day-theme">Multi-Agent AI & Placement Project</span>
+          </div>
+          <div class="day-date-pill">9:00 AM – 5:00 PM</div>
+        </div>
+
+        <div class="sessions-grid">
+
+          <!-- SESSION 3.1 -->
+          <div class="session-card" data-session="3.1" onclick="location.href='day3.html#session1'"
+            style="cursor:pointer;">
+            <div class="session-time-tag">9:00 – 11:00</div>
+            <div class="session-number">Session 1</div>
+            <h3 class="session-title">CrewAI — Multi-Agent Systems</h3>
+            <div class="session-body">
+              <div class="topics-block">
+                <h4>📖 Topics Covered</h4>
+                <ul>
+                  <li>Multi-Agent System Architecture</li>
+                  <li>Roles, Tasks & Crew Setup</li>
+                  <li>Sequential Execution</li>
+                  <li>Agent Collaboration Patterns</li>
+                </ul>
+              </div>
+              <div class="handson-block">
+                <h4>⚡ Build: AI Software Company</h4>
+                <div class="agents-grid">
+                  <div class="agent-chip">🧑‍💼 Project Manager</div>
+                  <div class="agent-chip">🔬 Researcher</div>
+                  <div class="agent-chip">💻 Developer</div>
+                  <div class="agent-chip">🧪 Tester</div>
+                  <div class="agent-chip">📝 Doc Writer</div>
+                </div>
+                <p class="handson-note">Students experience collaborative AI development</p>
+              </div>
+            </div>
+            <div class="skill-tag-row">
+              <span class="skill-tag">CrewAI</span>
+              <span class="skill-tag">Multi-Agent</span>
+              <span class="skill-tag">Collaboration</span>
+            </div>
+          </div>
+
+          <!-- SESSION 3.2 -->
+          <div class="session-card" data-session="3.2" onclick="location.href='day3.html#session2'"
+            style="cursor:pointer;">
+            <div class="session-time-tag">11:15 – 1:00</div>
+            <div class="session-number">Session 2</div>
+            <h3 class="session-title">Build an Industry-Level AI Application</h3>
+            <div class="session-body">
+              <div class="topics-block" style="width:100%">
+                <h4>🏗️ Choose Your Capstone Project</h4>
+                <div class="project-choice-grid">
+                  <div class="project-choice">
+                    <span class="project-num">01</span>
+                    <span>AI Resume Analyzer</span>
+                  </div>
+                  <div class="project-choice">
+                    <span class="project-num">02</span>
+                    <span>AI Interview Prep Assistant</span>
+                  </div>
+                  <div class="project-choice">
+                    <span class="project-num">03</span>
+                    <span>College Admission Chatbot</span>
+                  </div>
+                  <div class="project-choice">
+                    <span class="project-num">04</span>
+                    <span>Research Paper Assistant</span>
+                  </div>
+                  <div class="project-choice">
+                    <span class="project-num">05</span>
+                    <span>AI Code Reviewer</span>
+                  </div>
+                  <div class="project-choice">
+                    <span class="project-num">06</span>
+                    <span>AI Study Planner</span>
+                  </div>
+                </div>
+                <p class="handson-note" style="margin-top:12px;">👥 Work in teams of 3–4 students</p>
+              </div>
+            </div>
+            <div class="skill-tag-row">
+              <span class="skill-tag">Full Stack AI</span>
+              <span class="skill-tag">Streamlit</span>
+              <span class="skill-tag">Teamwork</span>
+            </div>
+          </div>
+
+          <!-- SESSION 3.3 -->
+          <div class="session-card featured-session grand-finale" data-session="3.3"
+            onclick="location.href='day3.html#session3'" style="cursor:pointer;">
+            <div class="session-time-tag">2:00 – 5:00</div>
+            <div class="session-number">Session 3</div>
+            <div class="featured-badge finale-badge">🏆 Grand Finale</div>
+            <h3 class="session-title">Capstone Demo & Career Readiness</h3>
+            <div class="session-body">
+              <div class="topics-block">
+                <h4>🎤 Each Team Presents</h4>
+                <ul>
+                  <li>Architecture Overview</li>
+                  <li>AI Workflow Walkthrough</li>
+                  <li>Live Demo</li>
+                  <li>GitHub Repository</li>
+                </ul>
+              </div>
+              <div class="handson-block">
+                <h4>💼 Career Guidance</h4>
+                <ul>
+                  <li>AI Interview Questions & Answers</li>
+                  <li>Resume Building for AI Roles</li>
+                  <li>GitHub Portfolio Best Practices</li>
+                  <li>6-Month Learning Roadmap</li>
+                  <li>Open-Source Contributions</li>
+                  <li>Internship Opportunities</li>
+                  <li>AI Certifications Guide</li>
+                </ul>
+              </div>
+            </div>
+            <div class="skill-tag-row">
+              <span class="skill-tag">Presentation</span>
+              <span class="skill-tag">GitHub</span>
+              <span class="skill-tag">Career</span>
+              <span class="skill-tag">Portfolio</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ░░ N8N BONUS ░░ -->
+  <section style="padding:60px 0;background:linear-gradient(135deg,rgba(255,109,90,0.06),rgba(245,166,35,0.04));">
+    <div class="container">
+      <div
+        style="display:flex;align-items:center;gap:32px;flex-wrap:wrap;background:rgba(255,255,255,0.03);border:1px solid rgba(255,109,90,0.25);border-radius:24px;padding:36px;position:relative;overflow:hidden;">
+        <div
+          style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ff6d5a,#f5a623);">
+        </div>
+        <div style="font-size:3.5rem;flex-shrink:0;">🔁</div>
+        <div style="flex:1;min-width:280px;">
+          <div
+            style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,109,90,0.8);margin-bottom:8px;">
+            ⭐ Complementary Material</div>
+          <h2 style="font-family:'Space Grotesk',sans-serif;font-size:1.6rem;color:#f0f4ff;margin-bottom:10px;">n8n —
+            No-Code AI Workflow Automation</h2>
+          <p style="color:#94a3b8;font-size:0.95rem;line-height:1.6;max-width:520px;margin-bottom:16px;">Build powerful
+            AI automation pipelines visually — no backend code needed. Covers 4 complete projects: AI Email Responder,
+            Document Summarizer, Support Webhook Bot, and Content Creation Pipeline.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
+            <span
+              style="font-size:12px;padding:4px 14px;border-radius:999px;background:rgba(255,109,90,0.1);border:1px solid rgba(255,109,90,0.3);color:#fca5a5;">📧
+              Email Auto-Responder</span>
+            <span
+              style="font-size:12px;padding:4px 14px;border-radius:999px;background:rgba(255,109,90,0.1);border:1px solid rgba(255,109,90,0.3);color:#fca5a5;">📄
+              Document Summarizer</span>
+            <span
+              style="font-size:12px;padding:4px 14px;border-radius:999px;background:rgba(255,109,90,0.1);border:1px solid rgba(255,109,90,0.3);color:#fca5a5;">🤖
+              Support Bot</span>
+            <span
+              style="font-size:12px;padding:4px 14px;border-radius:999px;background:rgba(255,109,90,0.1);border:1px solid rgba(255,109,90,0.3);color:#fca5a5;">📰
+              Content Pipeline</span>
+          </div>
+          <a href="n8n.html"
+            style="display:inline-block;padding:12px 28px;background:linear-gradient(135deg,#ff6d5a,#f5a623);color:white;text-decoration:none;border-radius:999px;font-weight:700;font-size:14px;box-shadow:0 4px 20px rgba(255,109,90,0.35);transition:all 0.3s;">Open
+            n8n Material →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ TOOLS ░░ -->
+
+  <section class="tools-section" id="tools">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">🛠️ Tech Stack</span>
+        <h2>Tools Used Throughout</h2>
+        <p>Industry-standard tools that look great on your resume</p>
+      </div>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="tool-icon">🐍</div>
+          <span class="tool-name">Python</span>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon">💻</div>
+          <span class="tool-name">VS Code</span>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon">🦙</div>
+          <span class="tool-name">Ollama</span>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon">🔗</div>
+          <span class="tool-name">LangChain</span>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon">📊</div>
+          <span class="tool-name">LangGraph</span>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon">👥</div>
+          <span class="tool-name">CrewAI</span>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon">🗃️</div>
+          <span class="tool-name">ChromaDB</span>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon">⚡</div>
+          <span class="tool-name">Streamlit</span>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon">🐙</div>
+          <span class="tool-name">Git & GitHub</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ ROADMAP ░░ -->
+  <section class="roadmap-section" id="roadmap">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">🗺️ Learning Journey</span>
+        <h2>Your 3-Day Progression</h2>
+        <p>A structured path from zero to industry-ready AI developer</p>
+      </div>
+      <div class="roadmap-timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot dot-1"></div>
+          <div class="timeline-content">
+            <div class="timeline-day">Day 1</div>
+            <h3>Foundations & RAG</h3>
+            <p>Set up environment, understand LLMs, build your first chatbot, and create a full RAG pipeline</p>
+            <div class="timeline-deliverable">📦 Deliverable: College Q&A System</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dot-2"></div>
+          <div class="timeline-content">
+            <div class="timeline-day">Day 2</div>
+            <h3>Autonomous & Multi-Agent Systems</h3>
+            <p>Single-agent ReAct tool calling, self-healing Python execution loops, adversarial debate arenas, and
+              reflective creator-critic duos</p>
+            <div class="timeline-deliverable">📦 Deliverable: 5 Complete Agentic AI Apps</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dot-3"></div>
+          <div class="timeline-content">
+            <div class="timeline-day">Day 3</div>
+            <h3>Multi-Agent Systems & Portfolio</h3>
+            <p>Build an AI Software Company with CrewAI, develop capstone project, present and get career guidance</p>
+            <div class="timeline-deliverable">📦 Deliverable: GitHub Portfolio Project</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ INSTRUCTOR ░░ -->
+  <section class="instructor-section" id="instructor">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">👨‍💻 Your Instructor</span>
+        <h2>Conducted by</h2>
+      </div>
+      <div class="instructor-card">
+        <img src="basavesh.jpg" alt="Basavesh D." class="instructor-avatar-lg" style="object-fit:cover;" />
+        <div class="instructor-details">
+          <h3 class="instructor-name">Basavesh D.</h3>
+          <p class="instructor-role">Assistant Professor &amp; AI Trainer</p>
+          <div class="instructor-meta">
+            <span class="inst-meta-item">🏛️ Dept. of CSE</span>
+            <span class="inst-meta-item">📍 Jyothy Institute of Technology, Bengaluru</span>
+          </div>
+          <p class="instructor-bio">
+            Passionate about making AI education practical and industry-relevant.
+            Designing and delivering hands-on workshops that equip students with real-world
+            skills in Generative AI, LangChain, RAG, and Multi-Agent Systems.
+          </p>
+          <div class="instructor-tags">
+            <span class="inst-tag">🤖 Generative AI</span>
+            <span class="inst-tag">🔗 LangChain</span>
+            <span class="inst-tag">📚 RAG Systems</span>
+            <span class="inst-tag">🕸️ Multi-Agent</span>
+            <span class="inst-tag">🐍 Python</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ FOOTER ░░ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-title">
+        <span class="gradient-text">Agentic AI Workshop</span>
+      </div>
+      <p class="footer-sub">Empowering engineering students to build the future with AI</p>
+      <div class="footer-tags">
+        <span>#AgenticAI</span>
+        <span>#LangChain</span>
+        <span>#RAG</span>
+        <span>#CrewAI</span>
+        <span>#PlacementReady</span>
+      </div>
+      <p class="footer-copy">Designed for maximum placement impact · 3 Days · 9 Sessions · 9+ Hands-On Projects</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

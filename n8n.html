@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>n8n for AI Workflows — Complementary Material | Agentic AI Workshop</title>
+  <meta name="description" content="Comprehensive n8n guide with 4 hands-on AI automation projects: Email Responder, Document Summarizer, Support Bot, and Content Pipeline."/>
+  <link rel="stylesheet" href="content.css"/>
+  <style>
+    /* n8n-specific overrides */
+    :root {
+      --n8n-orange: #ff6d5a;
+      --n8n-orange-light: #ff8c7a;
+      --n8n-grad: linear-gradient(135deg, #ff6d5a, #f5a623);
+    }
+
+    /* Node config cards */
+    .node-config {
+      background: #080f1e;
+      border: 1px solid rgba(255,109,90,0.25);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .node-config-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      background: rgba(255,109,90,0.08);
+      border-bottom: 1px solid rgba(255,109,90,0.2);
+    }
+    .node-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .node-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-1);
+    }
+    .node-type {
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    .node-config-body {
+      padding: 18px 20px;
+    }
+    .field-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .field-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      min-width: 130px;
+      padding-top: 2px;
+      flex-shrink: 0;
+    }
+    .field-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: #e2e8f0;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 12px;
+      flex: 1;
+      word-break: break-all;
+    }
+    .field-value.multiline {
+      white-space: pre-wrap;
+      line-height: 1.6;
+      padding: 10px 14px;
+    }
+
+    /* Workflow flow diagram */
+    .workflow-diagram {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0;
+      background: rgba(255,109,90,0.04);
+      border: 1px solid rgba(255,109,90,0.15);
+      border-radius: var(--r-lg);
+      padding: 24px 20px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+    .wf-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-align: center;
+      min-width: 90px;
+    }
+    .wf-node-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      border: 2px solid;
+      transition: transform 0.2s;
+    }
+    .wf-node-icon:hover { transform: scale(1.08); }
+    .wf-node-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-2);
+      max-width: 80px;
+      line-height: 1.3;
+    }
+    .wf-arrow {
+      color: var(--text-3);
+      font-size: 1.4rem;
+      padding: 0 6px;
+      align-self: flex-start;
+      margin-top: 14px;
+    }
+
+    /* n8n node colors */
+    .wf-trigger   { background: rgba(74,222,128,0.1); border-color: rgba(74,222,128,0.4); }
+    .wf-llm       { background: rgba(99,102,241,0.1); border-color: rgba(99,102,241,0.4); }
+    .wf-transform { background: rgba(34,211,238,0.1); border-color: rgba(34,211,238,0.4); }
+    .wf-action    { background: rgba(251,191,36,0.1); border-color: rgba(251,191,36,0.4); }
+    .wf-condition { background: rgba(168,85,247,0.1); border-color: rgba(168,85,247,0.4); }
+    .wf-http      { background: rgba(255,109,90,0.1); border-color: rgba(255,109,90,0.4); }
+
+    /* Import box */
+    .import-box {
+      background: linear-gradient(135deg, rgba(255,109,90,0.06), rgba(245,166,35,0.04));
+      border: 1px solid rgba(255,109,90,0.25);
+      border-radius: var(--r-lg);
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+    .import-box-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--n8n-orange);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .import-box p {
+      font-size: 0.87rem;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* Project header */
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      background: linear-gradient(135deg, rgba(255,109,90,0.08), rgba(245,166,35,0.05));
+      border: 1px solid rgba(255,109,90,0.2);
+      border-radius: var(--r-xl);
+      padding: 28px;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-header::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--n8n-grad);
+    }
+    .project-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem;
+      font-weight: 900;
+      background: var(--n8n-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .project-meta h3 {
+      font-size: 1.4rem;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+    .project-meta p {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .project-tech-row {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .project-tech {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(255,109,90,0.1);
+      border: 1px solid rgba(255,109,90,0.25);
+      color: #fca5a5;
+    }
+
+    /* Comparison table special */
+    .n8n-compare { border-color: rgba(255,109,90,0.2); }
+    .n8n-compare th { background: rgba(255,109,90,0.1); color: #fca5a5; }
+
+    /* Tip box n8n style */
+    .callout-n8n {
+      background: rgba(255,109,90,0.06);
+      border: 1px solid rgba(255,109,90,0.2);
+    }
+    .callout-n8n strong { color: var(--n8n-orange); }
+
+    /* n8n gradient text */
+    .n8n-text {
+      background: var(--n8n-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Sticky nav orange accent */
+    .nav-session-btn.active {
+      background: rgba(255,109,90,0.12);
+      border-color: rgba(255,109,90,0.4);
+      color: #fca5a5;
+    }
+    .nav-session-btn:hover {
+      background: rgba(255,109,90,0.1);
+      border-color: rgba(255,109,90,0.35);
+      color: #fca5a5;
+    }
+
+    /* Section dividers */
+    .project-section {
+      padding: 64px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 640px) {
+      .project-header { flex-direction: column; }
+      .project-num { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ░░ TOP NAV ░░ -->
+<nav class="top-nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-home"><span class="nav-home-icon">←</span> Back to Workshop</a>
+    <span class="nav-day-label n8n-text">n8n — AI Workflow Automation</span>
+    <div class="nav-sessions">
+      <a href="#intro"      class="nav-session-btn active">Intro</a>
+      <a href="#concepts"   class="nav-session-btn">Concepts</a>
+      <a href="#project1"   class="nav-session-btn">P1</a>
+      <a href="#project2"   class="nav-session-btn">P2</a>
+      <a href="#project3"   class="nav-session-btn">P3</a>
+      <a href="#project4"   class="nav-session-btn">P4</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ░░ HERO ░░ -->
+<section class="day-hero" id="intro">
+  <div class="container day-hero-inner">
+    <div class="day-crumb">
+      <a href="index.html">🏠 Workshop Home</a>
+      <span class="day-crumb-sep">›</span>
+      <span>n8n Complementary Material</span>
+    </div>
+    <h1>n8n — <span class="n8n-text">No-Code AI Workflow Automation</span></h1>
+    <p>Build powerful AI automation pipelines without writing a single line of backend code. Connect LLMs, APIs, databases, and services visually — and supercharge your AI projects with real-world integrations.</p>
+    <div class="day-meta-pills">
+      <span class="day-meta-pill pill-amber">🔧 Complementary Material</span>
+      <span class="day-meta-pill pill-blue">4 Hands-On Projects</span>
+      <span class="day-meta-pill pill-green">Visual + No-Code AI</span>
+      <span class="day-meta-pill pill-cyan">n8n · Ollama · Webhooks · APIs</span>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ WHAT IS N8N ░░ -->
+<section class="session-section" id="concepts">
+  <div class="container">
+
+    <div class="session-header-row">
+      <div class="session-header-left">
+        <div class="session-num-badge">Part 1 — Introduction & Core Concepts</div>
+        <h2 class="session-title-main">What is n8n?</h2>
+      </div>
+    </div>
+
+    <div class="concepts-section reveal">
+
+      <div class="callout callout-n8n">
+        <span class="callout-icon">🔁</span>
+        <div class="callout-content">
+          <strong>n8n in one sentence</strong>
+          n8n (pronounced "n-eight-n") is an open-source workflow automation platform that lets you connect any app, API, or AI model through a visual drag-and-drop interface — like Zapier, but free, self-hostable, and AI-first.
+        </div>
+      </div>
+
+      <div class="concepts-grid">
+        <div class="concept-card">
+          <span class="concept-card-icon">🆚</span>
+          <h4>n8n vs Alternatives</h4>
+          <table class="compare-table n8n-compare">
+            <tr><th>Feature</th><th>n8n</th><th>Zapier</th><th>Make</th></tr>
+            <tr><td>Cost</td><td>Free (self-host)</td><td>$$</td><td>$</td></tr>
+            <tr><td>AI Nodes</td><td>Built-in ✅</td><td>Limited</td><td>Limited</td></tr>
+            <tr><td>Open Source</td><td>Yes ✅</td><td>No</td><td>No</td></tr>
+            <tr><td>Custom Code</td><td>JS/Python ✅</td><td>No</td><td>Limited</td></tr>
+            <tr><td>Self-hosted</td><td>Yes ✅</td><td>No</td><td>No</td></tr>
+            <tr><td>LLM Integration</td><td>Native ✅</td><td>Via API</td><td>Via API</td></tr>
+          </table>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">🧩</span>
+          <h4>Core Building Blocks</h4>
+          <ul>
+            <li><strong>Nodes</strong> — Individual action/logic units (Gmail, HTTP, LLM)</li>
+            <li><strong>Connections</strong> — Arrows linking nodes (data flows through)</li>
+            <li><strong>Workflows</strong> — A complete automation (collection of nodes)</li>
+            <li><strong>Triggers</strong> — What starts the workflow (webhook, schedule, email)</li>
+            <li><strong>Expressions</strong> — Dynamic values: <code>{{ $json.email }}</code></li>
+            <li><strong>Credentials</strong> — API keys stored securely</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">🤖</span>
+          <h4>AI Nodes in n8n</h4>
+          <ul>
+            <li><strong>AI Agent</strong> — Full ReAct agent with tools</li>
+            <li><strong>Basic LLM Chain</strong> — Simple prompt → response</li>
+            <li><strong>AI Chat</strong> — Conversational interface trigger</li>
+            <li><strong>Embeddings</strong> — Generate text embeddings</li>
+            <li><strong>Vector Store</strong> — Store & retrieve with Chroma/Pinecone</li>
+            <li><strong>Memory Buffer</strong> — Conversation memory</li>
+            <li><strong>Tool nodes</strong> — Web search, calculator, code</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">🌐</span>
+          <h4>400+ Integrations</h4>
+          <ul>
+            <li>📧 Gmail, Outlook, SMTP</li>
+            <li>💬 Slack, Telegram, WhatsApp</li>
+            <li>📁 Google Drive, Dropbox, OneDrive</li>
+            <li>🗄️ MySQL, PostgreSQL, MongoDB</li>
+            <li>📋 Notion, Airtable, Google Sheets</li>
+            <li>🤖 OpenAI, Anthropic, Ollama, Groq</li>
+            <li>🔗 HTTP Request (any REST API)</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">⚡</span>
+          <h4>Trigger Types</h4>
+          <ul>
+            <li><strong>Webhook</strong> — Triggered by HTTP POST from external app</li>
+            <li><strong>Schedule</strong> — Run every X minutes/hours/days (cron)</li>
+            <li><strong>Email</strong> — Triggered when email arrives</li>
+            <li><strong>Chat Message</strong> — AI chat interface built-in</li>
+            <li><strong>Form Submission</strong> — n8n hosted form trigger</li>
+            <li><strong>Manual</strong> — Click button to run (testing)</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <span class="concept-card-icon">🔤</span>
+          <h4>n8n Expressions</h4>
+          <p>Access data from previous nodes dynamically:</p>
+          <ul>
+            <li><code>{{ $json.fieldName }}</code> — current node data</li>
+            <li><code>{{ $('NodeName').item.json.field }}</code> — specific node</li>
+            <li><code>{{ $now.toISO() }}</code> — current timestamp</li>
+            <li><code>{{ $input.all() }}</code> — all input items</li>
+            <li><code>{{ $vars.myVariable }}</code> — workflow variables</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- INSTALLATION -->
+    <div class="code-section reveal">
+      <div class="code-section-title">🔧 Installation & Setup</div>
+
+      <div class="handson-section">
+        <div class="handson-header">
+          <div class="handson-icon-wrap">💻</div>
+          <div class="handson-header-text">
+            <h3>3 Ways to Install n8n</h3>
+            <p>Choose the method that suits your system best</p>
+          </div>
+        </div>
+
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">A</div>
+            <div class="step-content">
+              <h4>Method 1 — npm (Recommended for workshop)</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span> Terminal</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code># Install n8n globally
+npm install -g n8n
+
+# Start n8n
+n8n start
+
+# Open in browser
+# http://localhost:5678</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">B</div>
+            <div class="step-content">
+              <h4>Method 2 — Docker (Clean, isolated)</h4>
+              <div class="code-block-wrapper">
+                <div class="code-block-header">
+                  <span class="code-filename"><span class="code-lang-badge lang-bash">bash</span> Terminal</span>
+                  <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre class="code-block"><code>docker run -it --rm \
+  --name n8n \
+  -p 5678:5678 \
+  -v ~/.n8n:/home/node/.n8n \
+  docker.n8n.io/n8nio/n8n
+
+# Open http://localhost:5678</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">C</div>
+            <div class="step-content">
+              <h4>Method 3 — n8n Cloud (Instant, no install)</h4>
+              <p>Go to <strong>n8n.io</strong> → Sign up free → Get a cloud instance instantly. Free trial available. Best if your laptop has limited RAM.</p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num">D</div>
+            <div class="step-content">
+              <h4>Connect Ollama to n8n</h4>
+              <p>In n8n, go to <strong>Settings → Credentials → Add Credential → Ollama</strong></p>
+              <div class="field-row" style="margin-top:10px;">
+                <span class="field-label">Base URL</span>
+                <span class="field-value">http://localhost:11434</span>
+              </div>
+              <div class="callout callout-tip" style="margin-top:10px;">
+                <span class="callout-icon">💡</span>
+                <div class="callout-content"><strong>Make sure Ollama is running!</strong> Start Ollama first: <code>ollama serve</code> — then n8n can connect to it as an LLM provider.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- n8n INTERFACE GUIDE -->
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">🖥️ n8n Interface Quick Guide</div>
+      <div class="concepts-grid">
+        <div class="concept-card">
+          <span class="concept-card-icon">🗺️</span>
+          <h4>Canvas (Main Area)</h4>
+          <ul>
+            <li>Drag-and-drop workspace for building workflows</li>
+            <li>Right-click → Add Node to insert a new node</li>
+            <li>Drag connections from node output dots</li>
+            <li>Click a node to configure it</li>
+            <li>Ctrl+A to select all, Delete to remove</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <span class="concept-card-icon">📚</span>
+          <h4>Node Library (Left Panel)</h4>
+          <ul>
+            <li>Search 400+ nodes by name or category</li>
+            <li>Categories: Triggers, Actions, AI, Transform, Flow</li>
+            <li>Drag directly onto canvas</li>
+            <li>Favorites: pin commonly used nodes</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <span class="concept-card-icon">▶️</span>
+          <h4>Execution & Testing</h4>
+          <ul>
+            <li><strong>Test Workflow</strong> — Run manually, see all data</li>
+            <li><strong>Execute Node</strong> — Test single node in isolation</li>
+            <li>Click any node after run → see Input/Output data</li>
+            <li><strong>Executions</strong> tab — history of all runs</li>
+            <li>Pin data — freeze test data to avoid re-fetching</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <span class="concept-card-icon">⚙️</span>
+          <h4>Workflow Settings</h4>
+          <ul>
+            <li><strong>Active toggle</strong> — enable/disable automation</li>
+            <li><strong>Variables</strong> — global workflow constants</li>
+            <li><strong>Error workflow</strong> — run another workflow on failure</li>
+            <li><strong>Timezone</strong> — for scheduled triggers</li>
+            <li><strong>Save & Share</strong> — export as JSON</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">🎯</span>
+        <div class="callout-content">
+          <strong>How to import workshop workflows</strong>
+          Each project below includes a JSON workflow. To import: Open n8n → Click <strong>+</strong> (New Workflow) → Menu (⋯) → Import from File/URL → Paste the JSON → Click Import. All nodes will appear on canvas ready to configure.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PROJECT 1
+═══════════════════════════════════════════ -->
+<section class="project-section" id="project1">
+  <div class="container">
+
+    <div class="project-header reveal">
+      <div class="project-num">01</div>
+      <div class="project-meta">
+        <h3>AI Email Auto-Responder</h3>
+        <p>Automatically reads incoming Gmail emails, classifies them using AI, routes them by category, drafts intelligent replies, and sends responses — all without human intervention.</p>
+        <div class="project-tech-row">
+          <span class="project-tech">Gmail Trigger</span>
+          <span class="project-tech">Ollama LLM</span>
+          <span class="project-tech">IF Condition</span>
+          <span class="project-tech">Gmail Send</span>
+          <span class="project-tech">Slack Notify</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARCHITECTURE -->
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">🏗️ Workflow Architecture</div>
+      <div class="workflow-diagram">
+        <div class="wf-node">
+          <div class="wf-node-icon wf-trigger">📧</div>
+          <div class="wf-node-label">Gmail Trigger</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-llm">🤖</div>
+          <div class="wf-node-label">AI Classify Email</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-condition">🔀</div>
+          <div class="wf-node-label">IF: Category?</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-llm">✍️</div>
+          <div class="wf-node-label">AI Draft Reply</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-action">📤</div>
+          <div class="wf-node-label">Gmail Send</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-action">💬</div>
+          <div class="wf-node-label">Slack Notify</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NODE CONFIGS -->
+    <div class="handson-section reveal">
+      <div class="handson-header">
+        <div class="handson-icon-wrap">⚙️</div>
+        <div class="handson-header-text">
+          <h3>Step-by-Step Node Configuration</h3>
+          <p>Configure each node exactly as shown below</p>
+        </div>
+      </div>
+
+      <div class="steps-list">
+        <!-- Node 1 -->
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Node: Gmail Trigger</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(234,67,53,0.15);">📧</div>
+                <span class="node-name">Gmail Trigger</span>
+                <span class="node-type" style="background:rgba(74,222,128,0.15);color:#4ade80;">TRIGGER</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Credential</span>
+                  <span class="field-value">Gmail OAuth2 (connect your account)</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Event</span>
+                  <span class="field-value">Message Received</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Filters</span>
+                  <span class="field-value">Label: INBOX, Only unread: true</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Poll Every</span>
+                  <span class="field-value">1 minute</span>
+                </div>
+              </div>
+            </div>
+            <div class="callout callout-tip">
+              <span class="callout-icon">💡</span>
+              <div class="callout-content"><strong>For testing</strong> — use <strong>Manual Trigger</strong> instead of Gmail Trigger. Paste a sample email JSON in the "Mock Data" section to test without real emails.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Node 2 -->
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Node: AI Email Classifier (Basic LLM Chain)</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(99,102,241,0.15);">🤖</div>
+                <span class="node-name">Basic LLM Chain — Classify</span>
+                <span class="node-type" style="background:rgba(99,102,241,0.15);color:#a5b4fc;">AI</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Model</span>
+                  <span class="field-value">Ollama → llama3.2</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Prompt</span>
+                  <span class="field-value multiline">Classify this email into EXACTLY one of these categories:
+INQUIRY, COMPLAINT, FEEDBACK, SPAM, SUPPORT, OTHER
+
+Return ONLY the category word. Nothing else.
+
+Email Subject: {{ $json.subject }}
+Email Body: {{ $json.snippet }}</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Temperature</span>
+                  <span class="field-value">0 (deterministic)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Node 3 -->
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Node: IF Condition (Route by Category)</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(168,85,247,0.15);">🔀</div>
+                <span class="node-name">IF — Route by Category</span>
+                <span class="node-type" style="background:rgba(168,85,247,0.15);color:#d8b4fe;">FLOW</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Condition 1</span>
+                  <span class="field-value">{{ $json.text }} contains "SPAM" → Route to: Spam Handler</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Condition 2</span>
+                  <span class="field-value">{{ $json.text }} contains "COMPLAINT" → Route to: Priority Reply</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Else</span>
+                  <span class="field-value">Standard Reply Generator</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Node 4 -->
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Node: AI Draft Reply (Basic LLM Chain)</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(99,102,241,0.15);">✍️</div>
+                <span class="node-name">Basic LLM Chain — Draft Reply</span>
+                <span class="node-type" style="background:rgba(99,102,241,0.15);color:#a5b4fc;">AI</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Model</span>
+                  <span class="field-value">Ollama → llama3.2</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Prompt</span>
+                  <span class="field-value multiline">You are a professional customer support representative.
+Write a helpful, concise, and friendly email reply.
+
+Original Email:
+Subject: {{ $('Gmail Trigger').item.json.subject }}
+From: {{ $('Gmail Trigger').item.json.from.value[0].name }}
+Body: {{ $('Gmail Trigger').item.json.snippet }}
+
+Category: {{ $('AI Classify Email').item.json.text }}
+
+Write ONLY the email body (no subject line). Sign off as "The Support Team".</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Temperature</span>
+                  <span class="field-value">0.4</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Node 5 -->
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Node: Gmail Send Reply</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(234,67,53,0.15);">📤</div>
+                <span class="node-name">Gmail — Send Email</span>
+                <span class="node-type" style="background:rgba(251,191,36,0.15);color:#fcd34d;">ACTION</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Operation</span>
+                  <span class="field-value">Reply</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Message ID</span>
+                  <span class="field-value">{{ $('Gmail Trigger').item.json.id }}</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Reply Body</span>
+                  <span class="field-value">{{ $json.text }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h4>Activate & Test</h4>
+            <p>Toggle <strong>Active</strong> in the top-right → send yourself a test email → watch it get classified and auto-replied within 1 minute!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="expected-output">
+        <div class="expected-output-title">✅ What Happens</div>
+        <p><strong>Email arrives:</strong> "Hi, I need help resetting my password"<br/>
+        <strong>AI classifies:</strong> SUPPORT<br/>
+        <strong>AI drafts:</strong> "Dear [Name], Thank you for reaching out! To reset your password, please follow these steps…"<br/>
+        <strong>Auto-sent:</strong> within 60 seconds of receiving email</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PROJECT 2
+═══════════════════════════════════════════ -->
+<section class="project-section" id="project2">
+  <div class="container">
+
+    <div class="project-header reveal">
+      <div class="project-num">02</div>
+      <div class="project-meta">
+        <h3>AI Document Summarizer & Extractor</h3>
+        <p>Students submit a PDF through an n8n form. The workflow extracts text, uses AI to summarize, extract key facts, generate a Q&A, and emails the structured report back — instantly.</p>
+        <div class="project-tech-row">
+          <span class="project-tech">n8n Form Trigger</span>
+          <span class="project-tech">PDF Extract</span>
+          <span class="project-tech">Ollama LLM</span>
+          <span class="project-tech">Code Node</span>
+          <span class="project-tech">Gmail Send</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">🏗️ Workflow Architecture</div>
+      <div class="workflow-diagram">
+        <div class="wf-node">
+          <div class="wf-node-icon wf-trigger">📝</div>
+          <div class="wf-node-label">Form Trigger</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-transform">📄</div>
+          <div class="wf-node-label">Extract PDF Text</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-llm">🤖</div>
+          <div class="wf-node-label">AI Summarize</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-llm">🔑</div>
+          <div class="wf-node-label">AI Key Facts</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-llm">❓</div>
+          <div class="wf-node-label">AI Q&A Gen</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-transform">🔧</div>
+          <div class="wf-node-label">Format Report</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-action">📧</div>
+          <div class="wf-node-label">Email Report</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="handson-section reveal">
+      <div class="handson-header">
+        <div class="handson-icon-wrap">⚙️</div>
+        <div class="handson-header-text">
+          <h3>Node-by-Node Configuration</h3>
+          <p>Build this document intelligence pipeline step by step</p>
+        </div>
+      </div>
+
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Node: n8n Form Trigger</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(74,222,128,0.15);">📝</div>
+                <span class="node-name">n8n Form Trigger</span>
+                <span class="node-type" style="background:rgba(74,222,128,0.15);color:#4ade80;">TRIGGER</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Form Title</span>
+                  <span class="field-value">AI Document Summarizer</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Fields</span>
+                  <span class="field-value multiline">1. Your Name (Text, required)
+2. Your Email (Email, required)
+3. Upload PDF (File Upload, required)
+4. What to focus on? (Text, optional)</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Result</span>
+                  <span class="field-value">n8n hosts a public URL for the form automatically</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Node: Extract from PDF</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(34,211,238,0.15);">📄</div>
+                <span class="node-name">Extract from PDF</span>
+                <span class="node-type" style="background:rgba(34,211,238,0.15);color:#67e8f9;">TRANSFORM</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Node type</span>
+                  <span class="field-value">Extract from File → PDF</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Binary Property</span>
+                  <span class="field-value">{{ $json['Upload PDF'] }} (the file field)</span>
+                </div>
+              </div>
+            </div>
+            <div class="callout callout-n8n" style="margin-top:10px;">
+              <span class="callout-icon">📌</span>
+              <div class="callout-content"><strong>Output:</strong> The node extracts all text from the PDF and puts it in <code>$json.text</code></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Node: AI Summary (Basic LLM Chain)</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(99,102,241,0.15);">🤖</div>
+                <span class="node-name">Basic LLM Chain — Summarize</span>
+                <span class="node-type" style="background:rgba(99,102,241,0.15);color:#a5b4fc;">AI</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Model</span>
+                  <span class="field-value">Ollama → llama3.2</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Prompt</span>
+                  <span class="field-value multiline">Create a comprehensive summary of the following document.
+Focus on: {{ $('n8n Form Trigger').item.json['What to focus on?'] || 'main topics' }}
+
+Structure your response as:
+📋 EXECUTIVE SUMMARY (3-4 sentences)
+📌 MAIN TOPICS COVERED (bullet list)
+💡 KEY INSIGHTS (3 important points)
+📊 CONCLUSION
+
+Document Text:
+{{ $json.text.substring(0, 4000) }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Node: AI Key Facts & Q&A Generator (Chained)</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(99,102,241,0.15);">❓</div>
+                <span class="node-name">Basic LLM Chain — Q&A Generator</span>
+                <span class="node-type" style="background:rgba(99,102,241,0.15);color:#a5b4fc;">AI</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Prompt</span>
+                  <span class="field-value multiline">Based on this document summary, generate:
+1. 5 key facts (numbered list)
+2. 5 study questions with answers
+
+Summary: {{ $('AI Summary').item.json.text }}
+
+Format:
+## KEY FACTS
+1. ...
+
+## STUDY Q&A
+Q1: ...
+A1: ...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Node: Code Node — Format HTML Email</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(34,211,238,0.15);">🔧</div>
+                <span class="node-name">Code Node — Format Report</span>
+                <span class="node-type" style="background:rgba(34,211,238,0.15);color:#67e8f9;">TRANSFORM</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Language</span>
+                  <span class="field-value">JavaScript</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Code</span>
+                  <span class="field-value multiline">const name = $('n8n Form Trigger').item.json['Your Name'];
+const summary = $('AI Summary').item.json.text;
+const qa = $('AI Q&A Generator').item.json.text;
+
+const html = `
+&lt;h2&gt;📄 AI Document Analysis Report&lt;/h2&gt;
+&lt;p&gt;Hello ${name},&lt;/p&gt;
+&lt;p&gt;Here is your AI-generated analysis:&lt;/p&gt;
+&lt;hr/&gt;
+&lt;h3&gt;📋 Summary&lt;/h3&gt;
+&lt;pre&gt;${summary}&lt;/pre&gt;
+&lt;hr/&gt;
+&lt;h3&gt;❓ Key Facts & Q&A&lt;/h3&gt;
+&lt;pre&gt;${qa}&lt;/pre&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;em&gt;Generated by AI Document Summarizer · Agentic AI Workshop&lt;/em&gt;&lt;/p&gt;
+`;
+
+return [{ json: { html, name, email: $('n8n Form Trigger').item.json['Your Email'] } }];</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h4>Node: Gmail — Send Report</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(234,67,53,0.15);">📧</div>
+                <span class="node-name">Gmail — Send Email</span>
+                <span class="node-type" style="background:rgba(251,191,36,0.15);color:#fcd34d;">ACTION</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">To</span>
+                  <span class="field-value">{{ $json.email }}</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Subject</span>
+                  <span class="field-value">📄 Your AI Document Report is Ready, {{ $json.name }}!</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Email Type</span>
+                  <span class="field-value">HTML</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">HTML Body</span>
+                  <span class="field-value">{{ $json.html }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PROJECT 3
+═══════════════════════════════════════════ -->
+<section class="project-section" id="project3">
+  <div class="container">
+
+    <div class="project-header reveal">
+      <div class="project-num">03</div>
+      <div class="project-meta">
+        <h3>AI Customer Support Webhook Bot</h3>
+        <p>A webhook-powered AI support system. External apps (website, Telegram, etc.) POST a question to the n8n webhook → AI searches a knowledge base → returns a structured answer with confidence score.</p>
+        <div class="project-tech-row">
+          <span class="project-tech">Webhook Trigger</span>
+          <span class="project-tech">AI Agent</span>
+          <span class="project-tech">Vector Store Retrieval</span>
+          <span class="project-tech">Respond to Webhook</span>
+          <span class="project-tech">Google Sheets Log</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">🏗️ Workflow Architecture</div>
+      <div class="workflow-diagram">
+        <div class="wf-node">
+          <div class="wf-node-icon wf-http">🔗</div>
+          <div class="wf-node-label">Webhook Trigger</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-transform">✅</div>
+          <div class="wf-node-label">Validate Input</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-llm">🧠</div>
+          <div class="wf-node-label">AI Agent + Tools</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-transform">🔧</div>
+          <div class="wf-node-label">Format Response</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-action">📊</div>
+          <div class="wf-node-label">Log to Sheets</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-http">📬</div>
+          <div class="wf-node-label">Respond to Webhook</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="handson-section reveal">
+      <div class="handson-header">
+        <div class="handson-icon-wrap">⚙️</div>
+        <div class="handson-header-text">
+          <h3>Node-by-Node Configuration</h3>
+          <p>Build the AI support webhook system</p>
+        </div>
+      </div>
+
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Node: Webhook Trigger</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(255,109,90,0.15);">🔗</div>
+                <span class="node-name">Webhook</span>
+                <span class="node-type" style="background:rgba(74,222,128,0.15);color:#4ade80;">TRIGGER</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">HTTP Method</span>
+                  <span class="field-value">POST</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Path</span>
+                  <span class="field-value">support-bot</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Response Mode</span>
+                  <span class="field-value">Using "Respond to Webhook" Node</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Your URL</span>
+                  <span class="field-value">http://localhost:5678/webhook/support-bot</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="callout callout-info">
+              <span class="callout-icon">🧪</span>
+              <div class="callout-content">
+                <strong>Test with curl or Postman:</strong><br/>
+                <code>curl -X POST http://localhost:5678/webhook/support-bot -H "Content-Type: application/json" -d '{"question": "What is the attendance policy?", "user_id": "student_001"}'</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Node: Set — Validate & Extract Input</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(34,211,238,0.15);">✅</div>
+                <span class="node-name">Set Node — Extract Question</span>
+                <span class="node-type" style="background:rgba(34,211,238,0.15);color:#67e8f9;">TRANSFORM</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">question</span>
+                  <span class="field-value">{{ $json.body.question }}</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">user_id</span>
+                  <span class="field-value">{{ $json.body.user_id || 'anonymous' }}</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">timestamp</span>
+                  <span class="field-value">{{ $now.toISO() }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Node: AI Agent (with Knowledge Base Tool)</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(99,102,241,0.15);">🧠</div>
+                <span class="node-name">AI Agent</span>
+                <span class="node-type" style="background:rgba(99,102,241,0.15);color:#a5b4fc;">AI AGENT</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Model</span>
+                  <span class="field-value">Ollama → llama3.2</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">System Prompt</span>
+                  <span class="field-value multiline">You are a helpful AI support assistant for Jyothy Institute of Technology.
+Answer questions accurately and concisely using available tools.
+If you cannot find an answer, honestly say so.
+Always end with a confidence level: [High/Medium/Low Confidence]</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">User Message</span>
+                  <span class="field-value">{{ $json.question }}</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Tools connected</span>
+                  <span class="field-value">Vector Store Retrieval (Chroma DB) + Calculator</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Memory</span>
+                  <span class="field-value">Window Buffer Memory (last 5 messages)</span>
+                </div>
+              </div>
+            </div>
+            <div class="callout callout-note" style="margin-top:10px;">
+              <span class="callout-icon">🗃️</span>
+              <div class="callout-content"><strong>Vector Store Setup:</strong> Add a "Vector Store Retrieval" sub-node. Connect it to Chroma with the same DB created in Day 1 workshop. The AI agent will automatically query it when needed.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Node: Code Node — Format JSON Response</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(34,211,238,0.15);">🔧</div>
+                <span class="node-name">Code — Format Response</span>
+                <span class="node-type" style="background:rgba(34,211,238,0.15);color:#67e8f9;">CODE</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Code</span>
+                  <span class="field-value multiline">const answer = $('AI Agent').item.json.output;
+const question = $('Set - Extract').item.json.question;
+
+return [{
+  json: {
+    status: 'success',
+    question: question,
+    answer: answer,
+    timestamp: new Date().toISOString(),
+    model: 'llama3.2',
+    workflow: 'n8n-support-bot'
+  }
+}];</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Node: Google Sheets — Log Query</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(74,222,128,0.15);">📊</div>
+                <span class="node-name">Google Sheets — Append Row</span>
+                <span class="node-type" style="background:rgba(251,191,36,0.15);color:#fcd34d;">ACTION</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Spreadsheet ID</span>
+                  <span class="field-value">Your Google Sheet ID (from URL)</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Sheet Name</span>
+                  <span class="field-value">Support Logs</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Columns</span>
+                  <span class="field-value multiline">Timestamp: {{ $json.timestamp }}
+User ID: {{ $('Set - Extract').item.json.user_id }}
+Question: {{ $json.question }}
+Answer: {{ $json.answer }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h4>Node: Respond to Webhook</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(255,109,90,0.15);">📬</div>
+                <span class="node-name">Respond to Webhook</span>
+                <span class="node-type" style="background:rgba(255,109,90,0.15);color:#fca5a5;">RESPONSE</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Response Code</span>
+                  <span class="field-value">200</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Response Data</span>
+                  <span class="field-value">All Fields from Code Node</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="expected-output" style="margin-top:12px;">
+              <div class="expected-output-title">✅ API Response (JSON)</div>
+              <p><code>{ "status": "success", "question": "What is the attendance policy?", "answer": "The minimum attendance required is 75%. Students below this threshold will be detained... [High Confidence]", "timestamp": "2026-07-22T06:00:00Z" }</code></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PROJECT 4
+═══════════════════════════════════════════ -->
+<section class="project-section" id="project4">
+  <div class="container">
+
+    <div class="project-header reveal">
+      <div class="project-num">04</div>
+      <div class="project-meta">
+        <h3>AI Content Creation Pipeline</h3>
+        <p>A scheduled pipeline that wakes up every morning, searches for trending AI news, generates a well-structured article using LLM, saves it to Notion, and sends a WhatsApp/Telegram notification with a preview.</p>
+        <div class="project-tech-row">
+          <span class="project-tech">Schedule Trigger</span>
+          <span class="project-tech">HTTP Request (News API)</span>
+          <span class="project-tech">Ollama LLM</span>
+          <span class="project-tech">Notion</span>
+          <span class="project-tech">Telegram Bot</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">🏗️ Workflow Architecture</div>
+      <div class="workflow-diagram">
+        <div class="wf-node">
+          <div class="wf-node-icon wf-trigger">⏰</div>
+          <div class="wf-node-label">Schedule (Daily)</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-http">🌐</div>
+          <div class="wf-node-label">Fetch AI News</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-transform">📰</div>
+          <div class="wf-node-label">Pick Top Story</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-llm">✍️</div>
+          <div class="wf-node-label">AI Write Article</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-llm">🏷️</div>
+          <div class="wf-node-label">AI Tag & SEO</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-action">📔</div>
+          <div class="wf-node-label">Save to Notion</div>
+        </div>
+        <span class="wf-arrow">→</span>
+        <div class="wf-node">
+          <div class="wf-node-icon wf-action">💬</div>
+          <div class="wf-node-label">Telegram Notify</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="handson-section reveal">
+      <div class="handson-header">
+        <div class="handson-icon-wrap">⚙️</div>
+        <div class="handson-header-text">
+          <h3>Node-by-Node Configuration</h3>
+          <p>Automate your content creation — runs daily at 7 AM</p>
+        </div>
+      </div>
+
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Node: Schedule Trigger</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(74,222,128,0.15);">⏰</div>
+                <span class="node-name">Schedule Trigger</span>
+                <span class="node-type" style="background:rgba(74,222,128,0.15);color:#4ade80;">TRIGGER</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Rule</span>
+                  <span class="field-value">Custom Cron</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Cron Expression</span>
+                  <span class="field-value">0 7 * * *  (Every day at 7:00 AM)</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Timezone</span>
+                  <span class="field-value">Asia/Kolkata (IST)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Node: HTTP Request — Fetch AI News</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(255,109,90,0.15);">🌐</div>
+                <span class="node-name">HTTP Request — NewsAPI</span>
+                <span class="node-type" style="background:rgba(255,109,90,0.15);color:#fca5a5;">HTTP</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Method</span>
+                  <span class="field-value">GET</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">URL</span>
+                  <span class="field-value">https://newsapi.org/v2/everything</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Query Parameters</span>
+                  <span class="field-value multiline">q = artificial intelligence
+language = en
+sortBy = publishedAt
+pageSize = 5
+apiKey = YOUR_NEWSAPI_KEY</span>
+                </div>
+              </div>
+            </div>
+            <div class="callout callout-tip" style="margin-top:10px;">
+              <span class="callout-icon">🔑</span>
+              <div class="callout-content"><strong>Free API Key:</strong> Sign up at newsapi.org for a free key (100 requests/day). Or use the GNews API — also free. Store the key in n8n Credentials for security.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Node: Code Node — Pick Best Story</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(34,211,238,0.15);">📰</div>
+                <span class="node-name">Code — Pick Top Story</span>
+                <span class="node-type" style="background:rgba(34,211,238,0.15);color:#67e8f9;">CODE</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Code</span>
+                  <span class="field-value multiline">const articles = $json.articles;
+// Pick the article with the most content
+const best = articles
+  .filter(a => a.content && a.content.length > 200)
+  .sort((a, b) => b.content.length - a.content.length)[0];
+
+return [{
+  json: {
+    title: best.title,
+    description: best.description,
+    content: best.content,
+    url: best.url,
+    source: best.source.name,
+    publishedAt: best.publishedAt
+  }
+}];</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Node: AI Article Writer (Basic LLM Chain)</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(99,102,241,0.15);">✍️</div>
+                <span class="node-name">Basic LLM Chain — Write Article</span>
+                <span class="node-type" style="background:rgba(99,102,241,0.15);color:#a5b4fc;">AI</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Model</span>
+                  <span class="field-value">Ollama → llama3.2</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Prompt</span>
+                  <span class="field-value multiline">You are a tech journalist writing for a CSE student audience.
+Write a comprehensive, engaging article (500-700 words) based on this news.
+Make it educational — explain technical terms simply.
+
+News Title: {{ $json.title }}
+Source: {{ $json.source }}
+Summary: {{ $json.description }}
+Content: {{ $json.content }}
+
+Structure:
+# [Catchy Title]
+## What Happened
+## Why It Matters
+## Technical Explanation (simplified)
+## Impact on the Industry
+## What Students Should Know
+## Key Takeaway</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Temperature</span>
+                  <span class="field-value">0.6 (creative but focused)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Node: AI Tagger — Tags + SEO Description</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(99,102,241,0.15);">🏷️</div>
+                <span class="node-name">Basic LLM Chain — Tags & SEO</span>
+                <span class="node-type" style="background:rgba(99,102,241,0.15);color:#a5b4fc;">AI</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Prompt</span>
+                  <span class="field-value multiline">Based on this article, provide:
+1. 5 relevant tags (comma separated)
+2. A 160-character SEO meta description
+
+Article: {{ $('AI Writer').item.json.text }}
+
+Format response EXACTLY as:
+TAGS: tag1, tag2, tag3, tag4, tag5
+META: your meta description here</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h4>Node: Notion — Create Page</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(255,255,255,0.08);">📔</div>
+                <span class="node-name">Notion — Create Page</span>
+                <span class="node-type" style="background:rgba(251,191,36,0.15);color:#fcd34d;">ACTION</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Database ID</span>
+                  <span class="field-value">Your Notion DB ID (from URL after notion.so/...)</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Title</span>
+                  <span class="field-value">{{ $('Pick Top Story').item.json.title }}</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Properties</span>
+                  <span class="field-value multiline">Status: Draft
+Source URL: {{ $('Pick Top Story').item.json.url }}
+Published Date: {{ $now.toISO() }}
+Tags: {{ $('AI Tagger').item.json.text.match(/TAGS: (.+)/)[1] }}</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Body</span>
+                  <span class="field-value">{{ $('AI Writer').item.json.text }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">7</div>
+          <div class="step-content">
+            <h4>Node: Telegram — Send Preview Notification</h4>
+            <div class="node-config">
+              <div class="node-config-header">
+                <div class="node-icon" style="background:rgba(34,211,238,0.15);">💬</div>
+                <span class="node-name">Telegram — Send Message</span>
+                <span class="node-type" style="background:rgba(251,191,36,0.15);color:#fcd34d;">ACTION</span>
+              </div>
+              <div class="node-config-body">
+                <div class="field-row">
+                  <span class="field-label">Chat ID</span>
+                  <span class="field-value">Your Telegram Chat ID</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Message</span>
+                  <span class="field-value multiline">📰 New AI Article Published!
+
+📌 {{ $('Pick Top Story').item.json.title }}
+🗞 Source: {{ $('Pick Top Story').item.json.source }}
+
+{{ $('AI Writer').item.json.text.substring(0, 300) }}...
+
+🔗 Read full article: {{ $('Pick Top Story').item.json.url }}
+📔 Saved to Notion ✅
+
+#AINews #AgenticAI</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">Parse Mode</span>
+                  <span class="field-value">HTML</span>
+                </div>
+              </div>
+            </div>
+            <div class="callout callout-tip" style="margin-top:10px;">
+              <span class="callout-icon">🤖</span>
+              <div class="callout-content"><strong>Create Telegram Bot:</strong> Message @BotFather on Telegram → /newbot → Get your token → Add to n8n Telegram credentials → Get your Chat ID by messaging @userinfobot</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="expected-output">
+        <div class="expected-output-title">✅ What Happens Every Morning at 7 AM</div>
+        <p>
+        1. Workflow wakes up automatically<br/>
+        2. Fetches 5 latest AI news articles<br/>
+        3. Picks the most complete story<br/>
+        4. AI writes a 600-word educational article<br/>
+        5. Generates tags and SEO description<br/>
+        6. Saves to your Notion database<br/>
+        7. Sends Telegram notification with preview<br/>
+        → No human intervention needed!
+        </p>
+      </div>
+    </div>
+
+    <!-- BONUS TIPS -->
+    <div class="concepts-section reveal">
+      <div class="concepts-section-title">🚀 Bonus: n8n Advanced Tips</div>
+      <div class="concepts-grid">
+        <div class="concept-card">
+          <span class="concept-card-icon">🔁</span>
+          <h4>Error Handling</h4>
+          <ul>
+            <li>Add a "Error Trigger" workflow for failures</li>
+            <li>Use <strong>Try/Catch</strong> pattern with IF nodes</li>
+            <li>Set <code>continueOnFail: true</code> for non-critical nodes</li>
+            <li>Log errors to Google Sheets automatically</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <span class="concept-card-icon">🔀</span>
+          <h4>Loop Processing</h4>
+          <ul>
+            <li>Use <strong>Loop Over Items</strong> node for lists</li>
+            <li>Process each email, article, or record individually</li>
+            <li>Set batch size to control API rate limits</li>
+            <li>Use <strong>Wait</strong> node to add delays between iterations</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <span class="concept-card-icon">🔐</span>
+          <h4>Security Best Practices</h4>
+          <ul>
+            <li>Store all API keys in <strong>Credentials</strong> (never hardcode)</li>
+            <li>Use webhook authentication (header token)</li>
+            <li>Limit webhook to specific IP ranges if possible</li>
+            <li>Use environment variables for sensitive config</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <span class="concept-card-icon">⚡</span>
+          <h4>Performance Tips</h4>
+          <ul>
+            <li>Pin test data to avoid re-fetching APIs during dev</li>
+            <li>Use <strong>Merge</strong> node to combine parallel branches</li>
+            <li>Set appropriate execution timeouts for LLM nodes</li>
+            <li>Use <strong>Cache</strong> node for repeated API calls</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-n8n">
+        <span class="callout-icon">💼</span>
+        <div class="callout-content">
+          <strong>Placement Value of n8n</strong>
+          Companies building AI automation tools, no-code platforms, and internal tools are actively looking for engineers who can build n8n workflows. Add "n8n workflow automation" and the projects above to your resume. It shows you can deliver AI value fast without rebuilding everything from scratch.
+        </div>
+      </div>
+    </div>
+
+    <div class="session-nav reveal">
+      <a href="index.html" class="session-nav-btn">← Workshop Home</a>
+      <a href="day1.html" class="session-nav-btn primary next">Start Day 1 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ FOOTER ░░ -->
+<footer class="content-footer">
+  <div class="container">
+    <p style="font-size:1rem;font-weight:700;margin-bottom:6px;">🔁 n8n — Complementary Workshop Material</p>
+    <p>Part of the 3-Day Agentic AI Workshop series</p>
+    <p style="margin-top:10px;"><a href="index.html">← Home</a> &nbsp;·&nbsp; <a href="day1.html">Day 1</a> &nbsp;·&nbsp; <a href="day2.html">Day 2</a> &nbsp;·&nbsp; <a href="day3.html">Day 3</a></p>
+    <p style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;"><img src="basavesh.jpg" alt="Basavesh D." style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid #a855f7;" /> Conducted by <strong>Basavesh D.</strong> · Dept. of CSE · Jyothy Institute of Technology, Bengaluru</p>
+  </div>
+</footer>
+
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block-wrapper').querySelector('code');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 70); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.06 });
+revealEls.forEach(el => obs.observe(el));
+
+// Active nav on scroll
+const sections = ['intro','concepts','project1','project2','project3','project4'];
+const navBtns  = document.querySelectorAll('.nav-session-btn');
+window.addEventListener('scroll', () => {
+  let current = 'intro';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 130) current = id;
+  });
+  navBtns.forEach(b => {
+    const href = b.getAttribute('href').replace('#','');
+    b.classList.toggle('active', href === current);
+  });
+});
+</script>
+</body>
+</html>
